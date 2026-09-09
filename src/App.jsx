@@ -45,6 +45,9 @@ const Page500 = React.lazy(() => import('./views/error-pages/page500/Page500'))
 
 // Protected Route
 import ProtectedRoute from './ProtectedRoute'
+import Home from './layout/home/Home'
+import UserLogin from './layout/user/UserLogin'
+import UserRegister from './layout/user/UserRegister'
 
 /**
  * Main Application Component
@@ -96,14 +99,18 @@ const App = () => {
         }
       >
         <Routes>
+          <Route exact path="/" name="Home Page" element={<Home />} />
+          <Route exact path="/login" name="Login Page" element={<UserLogin />} />
+          <Route exact path="/signup" name="Sign Up Page" element={<UserRegister />} />
           <Route
-            path="*"
+            path="/admin/*"
             element={
               <ProtectedRoute>
                 <AdminLayout />
               </ProtectedRoute>
             }
           />
+          
           <Route exact path="/authentication/login" name="Login Page" element={<Login />} />
           <Route
             exact
