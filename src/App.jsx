@@ -48,6 +48,7 @@ import ProtectedRoute from './ProtectedRoute'
 import Home from './layout/home/Home'
 import UserLogin from './layout/user/UserLogin'
 import UserRegister from './layout/user/UserRegister'
+import AdminLogin from './admin/auth/AdminLogin'
 
 /**
  * Main Application Component
@@ -102,6 +103,7 @@ const App = () => {
           <Route exact path="/" name="Home Page" element={<Home />} />
           <Route exact path="/login" name="Login Page" element={<UserLogin />} />
           <Route exact path="/signup" name="Sign Up Page" element={<UserRegister />} />
+          <Route exact path="/admin/login" name="Admin Login Page" element={<AdminLogin />} />
           <Route
             path="/admin/*"
             element={
@@ -110,7 +112,7 @@ const App = () => {
               </ProtectedRoute>
             }
           />
-          
+
           <Route exact path="/authentication/login" name="Login Page" element={<Login />} />
           <Route
             exact

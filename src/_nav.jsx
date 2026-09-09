@@ -155,8 +155,14 @@ const _nav = [
   },
   {
     component: CNavItem,
+    name: ' Add Admins',
+    to: '/admin/control-panel/add-admins',
+    icon: <CIcon icon={cilWalk} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
     name: 'Admins',
-    to: '/control-panel/admins',
+    to: '/admin/control-panel/admins',
     icon: <CIcon icon={cilWalk} customClassName="nav-icon" />,
   },
   {
@@ -166,7 +172,7 @@ const _nav = [
   {
     component: CNavItem,
     name: 'Charts',
-    to: '/charts',
+    to: '/admin/charts',
     icon: <CIcon icon={cilChartPie} customClassName="nav-icon" />,
   },
   {
