@@ -93,16 +93,16 @@ const Widgets = React.lazy(() => import('./views/widgets/Widgets'))
  */
 export const routes = [
   { path: '/admin', exact: true, name: 'Dashboard', element: Dashboard },
-  { path: '/dashboard', name: 'Dashboard', element: Dashboard },
-  { path: '/users', name: 'Users', element: UserPanel },
-  { path: '/categories', name: 'Categories', element: CategoryPanel },
-  { path: '/add-category', name: 'Categories', element: CategoryDetails },
-  { path: '/update-category/:id', name: 'Categories', element: CategoryDetails },
-  { path: '/products', name: 'Products', element: ProductPanel },
-  { path: '/add-product', name: 'Products', element: ProductDetails },
-  { path: '/update-product/:id', name: 'Products', element: ProductDetails },
-  { path: '/orders', name: 'Orders', element: OrderPanel },
-  { path: '/control-panel/admins', name: 'Admins', element: Admin },
+  { path: '/admin/dashboard', name: 'Dashboard', element: Dashboard },
+  { path: '/admin/users', name: 'Users', element: UserPanel },
+  { path: '/admin/categories', name: 'Categories', element: CategoryPanel },
+  { path: '/admin/add-category', name: 'Categories', element: CategoryDetails },
+  { path: '/admin/update-category/:id', name: 'Categories', element: CategoryDetails },
+  { path: '/admin/products', name: 'Products', element: ProductPanel },
+  { path: '/admin/add-product', name: 'Products', element: ProductDetails },
+  { path: '/admin/update-product/:id', name: 'Products', element: ProductDetails },
+  { path: '/admin/orders', name: 'Orders', element: OrderPanel },
+  { path: '/admin/control-panel/admins', name: 'Admins', element: Admin },
 
 
 
