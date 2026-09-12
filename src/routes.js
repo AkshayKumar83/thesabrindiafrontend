@@ -74,7 +74,6 @@ const Brands = React.lazy(() => import('./views/icons/brands/Brands'))
 
 const Widgets = React.lazy(() => import('./views/widgets/Widgets'))
 
-
 /**
  * Array of route configuration objects
  *
@@ -104,10 +103,8 @@ export const routes = [
   { path: '/update-product/:id', name: 'Products', element: ProductDetails },
   { path: '/orders', name: 'Orders', element: OrderPanel },
   { path: '/control-panel/add-admins', name: 'Admins', element: AdminRegister },
+  { path: '/control-panel/update-admin/:id', name: 'Admins', element: AdminRegister },
   { path: '/control-panel/admins', name: 'Admins', element: Admin },
-
-
-
 
   { path: '/components', name: 'Components', element: Accordion, exact: true },
   { path: '/components/accordion', name: 'Accordion', element: Accordion },
