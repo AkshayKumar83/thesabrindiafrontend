@@ -10,8 +10,14 @@ import {
   CTableBody,
   CTableDataCell,
   CButton,
+  CImage,
 } from '@coreui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+const getImageUrl = (value) => {
+  if (!value || value.startsWith('http') || value.startsWith('data:')) return value
+  return `http://localhost:8090${value}`
+}
 
 const ReusableTable = ({
   columns = [],
@@ -35,9 +41,7 @@ const ReusableTable = ({
                     {col.header}
                   </CTableHeaderCell>
                 ))}
-                {showActions && (
-                  <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
-                )}
+                {showActions && <CTableHeaderCell scope="col">Actions</CTableHeaderCell>}
               </CTableRow>
             </CTableHead>
 
@@ -56,9 +60,24 @@ const ReusableTable = ({
                   <CTableRow key={row.id || rowIndex}>
                     {columns.map((col, colIndex) => (
                       <CTableDataCell key={colIndex}>
-                        {col.render
-                          ? col.render(row[col.accessor], row, rowIndex)
-                          : row[col.accessor]}
+                        {col.render ? (
+                          col.render(row[col.accessor], row, rowIndex)
+                        ) : col.type === 'image' || col.accessor.toLowerCase().includes('image') ? (
+                          row[col.accessor] ? (
+                            <CImage
+                              src={getImageUrl(row[col.accessor])}
+                              alt={`${col.header} preview`}
+                              width={48}
+                              height={48}
+                              className="border rounded"
+                              style={{ objectFit: 'cover' }}
+                            />
+                          ) : (
+                            '-'
+                          )
+                        ) : (
+                          row[col.accessor]
+                        )}
                       </CTableDataCell>
                     ))}
 

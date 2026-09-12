@@ -17,6 +17,7 @@ import {
   CInputGroupText,
 } from '@coreui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { request } from '../../services/api'
 
 const ProductDetails = () => {
   const { id } = useParams()
@@ -32,6 +33,8 @@ const ProductDetails = () => {
     skuNo: '',
     inStock: 1,
   })
+  const [categories, setCategories] = useState([])
+  const [categoryError, setCategoryError] = useState('')
 
   // ========== Variants State ==========
   const [variants, setVariants] = useState([
@@ -63,6 +66,23 @@ const ProductDetails = () => {
     }
   }, [id, isEditMode])
 
+  useEffect(() => {
+    const loadCategories = async () => {
+      try {
+        const response = await request({ url: '/categories/status/1' })
+        const categoryList = Array.isArray(response)
+          ? response
+          : response?.categories || response?.data || []
+
+        setCategories(categoryList)
+      } catch (requestError) {
+        setCategoryError(requestError.response?.data?.message || 'Unable to load categories.')
+      }
+    }
+
+    loadCategories()
+  }, [])
+
   // ========== Handlers ==========
   const handleProductChange = (e) => {
     const { name, value } = e.target
@@ -82,8 +102,7 @@ const ProductDetails = () => {
   const handleImageChange = (variantIndex, imageIndex, e) => {
     const { name, value, type, checked } = e.target
     const updated = [...variants]
-    updated[variantIndex].images[imageIndex][name] =
-      type === 'checkbox' ? checked : value
+    updated[variantIndex].images[imageIndex][name] = type === 'checkbox' ? checked : value
     setVariants(updated)
   }
 
@@ -117,9 +136,7 @@ const ProductDetails = () => {
   const removeImage = (variantIndex, imageIndex) => {
     const updated = [...variants]
     if (updated[variantIndex].images.length === 1) return
-    updated[variantIndex].images = updated[variantIndex].images.filter(
-      (_, i) => i !== imageIndex
-    )
+    updated[variantIndex].images = updated[variantIndex].images.filter((_, i) => i !== imageIndex)
     setVariants(updated)
   }
 
@@ -185,15 +202,21 @@ const ProductDetails = () => {
 
               <CRow className="mb-3">
                 <CCol md={6}>
-                  <CFormLabel>Category ID</CFormLabel>
-                  <CFormInput
-                    type="number"
+                  <CFormLabel>Category</CFormLabel>
+                  <CFormSelect
                     name="categoryId"
                     value={product.categoryId}
                     onChange={handleProductChange}
-                    placeholder="Enter category ID"
                     required
-                  />
+                  >
+                    <option value="">Select category</option>
+                    {categories.map((category) => (
+                      <option key={category.id || category._id} value={category.id || category._id}>
+                        {category.name}
+                      </option>
+                    ))}
+                  </CFormSelect>
+                  {categoryError && <small className="text-danger">{categoryError}</small>}
                 </CCol>
 
                 <CCol md={6}>
