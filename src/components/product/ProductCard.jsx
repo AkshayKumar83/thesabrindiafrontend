@@ -82,7 +82,8 @@ const ProductCard = memo(({ product }) => {
 
         {quantity === 0 ? (
           <CButton
-            color="primary"
+            // color="success"
+            style={{ color :"#fff",backgroundColor: "var(--forest)",}}
             className="w-100 d-flex align-items-center justify-content-center gap-2"
             onClick={() => addToCart(product)}
           >
@@ -92,7 +93,8 @@ const ProductCard = memo(({ product }) => {
         ) : (
           <CInputGroup>
             <CButton
-              color="primary"
+              // color="primary"
+               style={{ color :"#fff",backgroundColor: "var(--forest)",}}
               variant="outline"
               onClick={() => decreaseQuantity(product.id)}
               aria-label="Decrease quantity"
@@ -108,7 +110,8 @@ const ProductCard = memo(({ product }) => {
             />
 
             <CButton
-              color="primary"
+              // color="primary"
+               style={{ color :"#fff",backgroundColor: "var(--forest)",}}
               variant="outline"
               onClick={() => increaseQuantity(product.id)}
               aria-label="Increase quantity"

@@ -27,6 +27,7 @@ import ProductList from '../../components/product/ProductList';
 // import CartButton from "./components/cart/CartButton";
 import ResponsiveCart from "../../components/cart/ResponsiveCart.jsx";
 import { useState } from 'react';
+import Header from './header/Header.jsx';
 
 function LandingPage({ onNavigate }) {
 
@@ -38,116 +39,8 @@ function LandingPage({ onNavigate }) {
           HEADER
       ====================================================== */}
 
-      <CHeader className="store-header border-bottom">
-        <CContainer fluid="xxl">
-          <CRow className="w-100 align-items-center">
-
-            {/* Logo */}
-            <CCol xs={6} md={3}>
-              <CHeaderBrand
-                as="button"
-                className="store-logo border-0 bg-transparent p-0"
-                onClick={() => onNavigate('home')}
-              >
-                <span>S</span> THE SABR INDIA
-              </CHeaderBrand>
-            </CCol>
-
-            {/* Navigation */}
-            <CCol
-              md={6}
-              className="d-none d-md-flex justify-content-center"
-            >
-              <CHeaderNav>
-
-                <CNavItem>
-                  <CNavLink
-                    href="#"
-                    active
-                    onClick={(e) => {
-                      e.preventDefault()
-                      onNavigate('home')
-                    }}
-                  >
-                    Home
-                  </CNavLink>
-                </CNavItem>
-
-                <CNavItem>
-                  <CNavLink
-                    href="#shop"
-                    onClick={(e) => {
-                      e.preventDefault()
-                      onNavigate('shop')
-                    }}
-                  >
-                    Shop
-                  </CNavLink>
-                </CNavItem>
-
-                <CNavItem>
-                  <CNavLink
-                    href="#"
-                    onClick={(e) => {
-                      e.preventDefault()
-                      onNavigate('contact')
-                    }}
-                  >
-                    Contact
-                  </CNavLink>
-                </CNavItem>
-                <CNavItem>
-                  <CNavLink
-                  className='cursor-pointer'
-                    onClick={() =>{ console.log('View cart click'), setCartVisible(true)}}
-                  >
-                    Cart
-                  </CNavLink>
-                </CNavItem>
-
-              </CHeaderNav>
-            </CCol>
-
-            {/* Header actions */}
-            <CCol
-              xs={6}
-              md={3}
-              className="d-flex justify-content-end align-items-center gap-1"
-            >
-
-              <CButton
-                color="light"
-                variant="ghost"
-                className="header-icon-button"
-                aria-label="Search"
-              >
-                <Search size={19} />
-              </CButton>
-
-              <CButton
-                color="light"
-                variant="ghost"
-                className="header-icon-button"
-                aria-label="Shopping bag"
-              >
-                <ShoppingBag size={19} />
-              </CButton>
-
-              <CButton
-                color="light"
-                variant="ghost"
-                className="account-link d-none d-sm-inline-flex"
-                onClick={() => onNavigate('login')}
-              >
-                Account
-              </CButton>
-
-            </CCol>
-
-          </CRow>
-        </CContainer>
-      </CHeader>
-
+      
+<Header/>
 
       {/* =====================================================
           MAIN
