@@ -20,27 +20,35 @@ const ViewDetailsModal = ({
   visible,
   title = 'Details',
   imageUrl,
+  images = [],
   imageAlt = 'Preview',
   fields = [],
+  children,
   onClose,
+  size="md",
 }) => {
+  const previewImages = images.length ? images : imageUrl ? [{ url: imageUrl, alt: imageAlt }] : []
+
   return (
-    <CModal visible={visible} onClose={onClose}>
+    <CModal visible={visible} onClose={onClose} size={size} >
       <CModalHeader>
         <CModalTitle>{title}</CModalTitle>
       </CModalHeader>
       <CModalBody>
         <CRow className="g-3">
-          {imageUrl && (
-            <CCol xs={12} className="text-center">
-              <CImage
-                src={getImageUrl(imageUrl)}
-                alt={imageAlt}
-                width={180}
-                height={180}
-                className="border rounded"
-                style={{ objectFit: 'cover' }}
-              />
+          {previewImages.length > 0 && (
+            <CCol xs={12} className="d-flex flex-wrap justify-content-center gap-2">
+              {previewImages.map((image, index) => (
+                <CImage
+                  key={`${image.url}-${index}`}
+                  src={getImageUrl(image.url)}
+                  alt={image.alt || imageAlt}
+                  width={120}
+                  height={120}
+                  className="border rounded"
+                  style={{ objectFit: 'cover' }}
+                />
+              ))}
             </CCol>
           )}
           {fields.map((field) => (
@@ -53,6 +61,7 @@ const ViewDetailsModal = ({
               <div>{field.value || '-'}</div>
             </CCol>
           ))}
+          {children}
         </CRow>
       </CModalBody>
       <CModalFooter>

@@ -19,6 +19,8 @@ import ProductPanel from './admin/product/ProductPanel'
 import OrderPanel from './admin/order/OrderPanel;'
 import Admin from './admin/controlpanel/Admin'
 import ProductDetails from './admin/product/ProductDetails'
+import ProductVariantDetails from './admin/product/ProductVariantDetails'
+import VariantPannel from './admin/product/VariantPannel'
 import CategoryPanel from './admin/category/CategoryPanel'
 import CategoryDetails from './admin/category/CategoryDetails'
 import AdminLogin from './admin/auth/AdminLogin'
@@ -99,7 +101,15 @@ export const routes = [
   { path: '/add-category', name: 'Categories', element: CategoryDetails },
   { path: '/update-category/:id', name: 'Categories', element: CategoryDetails },
   { path: '/products', name: 'Products', element: ProductPanel },
+  { path: '/product-variants', name: 'Variants', element: VariantPannel },
+  { path: '/product-variants/:productId', name: 'Variants', element: VariantPannel },
   { path: '/add-product', name: 'Products', element: ProductDetails },
+  { path: '/product-variants/:productId/add', name: 'Variants', element: ProductVariantDetails },
+  {
+    path: '/product-variants/:productId/edit/:variantId',
+    name: 'Variants',
+    element: ProductVariantDetails,
+  },
   { path: '/update-product/:id', name: 'Products', element: ProductDetails },
   { path: '/orders', name: 'Orders', element: OrderPanel },
   { path: '/control-panel/add-admins', name: 'Admins', element: AdminRegister },

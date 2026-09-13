@@ -136,6 +136,12 @@ const _nav = [
     icon: <CIcon icon={cilBlur} customClassName="nav-icon" />,
   },
   {
+    component: CNavItem,
+    name: 'Variants',
+    to: '/admin/product-variants',
+    icon: <CIcon icon={cilMedicalCross} customClassName="nav-icon" />,
+  },
+  {
     component: CNavTitle,
     name: 'Order Panel',
   },
