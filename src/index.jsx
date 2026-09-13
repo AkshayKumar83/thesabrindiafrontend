@@ -6,9 +6,12 @@ import 'core-js'
 import './fontAwesome'
 import App from './App'
 import store from './store'
+import { CartProvider } from './context/CartContext'
 
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>
-    <App />
+     <CartProvider>
+      <App />
+     </CartProvider>
   </Provider>,
 )

@@ -1,21 +1,423 @@
-import { ArrowRight, Heart, Search, ShoppingBag, Sparkles } from 'lucide-react'
+import {
+  CBadge,
+  CButton,
+  CCard,
+  CCardBody,
+  CCardImage,
+  CCol,
+  CContainer,
+  CHeader,
+  CHeaderBrand,
+  CHeaderNav,
+  CImage,
+  CNavItem,
+  CNavLink,
+  CRow,
+} from '@coreui/react'
 
-const products = [
-  { name: 'Gulnaar Silk Saree', price: '₹8,900', detail: 'Handwoven tussar silk', image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=900&q=85', tag: 'New arrival' },
-  { name: 'Neelambari Cotton', price: '₹3,600', detail: 'Soft kala cotton', image: 'https://images.unsplash.com/photo-1583391733956-6c78276477e2?auto=format&fit=crop&w=900&q=85', tag: 'Everyday edit' },
-  { name: 'Mogra Organza', price: '₹6,200', detail: 'Lightweight silk organza', image: 'https://images.unsplash.com/photo-1610189012906-7c6a6e2d5b83?auto=format&fit=crop&w=900&q=85', tag: 'Bestseller' },
-]
+import {
+  ArrowRight,
+  Heart,
+  Search,
+  ShoppingBag,
+  Sparkles,
+} from 'lucide-react'
+import ProductList from '../../components/product/ProductList';
+
+// import CartButton from "./components/cart/CartButton";
+import ResponsiveCart from "../../components/cart/ResponsiveCart.jsx";
+import { useState } from 'react';
 
 function LandingPage({ onNavigate }) {
-  return <>
-    <header className="store-header"><button className="store-logo" onClick={() => onNavigate('home')}><span>S</span> THE SABR INDIA</button><nav><button className="active" onClick={() => onNavigate('home')}>Home</button><button onClick={() => onNavigate('shop')}>Shop</button><button onClick={() => onNavigate('contact')}>Contact</button></nav><div className="header-actions"><button aria-label="Search"><Search size={19} /></button><button aria-label="Shopping bag"><ShoppingBag size={19} /></button><button className="account-link" onClick={() => onNavigate('login')}>Account</button></div></header>
-    <main className="storefront">
-      <section className="hero-section"><div className="hero-copy"><p className="section-kicker">THE FESTIVE EDIT · 2026</p><h1>Sarees with a<br /><em>story to tell.</em></h1><p>Beautifully woven drapes for the moments you will remember, chosen with patience and made to be lived in.</p><button className="dark-button" onClick={() => onNavigate('shop')}>Explore the collection <ArrowRight size={16} /></button></div><div className="hero-image"><img src="https://images.unsplash.com/photo-1610030469668-8e9f641aaf4b?auto=format&fit=crop&w=1300&q=88" alt="Woman wearing a pink saree" /><div className="hero-note"><Sparkles size={16} /><span>Made for your<br /><strong>special moments</strong></span></div></div></section>
-      <section className="promise-strip"><div><span>01</span><strong>Thoughtfully sourced</strong><p>Every weave has a maker and a story.</p></div><div><span>02</span><strong>Easy, considered shopping</strong><p>Personal help whenever you need it.</p></div><div><span>03</span><strong>Made to last</strong><p>Pieces to pass from one celebration to the next.</p></div></section>
-      <section className="product-section" id="shop"><div className="section-header"><div><p className="section-kicker">THE COLLECTION</p><h2>Find your <em>forever drape.</em></h2></div><button className="text-arrow" onClick={() => onNavigate('shop')}>View all sarees <ArrowRight size={15} /></button></div><div className="product-grid">{products.map((product) => <article className="product-card" key={product.name}><div className="product-image"><img src={product.image} alt={product.name} /><span>{product.tag}</span><button aria-label={`Save ${product.name}`}><Heart size={17} /></button></div><div className="product-info"><div><h3>{product.name}</h3><p>{product.detail}</p></div><strong>{product.price}</strong></div></article>)}</div></section>
-      <section className="story-section"><div className="story-image"><img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1000&q=85" alt="Detail of a handwoven saree" /></div><div className="story-copy"><p className="section-kicker">OUR POINT OF VIEW</p><h2>More than a<br /><em>piece of cloth.</em></h2><p>We believe getting dressed can be a small act of joy. Our sarees are selected for their feel, their fall, and the hands behind them, so they become part of your story.</p><button className="text-arrow">Read our story <ArrowRight size={15} /></button></div></section>
-    </main>
-  </>
+
+  const [cartVisible, setCartVisible] = useState(false);
+
+  return (
+    <>
+      {/* =====================================================
+          HEADER
+      ====================================================== */}
+
+      <CHeader className="store-header border-bottom">
+        <CContainer fluid="xxl">
+          <CRow className="w-100 align-items-center">
+
+            {/* Logo */}
+            <CCol xs={6} md={3}>
+              <CHeaderBrand
+                as="button"
+                className="store-logo border-0 bg-transparent p-0"
+                onClick={() => onNavigate('home')}
+              >
+                <span>S</span> THE SABR INDIA
+              </CHeaderBrand>
+            </CCol>
+
+            {/* Navigation */}
+            <CCol
+              md={6}
+              className="d-none d-md-flex justify-content-center"
+            >
+              <CHeaderNav>
+
+                <CNavItem>
+                  <CNavLink
+                    href="#"
+                    active
+                    onClick={(e) => {
+                      e.preventDefault()
+                      onNavigate('home')
+                    }}
+                  >
+                    Home
+                  </CNavLink>
+                </CNavItem>
+
+                <CNavItem>
+                  <CNavLink
+                    href="#shop"
+                    onClick={(e) => {
+                      e.preventDefault()
+                      onNavigate('shop')
+                    }}
+                  >
+                    Shop
+                  </CNavLink>
+                </CNavItem>
+
+                <CNavItem>
+                  <CNavLink
+                    href="#"
+                    onClick={(e) => {
+                      e.preventDefault()
+                      onNavigate('contact')
+                    }}
+                  >
+                    Contact
+                  </CNavLink>
+                </CNavItem>
+                <CNavItem>
+                  <CNavLink
+                  className='cursor-pointer'
+                    onClick={() =>{ console.log('View cart click'), setCartVisible(true)}}
+                  >
+                    Cart
+                  </CNavLink>
+                </CNavItem>
+
+              </CHeaderNav>
+            </CCol>
+
+            {/* Header actions */}
+            <CCol
+              xs={6}
+              md={3}
+              className="d-flex justify-content-end align-items-center gap-1"
+            >
+
+              <CButton
+                color="light"
+                variant="ghost"
+                className="header-icon-button"
+                aria-label="Search"
+              >
+                <Search size={19} />
+              </CButton>
+
+              <CButton
+                color="light"
+                variant="ghost"
+                className="header-icon-button"
+                aria-label="Shopping bag"
+              >
+                <ShoppingBag size={19} />
+              </CButton>
+
+              <CButton
+                color="light"
+                variant="ghost"
+                className="account-link d-none d-sm-inline-flex"
+                onClick={() => onNavigate('login')}
+              >
+                Account
+              </CButton>
+
+            </CCol>
+
+          </CRow>
+        </CContainer>
+      </CHeader>
+
+
+      {/* =====================================================
+          MAIN
+      ====================================================== */}
+
+      <main className="storefront">
+
+
+        {/* =====================================================
+            HERO SECTION
+        ====================================================== */}
+
+        <section className="hero-section">
+          <CContainer fluid="xxl">
+
+            <CRow className="align-items-center g-4 g-lg-5">
+
+              {/* Hero text */}
+              <CCol xs={12} lg={5}>
+                <div className="hero-copy">
+
+                  <p className="section-kicker">
+                    THE FESTIVE EDIT · 2026
+                  </p>
+
+                  <h1>
+                    Sarees with a
+                    <br />
+                    <em>story to tell.</em>
+                  </h1>
+
+                  <p>
+                    Beautifully woven drapes for the moments you will
+                    remember, chosen with patience and made to be lived in.
+                  </p>
+
+                  <CButton
+                    color="dark"
+                    className="dark-button d-inline-flex align-items-center gap-2"
+                    onClick={() => onNavigate('shop')}
+                  >
+                    Explore the collection
+                    <ArrowRight size={16} />
+                  </CButton>
+
+                </div>
+              </CCol>
+
+
+              {/* Hero image */}
+              <CCol xs={12} lg={7}>
+                <CCard className="hero-image border-0">
+
+                  <CCardImage
+                    src="https://images.unsplash.com/photo-1610030469668-8e9f641aaf4b?auto=format&fit=crop&w=1300&q=88"
+                    alt="Woman wearing a pink saree"
+                  />
+
+                  <div className="hero-note">
+
+                    <Sparkles size={16} />
+
+                    <span>
+                      Made for your
+                      <br />
+                      <strong>special moments</strong>
+                    </span>
+
+                  </div>
+
+                </CCard>
+              </CCol>
+
+            </CRow>
+
+          </CContainer>
+        </section>
+
+
+        {/* =====================================================
+            PROMISE STRIP
+        ====================================================== */}
+
+        <section className="promise-strip">
+
+          <CContainer fluid="xxl">
+
+            <CRow className="g-4">
+
+              <CCol xs={12} md={4}>
+                <div>
+                  <span>01</span>
+
+                  <strong>
+                    Thoughtfully sourced
+                  </strong>
+
+                  <p>
+                    Every weave has a maker and a story.
+                  </p>
+                </div>
+              </CCol>
+
+
+              <CCol xs={12} md={4}>
+                <div>
+                  <span>02</span>
+
+                  <strong>
+                    Easy, considered shopping
+                  </strong>
+
+                  <p>
+                    Personal help whenever you need it.
+                  </p>
+                </div>
+              </CCol>
+
+
+              <CCol xs={12} md={4}>
+                <div>
+                  <span>03</span>
+
+                  <strong>
+                    Made to last
+                  </strong>
+
+                  <p>
+                    Pieces to pass from one celebration to the next.
+                  </p>
+                </div>
+              </CCol>
+
+            </CRow>
+
+          </CContainer>
+
+        </section>
+
+
+        {/* =====================================================
+            PRODUCT SECTION
+        ====================================================== */}
+
+        <section
+          className="product-section"
+          id="shop"
+        >
+
+          <CContainer fluid="xxl">
+
+            {/* Section heading */}
+            <CRow className="section-header align-items-end">
+
+              <CCol xs={12} md={8}>
+
+                <div>
+
+                  <p className="section-kicker">
+                    THE COLLECTION
+                  </p>
+
+                  <h2>
+                    Find your <em>forever drape.</em>
+                  </h2>
+
+                </div>
+
+              </CCol>
+
+
+              <CCol
+                xs={12}
+                md={4}
+                className="d-flex justify-content-md-end mt-3 mt-md-0"
+              >
+
+                <CButton
+                  color="light"
+                  variant="ghost"
+                  className="text-arrow d-inline-flex align-items-center gap-2"
+                  onClick={() => onNavigate('shop')}
+                >
+                  View all sarees
+                  <ArrowRight size={15} />
+                </CButton>
+
+              </CCol>
+
+            </CRow>
+
+            {/* Product List component */}
+            <ProductList/>
+            {/* ++++++++++++++ */}
+          </CContainer>
+
+        </section>
+
+
+        {/* =====================================================
+            STORY SECTION
+        ====================================================== */}
+
+        <section className="story-section">
+
+          <CContainer fluid="xxl">
+
+            <CRow className="align-items-center g-5">
+
+              {/* Story image */}
+              <CCol xs={12} lg={6}>
+
+                <CCard className="story-image border-0">
+
+                  <CImage
+                    fluid
+                    src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1000&q=85"
+                    alt="Detail of a handwoven saree"
+                  />
+
+                </CCard>
+
+              </CCol>
+
+
+              {/* Story content */}
+              <CCol xs={12} lg={6}>
+
+                <div className="story-copy">
+
+                  <p className="section-kicker">
+                    OUR POINT OF VIEW
+                  </p>
+
+                  <h2>
+                    More than a
+                    <br />
+                    <em>piece of cloth.</em>
+                  </h2>
+
+                  <p>
+                    We believe getting dressed can be a small act of joy.
+                    Our sarees are selected for their feel, their fall,
+                    and the hands behind them, so they become part of
+                    your story.
+                  </p>
+
+                  <CButton
+                    color="light"
+                    variant="ghost"
+                    className="text-arrow d-inline-flex align-items-center gap-2 px-0"
+                  >
+                    Read our story
+                    <ArrowRight size={15} />
+                  </CButton>
+
+                </div>
+
+              </CCol>
+
+            </CRow>
+
+          </CContainer>
+
+        </section>
+      </main>
+      {/* Responsive Cart */}
+        <ResponsiveCart visible={cartVisible} onClose={() => setCartVisible(false)}/>  
+    </>
+  )
 }
 
 export default LandingPage
