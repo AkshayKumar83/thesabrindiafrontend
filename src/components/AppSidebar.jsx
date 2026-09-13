@@ -19,11 +19,13 @@
  * )
  */
 
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import {
+  CButton,
   CCloseButton,
+  CFooter,
   CSidebar,
   CSidebarBrand,
   CSidebarFooter,
@@ -34,11 +36,17 @@ import CIcon from '@coreui/icons-react'
 
 import { AppSidebarNav } from './AppSidebarNav'
 
-import { logo } from 'src/assets/brand/logo'
-import { sygnet } from 'src/assets/brand/sygnet'
+// import fullLogo from 'src/assets/brand/sabrLogo.jpeg'
+// import smallLogo from 'src/assets/brand/sabrLogo.jpeg'
+
+import fullLogo from 'src/assets/brand/logoSabr.jpeg'
+import smallLogo from 'src/assets/brand/logoSabr.jpeg'
 
 // sidebar nav config
 import navigation from '../_nav'
+import { cilLockLocked } from '@coreui/icons'
+import { useNavigate } from 'react-router-dom'
+import ConfirmationModal from '../admin/common/ConfirmationModal'
 
 /**
  * AppSidebar functional component
@@ -56,6 +64,19 @@ const AppSidebar = () => {
   const dispatch = useDispatch()
   const unfoldable = useSelector((state) => state.sidebarUnfoldable)
   const sidebarShow = useSelector((state) => state.sidebarShow)
+  const [logOutVisible, setLogOutVisible] = useState(false)
+
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    // Remove JWT token
+    localStorage.removeItem('token')
+
+    // Navigate to home
+    navigate('/')
+  }
+
+
 
   return (
     <CSidebar
@@ -69,10 +90,23 @@ const AppSidebar = () => {
       }}
     >
       <CSidebarHeader className="border-bottom">
-        <CSidebarBrand to="/">
-          <CIcon customClassName="sidebar-brand-full" icon={logo} height={32} />
-          <CIcon customClassName="sidebar-brand-narrow" icon={sygnet} height={32} />
-        </CSidebarBrand>
+       <CSidebarBrand to="/">
+  <img
+    src={fullLogo}
+    alt="The Sabr India"
+    className=""
+    height={30}
+    width={100}
+   
+  />
+
+  <img
+    src={smallLogo}
+    alt="The Sabr India"
+    className="sidebar-brand-narrow"
+    height={30}
+  />
+</CSidebarBrand>
         <CCloseButton
           className="d-lg-none"
           dark
@@ -80,11 +114,25 @@ const AppSidebar = () => {
         />
       </CSidebarHeader>
       <AppSidebarNav items={navigation} />
-      <CSidebarFooter className="border-top d-none d-lg-flex">
-        <CSidebarToggler
-          onClick={() => dispatch({ type: 'set', sidebarUnfoldable: !unfoldable })}
-        />
-      </CSidebarFooter>
+      <CFooter className="px-4">
+  <CButton
+    color="transparent"
+    className="p-0"
+    onClick={() => setLogOutVisible(true)}
+  >
+    <CIcon icon={cilLockLocked} className="me-2" />
+    LogOut
+  </CButton>
+</CFooter>
+ <ConfirmationModal
+        visible={logOutVisible}
+        title="LogOut Confirmation"
+        message={`Are you sure you want to LogOut`}
+        confirmLabel="LogOut"
+        // loading={deletingId !== null}
+        onClose={() => setLogOutVisible(false)}
+        onConfirm={() => handleLogout()}
+      />
     </CSidebar>
   )
 }
