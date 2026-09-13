@@ -42,6 +42,7 @@ import {
   CNavItem,
   CSearchButton,
   useColorModes,
+  CHeaderBrand,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import {
@@ -56,6 +57,7 @@ import {
 
 import { AppBreadcrumb } from './index'
 import { AppHeaderDropdown } from './header/index'
+import { cilCalendar } from '@coreui/icons'
 
 /**
  * AppHeader functional component
@@ -72,6 +74,7 @@ const AppHeader = () => {
   const headerRef = useRef()
   const { colorMode, setColorMode } = useColorModes('coreui-free-react-admin-template-theme')
   const [searchVisible, setSearchVisible] = useState(false)
+  const [currentDateTime, setCurrentDateTime] = React.useState(new Date())
 
   const dispatch = useDispatch()
   const sidebarShow = useSelector((state) => state.sidebarShow)
@@ -86,21 +89,41 @@ const AppHeader = () => {
     return () => document.removeEventListener('scroll', handleScroll)
   }, [])
 
+
+React.useEffect(() => {
+  const timer = setInterval(() => {
+    setCurrentDateTime(new Date())
+  }, 1000)
+
+  return () => clearInterval(timer)
+}, [])
+
   return (
     <CHeader position="sticky" className="mb-4 p-0" ref={headerRef}>
-      <CContainer className="border-bottom px-4" fluid>
-        <CHeaderToggler
-          onClick={() => dispatch({ type: 'set', sidebarShow: !sidebarShow })}
-          style={{ marginInlineStart: '-14px' }}
-        >
-          <CIcon icon={cilMenu} size="lg" />
-        </CHeaderToggler>
-        <CSearchButton
+     <CContainer
+  fluid
+  className="border-bottom px-4 position-relative"
+>
+  <CHeaderToggler
+    onClick={() =>
+      dispatch({
+        type: 'set',
+        sidebarShow: !sidebarShow,
+      })
+    }
+  >
+    <CIcon icon={cilMenu} size="lg" />
+  </CHeaderToggler>
+
+<CHeaderBrand className="flex-grow-1 text-center fw-bold fst-italic">
+  THE SABR INDIA
+</CHeaderBrand>
+        {/* <CSearchButton
           onTrigger={() => setSearchVisible(true)}
           aria-label="Open search dialog"
           aria-controls="app-header-search-modal"
-        />
-        <CModal
+        /> */}
+        {/* <CModal
           id="app-header-search-modal"
           visible={searchVisible}
           onClose={() => setSearchVisible(false)}
@@ -146,23 +169,31 @@ const AppHeader = () => {
               </CListGroupItem>
             </CListGroup>
           </CModalBody>
-        </CModal>
+        </CModal> */}
         <CHeaderNav className="ms-auto">
-          <CNavItem>
-            <CNavLink href="#">
-              <CIcon icon={cilBell} size="lg" />
-            </CNavLink>
-          </CNavItem>
-          <CNavItem>
-            <CNavLink href="#">
-              <CIcon icon={cilList} size="lg" />
-            </CNavLink>
-          </CNavItem>
-          <CNavItem>
-            <CNavLink href="#">
-              <CIcon icon={cilEnvelopeOpen} size="lg" />
-            </CNavLink>
-          </CNavItem>
+      
+         <CNavItem>
+  <CNavLink className="d-flex align-items-center gap-2">
+    <CIcon icon={cilCalendar} size="lg" />
+
+    <span>
+      {currentDateTime.toLocaleDateString('en-IN', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+      })}
+    </span>
+
+    <span>
+      {currentDateTime.toLocaleTimeString('en-IN', {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true,
+      })}
+    </span>
+  </CNavLink>
+</CNavItem> 
         </CHeaderNav>
         <CHeaderNav>
           <li className="nav-item py-1">

@@ -127,7 +127,7 @@ const VariantPannel = () => {
             Add Variant
           </CButton>
         </CCardHeader>
-        <CCardBody>
+        <CCardBody className="p-0 ">
           {loading && <CSpinner color="primary" />}
           {error && <CAlert color="danger">{error}</CAlert>}
           <ReusableTable

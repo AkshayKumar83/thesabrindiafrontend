@@ -53,7 +53,7 @@ const AdminLogin = () => {
       }
 
       localStorage.setItem('token', token)
-      navigate(location.state?.from?.pathname || '/admin', { replace: true })
+      navigate(location.state?.from?.pathname || '/admin/dashboard', { replace: true })
     } catch (requestError) {
       setError(
         requestError.response?.data?.message ||
@@ -98,7 +98,7 @@ const AdminLogin = () => {
                     <CCol xs={12}>
                       <div className="d-flex justify-content-between">
                         <CFormLabel htmlFor="password">Password</CFormLabel>
-                        <Link to="/authentication/reset-password">I forgot password</Link>
+                        {/* <Link to="/authentication/reset-password">I forgot password</Link> */}
                       </div>
                       <CInputGroup>
                         <CFormInput
@@ -137,31 +137,10 @@ const AdminLogin = () => {
                       </CButton>
                     </CCol>
                   </CForm>
-                  <div className="position-relative">
-                    <hr />
-                    <div className="position-absolute top-50 start-50 translate-middle bg-body px-2 text-body-tertiary text-uppercase small">
-                      or
-                    </div>
-                  </div>
-                  <CRow>
-                    <CCol>
-                      <CButton type="button" variant="outline" className="w-100">
-                        <CIcon icon={google} className="me-1" />
-                        Login with Google
-                      </CButton>
-                    </CCol>
-                    <CCol>
-                      <CButton type="button" variant="outline" className="w-100">
-                        <CIcon icon={apple} className="me-1" />
-                        Login with Apple
-                      </CButton>
-                    </CCol>
-                  </CRow>
+                  
                 </CCardBody>
               </CCard>
-              <div className="text-center text-body-secondary">
-                Need an account? <Link to="/authentication/register">Sign up</Link>
-              </div>
+              
             </div>
           </CCol>
         </CRow>
