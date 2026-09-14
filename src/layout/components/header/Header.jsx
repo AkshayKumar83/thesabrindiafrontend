@@ -28,13 +28,14 @@ import {
   ShoppingCart,
 } from 'lucide-react'
 
-const Header = ({ onNavigate, setCartVisible, cartCount = 0, activePage = 'home' }) => {
+const Header = ({ onNavigate, setCartVisible, cartCount = 0, activePage = 'home', handleNavigate }) => {
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
 
   const navItems = [
     { key: 'home', label: 'Home' },
     { key: 'shop', label: 'Shop' },
     { key: 'contact', label: 'Contact' },
+    { key: 'product-details/123', label: 'PD' },
   ]
 
  return (
@@ -97,10 +98,10 @@ const Header = ({ onNavigate, setCartVisible, cartCount = 0, activePage = 'home'
           {/* Logo */}
           <CCol xs={6} md={3}>
           <CHeaderBrand
-  as="button"
-  className="store-logo border-0 bg-transparent p-0"
-  onClick={() => onNavigate('home')}
->
+            as="button"
+            className="store-logo border-0 bg-transparent p-0"
+            onClick={() => handleNavigate('/')}
+          >
   <img
     src={logoSabr}
     alt="The Sabr India"
@@ -118,12 +119,8 @@ const Header = ({ onNavigate, setCartVisible, cartCount = 0, activePage = 'home'
               {navItems.map((item) => (
                 <CNavItem key={item.key}>
                   <CNavLink
-                    href="#"
                     active={activePage === item.key}
-                    onClick={(e) => {
-                      e.preventDefault()
-                      onNavigate(item.key)
-                    }}
+                    onClick={()=>handleNavigate(`/${item.key==='home' ? '' : item.key}`)}
                   >
                     {item.label}
                   </CNavLink>
@@ -172,7 +169,7 @@ const Header = ({ onNavigate, setCartVisible, cartCount = 0, activePage = 'home'
               variant="ghost"
               className="header-icon-button d-none d-sm-inline-flex"
               aria-label="Account"
-              onClick={() => onNavigate('login')}
+              onClick={() => handleNavigate('/auth')}
             >
               <User size={29} />
             </CButton>
@@ -185,13 +182,8 @@ const Header = ({ onNavigate, setCartVisible, cartCount = 0, activePage = 'home'
             {navItems.map((item) => (
               <CNavItem key={item.key} className="w-100">
                 <CNavLink
-                  href="#"
                   active={activePage === item.key}
-                  onClick={(e) => {
-                    e.preventDefault()
-                    onNavigate(item.key)
-                    setMobileNavOpen(false)
-                  }}
+                  onClick={()=>handleNavigate(`/${item.key}`)}
                 >
                   {item.label}
                 </CNavLink>
