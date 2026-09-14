@@ -1,0 +1,394 @@
+/* =====================================================
+   THE SABR INDIA FOOTER
+   ===================================================== */
+
+.sabr-footer {
+  width: 100%;
+  background: #214438;
+  color: #ffffff;
+  border: 0;
+}
+
+
+/* =====================================================
+   FOOTER MAIN
+   ===================================================== */
+
+.sabr-footer-main {
+  width: 100%;
+  background: #214438;
+
+  padding-top: 55px;
+  padding-bottom: 60px;
+}
+
+
+/*
+  Contact section jaisa left/right alignment.
+
+  1366px screen par approximately:
+  1366 - 1148 = 218
+  218 / 2 = 109px
+
+  Isliye footer ka content x=109 se start hoga.
+*/
+
+.sabr-footer-container {
+  width: 100%;
+  max-width: 1148px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+/* =====================================================
+   ROW
+   ===================================================== */
+
+.sabr-footer-row {
+  width: 100%;
+  align-items: flex-start;
+
+  --cui-gutter-x: 1.5rem;
+}
+
+
+/* Important:
+   Sab columns same top position se start honge.
+*/
+
+.sabr-footer-col {
+  display: flex;
+  align-items: flex-start;
+}
+
+
+/* =====================================================
+   BRAND
+   ===================================================== */
+
+.sabr-footer-brand {
+  width: 100%;
+  max-width: 300px;
+}
+
+
+/*
+  Logo ko heading ke same top level par rakha hai.
+*/
+
+.sabr-footer-logo-link {
+  display: block;
+  width: fit-content;
+
+  margin-top: 0;
+  margin-bottom: 15px;
+
+  text-decoration: none;
+}
+
+
+/*
+  Agar PNG ke andar thoda transparent space hai
+  to visual logo ko thoda upar shift kar raha hai.
+*/
+
+.sabr-footer-logo {
+  width: 145px;
+  height: auto;
+
+  display: block;
+
+  object-fit: contain;
+
+  mix-blend-mode: multiply;
+
+  transform: translateY(-8px);
+}
+
+
+/* =====================================================
+   BRAND TITLE
+   ===================================================== */
+
+.sabr-footer-title {
+  margin-top: 0;
+  margin-bottom: 10px;
+
+  font-family: Georgia, serif;
+
+  font-size: 1.35rem;
+  font-weight: 600;
+
+  color: #ffffff;
+}
+
+
+/* =====================================================
+   DESCRIPTION
+   ===================================================== */
+
+.sabr-footer-description {
+  margin: 0;
+
+  max-width: 300px;
+
+  color: rgba(255, 255, 255, 0.65);
+
+  font-size: 0.88rem;
+  line-height: 1.7;
+}
+
+
+/* =====================================================
+   SOCIAL
+   ===================================================== */
+
+.sabr-footer-social {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  margin-top: 25px;
+}
+
+
+.sabr-social-btn {
+  width: 38px;
+  height: 38px;
+
+  padding: 0;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(255, 255, 255, 0.35);
+
+  border-radius: 50%;
+
+  background: transparent;
+
+  color: #ffffff;
+}
+
+
+.sabr-social-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+
+  color: #ffffff;
+
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+
+.sabr-social-text {
+  margin-top: 10px;
+  margin-bottom: 0;
+
+  color: rgba(255, 255, 255, 0.65);
+
+  font-size: 0.8rem;
+}
+
+
+/* =====================================================
+   FOOTER SECTIONS
+   ===================================================== */
+
+.sabr-footer-section {
+  width: 100%;
+}
+
+
+/* Heading */
+
+.sabr-footer-heading {
+  margin-top: 0;
+  margin-bottom: 20px;
+
+  color: #d6b98c;
+
+  font-size: 0.75rem;
+
+  font-weight: 700;
+
+  letter-spacing: 0.14em;
+
+  text-transform: uppercase;
+}
+
+
+/* =====================================================
+   LINKS
+   ===================================================== */
+
+.sabr-footer-link {
+  display: block;
+
+  width: fit-content;
+
+  margin: 0 0 10px;
+
+  padding: 0;
+
+  color: rgba(255, 255, 255, 0.65) !important;
+
+  font-size: 0.85rem;
+
+  text-decoration: none;
+
+  text-align: left;
+}
+
+
+.sabr-footer-link:hover {
+  color: #ffffff !important;
+}
+
+
+/* =====================================================
+   CONTACT
+   ===================================================== */
+
+.sabr-contact-item {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  margin-bottom: 14px;
+
+  color: rgba(255, 255, 255, 0.65);
+
+  font-size: 0.85rem;
+}
+
+
+.sabr-contact-item svg {
+  flex-shrink: 0;
+}
+
+
+/* =====================================================
+   BOTTOM
+   ===================================================== */
+
+.sabr-footer-bottom {
+  width: 100%;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+
+  background: #214438;
+}
+
+
+.sabr-footer-bottom-content {
+  min-height: 60px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 15px;
+
+  color: rgba(255, 255, 255, 0.45);
+
+  font-size: 0.75rem;
+}
+
+
+/* =====================================================
+   TABLET
+   ===================================================== */
+
+@media (max-width: 1199.98px) {
+
+  .sabr-footer-container {
+    max-width: 960px;
+  }
+
+}
+
+
+/* =====================================================
+   MOBILE
+   ===================================================== */
+
+@media (max-width: 767.98px) {
+
+  .sabr-footer-main {
+    padding-top: 45px;
+    padding-bottom: 35px;
+  }
+
+  .sabr-footer-container {
+    width: calc(100% - 40px);
+  }
+
+  .sabr-footer-col {
+    margin-bottom: 35px;
+  }
+
+  .sabr-footer-brand {
+    max-width: 100%;
+  }
+
+  .sabr-footer-logo {
+    width: 135px;
+  }
+
+  .sabr-footer-bottom-content {
+    min-height: 70px;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    justify-content: center;
+  }
+
+}
+
+/* ================= FOOTER ILLUSTRATION ================= */
+
+/* ================= FOOTER ILLUSTRATION ================= */
+
+.sabr-footer-illustration {
+  width: 100%;
+  overflow: hidden;
+  background: #214438;
+  line-height: 0;
+}
+
+.sabr-footer-illustration img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: none;
+
+  margin-top: -140px;
+}
+
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 767.98px) {
+
+  .sabr-footer-illustration {
+    width: 100%;
+  }
+
+  .sabr-footer-illustration img {
+    width: 180%;
+    max-width: none;
+
+    margin-top: -80px;
+    margin-left: -22%;
+  }
+
+}
