@@ -4,7 +4,7 @@ import Register from '../components/Register.jsx'
 import ForgotPassword from '../components/ForgotPassword.jsx'
 import LandingPage from '../components/landingPage.jsx'
 import Contact from '../components/Contact.jsx'
-import Footer from '../components/Footer.jsx'
+import Footer from '../components/footer/Footer.jsx'
 import './Home.css'
 
 function Home() {

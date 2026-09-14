@@ -356,7 +356,6 @@
 
 /* ================= FOOTER ILLUSTRATION ================= */
 
-/* ================= FOOTER ILLUSTRATION ================= */
 
 .sabr-footer-illustration {
   width: 100%;
@@ -370,8 +369,36 @@
   width: 100%;
   height: auto;
   max-width: none;
-
   margin-top: -140px;
+}
+
+
+/* ================= POLICY LINKS ================= */
+
+.sabr-policy-link {
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.sabr-policy-link:hover {
+  color: #ffffff !important;
+}
+
+
+/* ================= POLICY MODAL ================= */
+
+.sabr-policy-modal-body {
+  color: #4a4a4a;
+  font-size: 0.9rem;
+  line-height: 1.8;
+}
+
+.sabr-policy-modal-body p {
+  margin-bottom: 16px;
+}
+
+.sabr-policy-modal-body p:last-child {
+  margin-bottom: 0;
 }
 
 
@@ -379,14 +406,9 @@
 
 @media (max-width: 767.98px) {
 
-  .sabr-footer-illustration {
-    width: 100%;
-  }
-
   .sabr-footer-illustration img {
     width: 180%;
     max-width: none;
-
     margin-top: -80px;
     margin-left: -22%;
   }

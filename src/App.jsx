@@ -49,6 +49,7 @@ import Home from './layout/home/Home'
 import UserLogin from './layout/user/UserLogin'
 import UserRegister from './layout/user/UserRegister'
 import AdminLogin from './admin/auth/AdminLogin'
+import PolicyPage from './layout/pages/policies/PolicyPage'
 
 /**
  * Main Application Component
@@ -144,6 +145,10 @@ const App = () => {
             name="Password Changed Page"
             element={<PasswordChanged />}
           />
+          <Route
+  path="/policies/:policy"
+  element={<PolicyPage />}
+/>
           <Route exact path="/error-pages/404" name="Page 404" element={<Page404 />} />
           <Route exact path="/error-pages/500" name="Page 500" element={<Page500 />} />
         </Routes>
