@@ -110,6 +110,8 @@ const App = () => {
             <Route index element={<LandingPage />} />
             <Route exact path="contact" name="Contact Page" element={<Contact />} />
             <Route exact path="product-details/:id" name="Product Details Page" element={<ProductDetails />} />
+
+            <Route path="/policies/:policy" element={<PolicyPage />} />
           </Route>
           <Route exact path="/login" name="Login Page" element={<UserLogin />} />
           <Route exact path="/signup" name="Sign Up Page" element={<UserRegister />} />
@@ -154,10 +156,6 @@ const App = () => {
             name="Password Changed Page"
             element={<PasswordChanged />}
           />
-          <Route
-  path="/policies/:policy"
-  element={<PolicyPage />}
-/>
           <Route exact path="/error-pages/404" name="Page 404" element={<Page404 />} />
           <Route exact path="/error-pages/500" name="Page 500" element={<Page500 />} />
         </Routes>
