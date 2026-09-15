@@ -52,38 +52,22 @@ function PolicyPage() {
 
     return (
       <>
-
-        <Header />
-
         <main className="sabr-policy-page">
-
           {/* WATERMARK */}
-
           <div className="sabr-policy-watermark">
             THE SABR INDIA
           </div>
-
-
           <CContainer>
-
             <div className="sabr-policy-not-found">
-
               <h1>
                 Policy Not Found
               </h1>
-
               <p>
                 The policy you are looking for does not exist.
               </p>
-
             </div>
-
           </CContainer>
-
         </main>
-
-        <Footer />
-
       </>
     )
   }
@@ -95,96 +79,54 @@ function PolicyPage() {
 
   return (
     <>
-
-      {/* =====================================================
-          HEADER
-          ===================================================== */}
-
-      <Header />
-
-
       {/* =====================================================
           POLICY CONTENT
           ===================================================== */}
-
       <main className="sabr-policy-page">
-
-
         {/* =================================================
             WATERMARK
             ================================================= */}
-
         {/* <div className="sabr-policy-watermark">
           THE SABR INDIA
         </div> */}
-
-
         <CContainer>
-
           <div className="sabr-policy-wrapper">
-
-
             {/* =================================================
                 POLICY HEADER
                 ================================================= */}
-
             <div
               ref={policyHeaderRef}
               className="sabr-policy-header"
             >
-
               <h1 className="sabr-policy-title">
                 {currentPolicy.title}
               </h1>
-
               <p className="sabr-policy-updated">
                 Last updated: {currentPolicy.lastUpdated}
               </p>
-
             </div>
-
 
             {/* =================================================
                 POLICY CONTENT
                 ================================================= */}
-
             <div className="sabr-policy-content">
-
               {currentPolicy.sections.map((section, index) => (
-
                 <section
                   key={index}
                   className="sabr-policy-section"
                 >
-
                   <h2>
                     {section.heading}
                   </h2>
-
                   <p>
                     {section.content}
                   </p>
-
                 </section>
-
               ))}
-
             </div>
-
-
           </div>
-
         </CContainer>
-
       </main>
-
-
-      {/* =====================================================
-          FOOTER
-          ===================================================== */}
-
-      <Footer />
-
     </>
   )
 }

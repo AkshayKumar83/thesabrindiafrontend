@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 
 
-import Footer from '../components/Footer.jsx'
+import Footer from '../components/footer/Footer.jsx'
 import Header from '../components/header/Header.jsx'
 
 import './Home.css'
