@@ -1,0 +1,217 @@
+/* =====================================================
+   POLICY PAGE
+   ===================================================== */
+
+.sabr-policy-page {
+  min-height: 70vh;
+  padding-top: 70px;
+  padding-bottom: 90px;
+  background: #ffffff;
+  color: #2f2f2f;
+}
+
+
+/* =====================================================
+   HEADER
+   ===================================================== */
+
+.sabr-policy-header {
+  max-width: 850px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+
+.sabr-policy-back {
+  padding: 0;
+  margin-bottom: 25px;
+
+  color: #214438 !important;
+
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+
+
+.sabr-policy-back:hover {
+  color: #172f27 !important;
+}
+
+
+.sabr-policy-title {
+  margin: 0;
+
+  font-family: Georgia, serif;
+
+  font-size: 2.5rem;
+  font-weight: 600;
+
+  color: #214438;
+}
+
+
+.sabr-policy-updated {
+  margin-top: 12px;
+  margin-bottom: 0;
+
+  color: #888888;
+
+  font-size: 0.8rem;
+}
+
+
+/* =====================================================
+   CONTENT
+   ===================================================== */
+
+.sabr-policy-content {
+  max-width: 850px;
+  margin: 55px auto 0;
+}
+
+
+.sabr-policy-section {
+  margin-bottom: 38px;
+}
+
+
+.sabr-policy-section h2 {
+  margin-bottom: 12px;
+
+  font-family: Georgia, serif;
+
+  font-size: 1.25rem;
+  font-weight: 600;
+
+  color: #214438;
+}
+
+
+.sabr-policy-section p {
+  margin: 0;
+
+  color: #555555;
+
+  font-size: 0.95rem;
+  line-height: 1.9;
+}
+
+
+/* =====================================================
+   FOOTER BUTTON
+   ===================================================== */
+
+.sabr-policy-footer {
+  max-width: 850px;
+  margin: 55px auto 0;
+
+  padding-top: 30px;
+
+  border-top: 1px solid #eeeeee;
+}
+
+
+.sabr-policy-home-btn {
+  padding: 10px 22px;
+
+  border: 1px solid #214438;
+
+  background: #214438;
+  color: #ffffff;
+
+  font-size: 0.85rem;
+}
+
+
+.sabr-policy-home-btn:hover {
+  background: #172f27;
+  color: #ffffff;
+}
+
+
+/* =====================================================
+   NOT FOUND
+   ===================================================== */
+
+.sabr-policy-not-found {
+  padding: 100px 20px;
+
+  text-align: center;
+}
+
+
+.sabr-policy-not-found h1 {
+  font-family: Georgia, serif;
+  color: #214438;
+}
+
+
+.sabr-policy-not-found p {
+  color: #777777;
+}
+
+
+/* =====================================================
+   MOBILE
+   ===================================================== */
+
+@media (max-width: 767.98px) {
+
+  .sabr-policy-page {
+    padding-top: 45px;
+    padding-bottom: 60px;
+  }
+
+  .sabr-policy-title {
+    font-size: 2rem;
+  }
+
+  .sabr-policy-content {
+    margin-top: 40px;
+  }
+
+  .sabr-policy-section {
+    margin-bottom: 30px;
+  }
+
+  .sabr-policy-section h2 {
+    font-size: 1.15rem;
+  }
+
+  .sabr-policy-section p {
+    font-size: 0.9rem;
+    line-height: 1.8;
+  }
+
+}
+
+/* .sabr-policy-watermark {
+  position: absolute;
+
+  left: 50%;
+  bottom: 180px;
+
+  transform: translateX(-50%) rotate(-8deg);
+
+  width: 120%;
+
+  text-align: center;
+
+  font-family: Georgia, serif;
+
+  font-size: 6rem;
+  font-weight: 700;
+
+  letter-spacing: 0.2em;
+
+  color: #d44c22;
+
+  opacity: 0.07;
+
+  white-space: nowrap;
+
+  pointer-events: none;
+  user-select: none;
+
+  z-index: 0;
+} */

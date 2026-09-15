@@ -53,6 +53,7 @@ import ProductDetails from './components/product/ProductDetails'
 import LandingPage from './layout/components/landingPage'
 import Contact from './layout/components/Contact';
 import AuthPage from './layout/home/AuthPage'
+import PolicyPage from './layout/pages/policies/PolicyPage'
 
 /**
  * Main Application Component
@@ -153,6 +154,10 @@ const App = () => {
             name="Password Changed Page"
             element={<PasswordChanged />}
           />
+          <Route
+  path="/policies/:policy"
+  element={<PolicyPage />}
+/>
           <Route exact path="/error-pages/404" name="Page 404" element={<Page404 />} />
           <Route exact path="/error-pages/500" name="Page 500" element={<Page500 />} />
         </Routes>
