@@ -49,6 +49,10 @@ import Home from './layout/home/Home'
 import UserLogin from './layout/user/UserLogin'
 import UserRegister from './layout/user/UserRegister'
 import AdminLogin from './admin/auth/AdminLogin'
+import ProductDetails from './components/product/ProductDetails'
+import LandingPage from './layout/components/landingPage'
+import Contact from './layout/components/Contact';
+import AuthPage from './layout/home/AuthPage'
 import PolicyPage from './layout/pages/policies/PolicyPage'
 
 /**
@@ -101,7 +105,12 @@ const App = () => {
         }
       >
         <Routes>
-          <Route exact path="/" name="Home Page" element={<Home />} />
+          <Route exact path="/auth" name="Auth Page" element={<AuthPage />} />
+          <Route path="/" element={<Home />}>
+            <Route index element={<LandingPage />} />
+            <Route exact path="contact" name="Contact Page" element={<Contact />} />
+            <Route exact path="product-details/:id" name="Product Details Page" element={<ProductDetails />} />
+          </Route>
           <Route exact path="/login" name="Login Page" element={<UserLogin />} />
           <Route exact path="/signup" name="Sign Up Page" element={<UserRegister />} />
           <Route exact path="/admin/login" name="Admin Login Page" element={<AdminLogin />} />
