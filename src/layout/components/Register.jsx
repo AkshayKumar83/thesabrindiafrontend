@@ -27,7 +27,7 @@ function Register() {
       })
       const data = await response.json()
       if (!response.ok) throw new Error(data.message || 'Unable to create account')
-      localStorage.setItem('sabrIndiaToken', data.token)
+      localStorage.setItem('etoken', data.token)
       setMessage({ type: 'success', text: data.message })
     } catch (error) {
       setMessage({ type: 'error', text: error.message })

@@ -6,7 +6,7 @@ const ProtectedRoute = ({ children }) => {
   const location = useLocation()
 
   // Change this according to how you store auth
-  const isAuthenticated = Boolean(localStorage.getItem('token'))
+  const isAuthenticated = Boolean(localStorage.getItem('etoken'))
   // or: const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
 
   if (!!isAuthenticated) {

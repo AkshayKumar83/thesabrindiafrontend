@@ -4,7 +4,16 @@ import React, {
   useEffect,
   useMemo,
   useReducer,
+  useState,
 } from "react";
+
+import {
+  getCartApi,
+  addToCartApi,
+  updateCartQuantityApi,
+  removeFromCartApi,
+  clearCartApi,
+} from "../services/cart.api.js";
 
 const CartContext = createContext(null);
 
@@ -14,85 +23,22 @@ const initialState = {
 
 function cartReducer(state, action) {
   switch (action.type) {
-    case "ADD_TO_CART": {
-      const product = action.payload;
-
-      const existingItem = state.items.find(
-        (item) => item.id === product.id
-      );
-
-      if (existingItem) {
-        return {
-          ...state,
-          items: state.items.map((item) =>
-            item.id === product.id
-              ? {
-                  ...item,
-                  quantity: item.quantity + 1,
-                }
-              : item
-          ),
-        };
-      }
-
+    case "LOAD_CART":
       return {
         ...state,
-        items: [
-          ...state.items,
-          {
-            ...product,
-            quantity: 1,
-          },
-        ],
-      };
-    }
-
-    case "INCREASE_QUANTITY":
-      return {
-        ...state,
-        items: state.items.map((item) =>
-          item.id === action.payload
-            ? {
-                ...item,
-                quantity: item.quantity + 1,
-              }
-            : item
-        ),
+        items: action.payload || [],
       };
 
-    case "DECREASE_QUANTITY":
+    case "SET_CART":
       return {
         ...state,
-        items: state.items
-          .map((item) =>
-            item.id === action.payload
-              ? {
-                  ...item,
-                  quantity: item.quantity - 1,
-                }
-              : item
-          )
-          .filter((item) => item.quantity > 0),
-      };
-
-    case "REMOVE_FROM_CART":
-      return {
-        ...state,
-        items: state.items.filter(
-          (item) => item.id !== action.payload
-        ),
+        items: action.payload || [],
       };
 
     case "CLEAR_CART":
       return {
         ...state,
         items: [],
-      };
-
-    case "LOAD_CART":
-      return {
-        ...state,
-        items: action.payload || [],
       };
 
     default:
@@ -106,74 +52,543 @@ export function CartProvider({ children }) {
     initialState
   );
 
-  // Load saved cart
-  useEffect(() => {
-    const savedCart = localStorage.getItem("cart");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-    if (!savedCart) return;
+  // ==========================================
+  // GUEST CART HELPERS
+  // ==========================================
+
+  const getGuestCart = () => {
+    try {
+      const savedCart =
+        localStorage.getItem("guestCart");
+
+      if (!savedCart) {
+        return [];
+      }
+
+      const parsedCart = JSON.parse(savedCart);
+
+      return Array.isArray(parsedCart)
+        ? parsedCart
+        : [];
+    } catch (error) {
+      console.error(
+        "Unable to read guest cart:",
+        error
+      );
+
+      return [];
+    }
+  };
+
+  const saveGuestCart = (items) => {
+    localStorage.setItem(
+      "guestCart",
+      JSON.stringify(items)
+    );
+  };
+
+  const clearGuestCart = () => {
+    localStorage.removeItem("guestCart");
+  };
+
+  // ==========================================
+  // LOAD CART
+  // ==========================================
+
+  const loadCart = async () => {
+    const token = localStorage.getItem("etoken");
+
+    // ------------------------------------------
+    // GUEST
+    // ------------------------------------------
+
+    if (!token) {
+      const guestCart = getGuestCart();
+
+      dispatch({
+        type: "SET_CART",
+        payload: guestCart,
+      });
+
+      return;
+    }
+
+    // ------------------------------------------
+    // LOGGED IN
+    // ------------------------------------------
 
     try {
+      setLoading(true);
+      setError(null);
+
+      const response = await getCartApi();
+
       dispatch({
         type: "LOAD_CART",
-        payload: JSON.parse(savedCart),
+        payload: response.data?.items || [],
       });
     } catch (error) {
-      console.error("Unable to load cart", error);
+      console.error(
+        "Load cart error:",
+        error
+      );
+
+      setError(error.message);
+
+      dispatch({
+        type: "SET_CART",
+        payload: [],
+      });
+    } finally {
+      setLoading(false);
     }
+  };
+
+  // ==========================================
+  // SYNC GUEST CART AFTER LOGIN
+  // ==========================================
+
+  const syncGuestCart = async () => {
+    const token = localStorage.getItem("etoken");
+
+    if (!token) {
+      return;
+    }
+
+    const guestCart = getGuestCart();
+
+    if (guestCart.length === 0) {
+      await loadCart();
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setError(null);
+
+      // Add every guest item to user's DB cart
+      for (const item of guestCart) {
+        await addToCartApi({
+          productId:
+            item.productId || item.id,
+
+          variantId: item.variantId,
+
+          quantity: Number(
+            item.quantity || 1
+          ),
+        });
+      }
+
+      // Guest cart successfully moved to DB
+      clearGuestCart();
+
+      // Load final merged DB cart
+      await loadCart();
+    } catch (error) {
+      console.error(
+        "Guest cart sync error:",
+        error
+      );
+
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // ==========================================
+  // INITIAL LOAD
+  // ==========================================
+
+  useEffect(() => {
+    loadCart();
   }, []);
 
-  // Save cart
-  useEffect(() => {
-    localStorage.setItem(
-      "cart",
-      JSON.stringify(state.items)
-    );
-  }, [state.items]);
+  // ==========================================
+  // ADD TO CART
+  // ==========================================
 
-  const addToCart = (product) => {
-    dispatch({
-      type: "ADD_TO_CART",
-      payload: product,
-    });
+  const addToCart = async (product) => {
+    const token = localStorage.getItem("etoken");
+
+    // ------------------------------------------
+    // GUEST
+    // ------------------------------------------
+
+    if (!token) {
+      const guestCart = getGuestCart();
+
+      const productId =
+        product.productId || product.id;
+
+      const existingItem = guestCart.find(
+        (item) =>
+          item.variantId === product.variantId
+      );
+
+      let updatedCart;
+
+      if (existingItem) {
+        updatedCart = guestCart.map((item) =>
+          item.variantId === product.variantId
+            ? {
+                ...item,
+                quantity:
+                  Number(item.quantity) + 1,
+              }
+            : item
+        );
+      } else {
+        updatedCart = [
+          ...guestCart,
+          {
+            ...product,
+            productId,
+            variantId: product.variantId,
+            quantity: 1,
+          },
+        ];
+      }
+
+      saveGuestCart(updatedCart);
+
+      dispatch({
+        type: "SET_CART",
+        payload: updatedCart,
+      });
+
+      return;
+    }
+
+    // ------------------------------------------
+    // LOGGED IN
+    // ------------------------------------------
+
+    try {
+      setError(null);
+
+      const response = await addToCartApi({
+        productId:
+          product.productId || product.id,
+
+        variantId: product.variantId,
+
+        quantity: product.quantity || 1,
+      });
+
+      await loadCart();
+
+      return response;
+    } catch (error) {
+      console.error(
+        "Add to cart error:",
+        error
+      );
+
+      setError(error.message);
+
+      throw error;
+    }
   };
 
-  const increaseQuantity = (productId) => {
-    dispatch({
-      type: "INCREASE_QUANTITY",
-      payload: productId,
-    });
+  // ==========================================
+  // INCREASE QUANTITY
+  // ==========================================
+
+  const increaseQuantity = async (variantId) => {
+    const token = localStorage.getItem("etoken");
+
+    // ------------------------------------------
+    // GUEST
+    // ------------------------------------------
+
+    if (!token) {
+      const guestCart = getGuestCart();
+
+      const updatedCart = guestCart.map(
+        (item) =>
+          item.variantId === variantId
+            ? {
+                ...item,
+                quantity:
+                  Number(item.quantity) + 1,
+              }
+            : item
+      );
+
+      saveGuestCart(updatedCart);
+
+      dispatch({
+        type: "SET_CART",
+        payload: updatedCart,
+      });
+
+      return;
+    }
+
+    // ------------------------------------------
+    // LOGGED IN
+    // ------------------------------------------
+
+    try {
+      setError(null);
+
+      const currentItem = state.items.find(
+        (item) =>
+          item.variantId === variantId
+      );
+
+      if (!currentItem) {
+        return;
+      }
+
+      const newQuantity =
+        Number(currentItem.quantity) + 1;
+
+      await updateCartQuantityApi(
+        variantId,
+        newQuantity
+      );
+
+      await loadCart();
+    } catch (error) {
+      console.error(
+        "Increase quantity error:",
+        error
+      );
+
+      setError(error.message);
+
+      throw error;
+    }
   };
 
-  const decreaseQuantity = (productId) => {
-    dispatch({
-      type: "DECREASE_QUANTITY",
-      payload: productId,
-    });
+  // ==========================================
+  // DECREASE QUANTITY
+  // ==========================================
+
+  const decreaseQuantity = async (variantId) => {
+    const token = localStorage.getItem("etoken");
+
+    // ------------------------------------------
+    // GUEST
+    // ------------------------------------------
+
+    if (!token) {
+      const guestCart = getGuestCart();
+
+      const currentItem = guestCart.find(
+        (item) =>
+          item.variantId === variantId
+      );
+
+      if (!currentItem) {
+        return;
+      }
+
+      const newQuantity =
+        Number(currentItem.quantity) - 1;
+
+      let updatedCart;
+
+      if (newQuantity <= 0) {
+        updatedCart = guestCart.filter(
+          (item) =>
+            item.variantId !== variantId
+        );
+      } else {
+        updatedCart = guestCart.map(
+          (item) =>
+            item.variantId === variantId
+              ? {
+                  ...item,
+                  quantity: newQuantity,
+                }
+              : item
+        );
+      }
+
+      saveGuestCart(updatedCart);
+
+      dispatch({
+        type: "SET_CART",
+        payload: updatedCart,
+      });
+
+      return;
+    }
+
+    // ------------------------------------------
+    // LOGGED IN
+    // ------------------------------------------
+
+    try {
+      setError(null);
+
+      const currentItem = state.items.find(
+        (item) =>
+          item.variantId === variantId
+      );
+
+      if (!currentItem) {
+        return;
+      }
+
+      const newQuantity =
+        Number(currentItem.quantity) - 1;
+
+      if (newQuantity <= 0) {
+        await removeFromCartApi(variantId);
+      } else {
+        await updateCartQuantityApi(
+          variantId,
+          newQuantity
+        );
+      }
+
+      await loadCart();
+    } catch (error) {
+      console.error(
+        "Decrease quantity error:",
+        error
+      );
+
+      setError(error.message);
+
+      throw error;
+    }
   };
 
-  const removeFromCart = (productId) => {
-    dispatch({
-      type: "REMOVE_FROM_CART",
-      payload: productId,
-    });
+  // ==========================================
+  // REMOVE FROM CART
+  // ==========================================
+
+  const removeFromCart = async (variantId) => {
+    const token = localStorage.getItem("etoken");
+
+    // ------------------------------------------
+    // GUEST
+    // ------------------------------------------
+
+    if (!token) {
+      const guestCart = getGuestCart();
+
+      const updatedCart = guestCart.filter(
+        (item) =>
+          item.variantId !== variantId
+      );
+
+      saveGuestCart(updatedCart);
+
+      dispatch({
+        type: "SET_CART",
+        payload: updatedCart,
+      });
+
+      return;
+    }
+
+    // ------------------------------------------
+    // LOGGED IN
+    // ------------------------------------------
+
+    try {
+      setError(null);
+
+      await removeFromCartApi(variantId);
+
+      await loadCart();
+    } catch (error) {
+      console.error(
+        "Remove from cart error:",
+        error
+      );
+
+      setError(error.message);
+
+      throw error;
+    }
   };
 
-  const clearCart = () => {
-    dispatch({
-      type: "CLEAR_CART",
-    });
+  // ==========================================
+  // CLEAR CART
+  // ==========================================
+
+  const clearCart = async () => {
+    const token = localStorage.getItem("etoken");
+
+    // ------------------------------------------
+    // GUEST
+    // ------------------------------------------
+
+    if (!token) {
+      clearGuestCart();
+
+      dispatch({
+        type: "CLEAR_CART",
+      });
+
+      return;
+    }
+
+    // ------------------------------------------
+    // LOGGED IN
+    // ------------------------------------------
+
+    try {
+      setError(null);
+
+      await clearCartApi();
+
+      dispatch({
+        type: "CLEAR_CART",
+      });
+    } catch (error) {
+      console.error(
+        "Clear cart error:",
+        error
+      );
+
+      setError(error.message);
+
+      throw error;
+    }
   };
+
+  // ==========================================
+  // TOTAL ITEMS
+  // ==========================================
 
   const totalItems = state.items.reduce(
-    (total, item) => total + item.quantity,
+    (total, item) =>
+      total + Number(item.quantity || 0),
     0
   );
 
+  // ==========================================
+  // SUBTOTAL
+  // ==========================================
+
   const subtotal = state.items.reduce(
-    (total, item) =>
-      total + item.price * item.quantity,
+    (total, item) => {
+      const price =
+        item.totalPrice !== undefined
+          ? Number(item.totalPrice)
+          : Number(item.price || 0) *
+            Number(item.quantity || 0);
+
+      return total + price;
+    },
     0
   );
+
+  // ==========================================
+  // SHIPPING
+  // ==========================================
 
   const shipping =
     subtotal === 0
@@ -182,20 +597,32 @@ export function CartProvider({ children }) {
       ? 0
       : 100;
 
+  // ==========================================
+  // TOTAL
+  // ==========================================
+
   const total = subtotal + shipping;
 
   const value = useMemo(
     () => ({
       items: state.items,
+
       addToCart,
       increaseQuantity,
       decreaseQuantity,
       removeFromCart,
       clearCart,
+
+      loadCart,
+      syncGuestCart,
+
       totalItems,
       subtotal,
       shipping,
       total,
+
+      loading,
+      error,
     }),
     [
       state.items,
@@ -203,6 +630,8 @@ export function CartProvider({ children }) {
       subtotal,
       shipping,
       total,
+      loading,
+      error,
     ]
   );
 
@@ -224,3 +653,4 @@ export function useCart() {
 
   return context;
 }
+

@@ -23,7 +23,7 @@ function CartActions({
     <div className="d-flex flex-column gap-2 mt-3">
 
       <CButton
-        color="primary"
+        style={{background:"var(--forest)", color:"var(--paper)"}}
         size="lg"
         className="fw-semibold"
         disabled={items.length === 0}
@@ -38,7 +38,7 @@ function CartActions({
       </CButton>
 
       <CButton
-        color="secondary"
+        color="danger"
         variant="ghost"
         onClick={onContinueShopping}
       >

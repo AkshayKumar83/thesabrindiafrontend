@@ -30,11 +30,12 @@ import {
 
 const Header = ({ onNavigate, setCartVisible, cartCount = 0, activePage = 'home', handleNavigate }) => {
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
-
+ 
   const navItems = [
     { key: 'home', label: 'Home' },
     { key: 'shop', label: 'Shop' },
     { key: 'contact', label: 'Contact' },
+    { key: 'collections', label: 'Colections' },
     { key: 'product-details/123', label: 'PD' },
   ]
 

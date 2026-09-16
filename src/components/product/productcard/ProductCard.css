@@ -1,0 +1,454 @@
+/* ================================
+   PRODUCT CARD
+================================ */
+
+.product-card {
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.product-card:hover {
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+  transform: translateY(-4px);
+}
+
+
+/* ================================
+   IMAGE
+================================ */
+
+.product-card-image-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: #f2ede4;
+}
+
+.product-card-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.product-card:hover .product-card-image {
+  transform: scale(1.05);
+}
+
+
+/* ================================
+   BADGES
+================================ */
+
+.product-badge {
+  position: absolute;
+  top: 10px;
+  z-index: 2;
+
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+
+  padding: 0.35em 0.75em;
+
+  white-space: nowrap;
+}
+
+.badge-discount {
+  left: 10px;
+  background-color: #c0392b !important;
+  color: #fff;
+}
+
+.badge-tag {
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.75) !important;
+  color: #fff;
+}
+
+
+/* ================================
+   CART OVERLAY
+================================ */
+
+.product-card-overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 12px;
+
+  opacity: 0;
+  transform: translateY(10px);
+
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.35),
+    transparent 70%
+  );
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.product-card:hover .product-card-overlay,
+.product-card:focus-within .product-card-overlay {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* ================================
+   ADD TO CART
+================================ */
+
+.product-add-btn {
+  width: 100%;
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  background-color: var(--forest, #2f4f3f);
+  color: #fff;
+
+  border: none;
+  border-radius: 999px;
+
+  padding: 0.7rem 1rem;
+
+  font-weight: 600;
+  font-size: 0.85rem;
+
+  white-space: nowrap;
+}
+
+.product-add-btn:hover {
+  background-color: var(--forest-dark, #24392c);
+  color: #fff;
+}
+
+
+/* ================================
+   QUANTITY CONTROL
+================================ */
+
+.product-qty-group {
+  display: flex;
+
+  width: 140px;
+  max-width: 100%;
+
+  min-width: 0;
+
+  border-radius: 999px !important;
+  overflow: hidden;
+}
+
+.product-qty-btn {
+  flex: 0 0 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: var(--forest, #2f4f3f);
+  border: none;
+  color: #fff;
+
+  padding: 0.45rem;
+}
+
+.product-qty-btn:hover {
+  background-color: var(--forest-dark, #24392c);
+  color: #fff;
+}
+
+.product-qty-group > .product-qty-btn:first-child {
+  border-top-left-radius: 999px !important;
+  border-bottom-left-radius: 999px !important;
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+.product-qty-group > .product-qty-btn:last-child {
+  border-top-right-radius: 999px !important;
+  border-bottom-right-radius: 999px !important;
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+
+.product-qty-input {
+  min-width: 0;
+  width: 50px;
+  max-width: 50px;
+
+  flex: 1 1 auto;
+
+  border: none !important;
+  border-radius: 0 !important;
+
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+
+  box-shadow: none !important;
+}
+
+
+/* ================================
+   CARD BODY
+================================ */
+
+.product-card-body {
+  padding: 1rem 1.1rem 1.25rem;
+
+  min-width: 0;
+}
+
+
+/* ================================
+   TITLE
+================================ */
+
+.product-card-title {
+  font-family: "Playfair Display", Georgia, serif;
+
+  font-size: 1rem;
+  font-weight: 600;
+
+  color: #2b2b2b;
+
+  margin-bottom: 0.3rem;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+/* ================================
+   DESCRIPTION
+================================ */
+
+.product-card-desc {
+  font-size: 0.8rem;
+  color: #8a8a8a;
+
+  margin-bottom: 0.6rem;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+/* ================================
+   PRICE
+================================ */
+
+.product-price-row {
+  display: flex;
+  align-items: baseline;
+
+  gap: 0.5rem;
+
+  min-width: 0;
+}
+
+.product-price {
+  font-size: 1.05rem;
+  font-weight: 700;
+
+  color: var(--forest, #2f4f3f);
+
+  white-space: nowrap;
+}
+
+.product-price-original {
+  font-size: 0.8rem;
+  color: #a8a8a8;
+
+  text-decoration: line-through;
+
+  white-space: nowrap;
+}
+
+
+/* ================================
+   TABLET
+================================ */
+
+@media (max-width: 991.98px) {
+  .product-card-body {
+    padding: 0.9rem 0.95rem 1.1rem;
+  }
+
+  .product-card-title {
+    font-size: 0.95rem;
+  }
+
+  .product-price {
+    font-size: 1rem;
+  }
+
+  .product-price-original {
+    font-size: 0.76rem;
+  }
+
+  .product-card-overlay {
+    padding: 10px;
+  }
+}
+
+
+/* ================================
+   MOBILE
+================================ */
+
+@media (max-width: 767.98px) {
+  .product-card {
+    border-radius: 14px;
+  }
+
+  .product-card-body {
+    padding: 0.85rem 0.9rem 1rem;
+  }
+
+  .product-card-title {
+    font-size: 0.92rem;
+  }
+
+  .product-card-desc {
+    font-size: 0.76rem;
+  }
+
+  .product-price {
+    font-size: 0.98rem;
+  }
+
+  .product-price-original {
+    font-size: 0.74rem;
+  }
+
+  .product-badge {
+    top: 8px;
+    font-size: 0.62rem;
+  }
+
+  .badge-discount {
+    left: 8px;
+  }
+
+  .badge-tag {
+    right: 8px;
+  }
+
+  .product-card-overlay {
+    padding: 9px;
+  }
+
+  .product-add-btn {
+    padding: 0.62rem 0.75rem;
+    font-size: 0.8rem;
+  }
+
+  .product-qty-group {
+    width: 130px;
+  }
+
+  .product-qty-btn {
+    flex-basis: 36px;
+  }
+}
+
+
+/* ================================
+   SMALL MOBILE
+================================ */
+
+@media (max-width: 399.98px) {
+  .product-card-body {
+    padding: 0.75rem 0.8rem 0.9rem;
+  }
+
+  .product-card-title {
+    font-size: 0.88rem;
+  }
+
+  .product-card-desc {
+    font-size: 0.72rem;
+  }
+
+  .product-price {
+    font-size: 0.94rem;
+  }
+
+  .product-price-original {
+    font-size: 0.7rem;
+  }
+
+  .product-card-overlay {
+    padding: 8px;
+  }
+
+  .product-add-btn {
+    font-size: 0.76rem;
+    padding: 0.58rem 0.65rem;
+  }
+
+  .product-qty-group {
+    width: 120px;
+  }
+}
+
+
+/* ================================
+   TOUCH DEVICES
+================================ */
+
+/*
+   On touch devices there is no real hover.
+   Keep the cart control visible so the
+   user doesn't have to hover over the card.
+*/
+
+@media (hover: none) and (pointer: coarse) {
+  .product-card-overlay {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .product-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .product-card:hover .product-card-image {
+    transform: none;
+  }
+}
+
+
+
+
+
+

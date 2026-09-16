@@ -6,6 +6,7 @@
 
 body {
   background-color: var(--cui-tertiary-bg);
+  font-family: Georgia, serif;
 }
 
 .sidebar-nav-small .nav-link {
@@ -103,58 +104,58 @@ body {
    Product Card
 ----------------------------- */
 
-.product-card {
-  border-radius: var(--shop-radius);
-  overflow: hidden;
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-}
+// .product-card {
+//   border-radius: var(--shop-radius);
+//   overflow: hidden;
+//   transition:
+//     transform 0.2s ease,
+//     box-shadow 0.2s ease;
+// }
 
-.product-card:hover {
-  transform: translateY(-3px);
-  box-shadow:
-    0 0.75rem 1.5rem
-    rgba(0, 0, 0, 0.08) !important;
-}
+// .product-card:hover {
+//   transform: translateY(-3px);
+//   box-shadow:
+//     0 0.75rem 1.5rem
+//     rgba(0, 0, 0, 0.08) !important;
+// }
 
-.product-image-wrapper {
-  overflow: hidden;
-}
+// .product-image-wrapper {
+//   overflow: hidden;
+// }
 
-.product-image {
-  width: 100%;
-  height: 230px;
-  object-fit: cover;
-  transition: transform 0.3s ease;
-}
+// .product-image {
+//   width: 100%;
+//   height: 230px;
+//   object-fit: cover;
+//   transition: transform 0.3s ease;
+// }
 
-.product-card:hover .product-image {
-  transform: scale(1.03);
-}
+// .product-card:hover .product-image {
+//   transform: scale(1.03);
+// }
 
-.product-discount {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-}
+// .product-discount {
+//   position: absolute;
+//   top: 12px;
+//   left: 12px;
+// }
 
-.product-description {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  min-height: 38px;
-}
+// .product-description {
+//   display: -webkit-box;
+//   -webkit-line-clamp: 2;
+//   -webkit-box-orient: vertical;
+//   overflow: hidden;
+//   min-height: 38px;
+// }
 
-.product-rating {
-  display: flex;
-  align-items: center;
-}
+// .product-rating {
+//   display: flex;
+//   align-items: center;
+// }
 
-.quantity-value {
-  pointer-events: none;
-}
+// .quantity-value {
+//   pointer-events: none;
+// }
 
 /* -----------------------------
    Cart Button
@@ -186,7 +187,7 @@ body {
 ----------------------------- */
 
 .desktop-cart {
-  width: 480px !important;
+  width: 440px !important;
 }
 
 .cart-items-container {

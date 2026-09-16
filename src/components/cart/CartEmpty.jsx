@@ -41,7 +41,7 @@ function CartEmpty({
           </div>
 
           <CButton
-            color="primary"
+            style={{background:"var(--forest)", color:"var(--paper)"}}
             onClick={onContinueShopping}
           >
             Continue Shopping

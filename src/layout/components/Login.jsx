@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import { Eye, EyeOff, Mail } from 'lucide-react'
 import API_BASE_URL, { API_ROUTES } from '../../config/api.js'
+import { useCart } from '../../context/CartContext.jsx';
 
 function Login({ onForgot }) {
+  const { syncGuestCart } = useCart();
   const [form, setForm] = useState({ email: '', password: '' })
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -27,7 +29,8 @@ function Login({ onForgot }) {
       })
       const data = await response.json()
       if (!response.ok) throw new Error(data.message || 'Unable to login')
-      localStorage.setItem('sabrIndiaToken', data.token)
+      localStorage.setItem('etoken', data.token)
+      await syncGuestCart();
       setMessage({ type: 'success', text: data.message })
     } catch (error) {
       setMessage({ type: 'error', text: error.message })

@@ -52,7 +52,7 @@ const AdminLogin = () => {
         throw new Error('Login response did not include an authentication token.')
       }
 
-      localStorage.setItem('token', token)
+      localStorage.setItem('etoken', token)
       navigate(location.state?.from?.pathname || '/admin/dashboard', { replace: true })
     } catch (requestError) {
       setError(
