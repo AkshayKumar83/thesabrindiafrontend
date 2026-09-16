@@ -1,0 +1,125 @@
+/* ProductList.css */
+.product-list-section {
+  background-color: #fdf6ec;
+  padding: 2rem 0;
+}
+
+.product-list-title {
+  text-align: center;
+  font-family: "Playfair Display", Georgia, serif;
+  font-style: italic;
+  color: var(--forest, #2f4f3f);
+  font-size: 2.25rem;
+  margin-bottom: 2.5rem;
+}
+
+.product-list-wrapper {
+  position: relative;
+}
+
+.product-list-scroll {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  padding: 0.25rem 0.25rem 1rem;
+  scrollbar-width: none;
+}
+
+.product-list-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* 5 cards visible on desktop */
+.product-list-item {
+  flex: 0 0 auto;
+  width: calc((100% - 4 * 1.3rem) / 5);
+  scroll-snap-align: start;
+}
+
+@media (max-width: 1200px) {
+  .product-list-item {
+    width: calc((100% - 3 * 1.3rem) / 4);
+  }
+}
+
+@media (max-width: 992px) {
+  .product-list-item {
+    width: calc((100% -  2 * 1.3rem) / 3);
+  }
+}
+
+@media (max-width: 800px) {
+  .product-list-item {
+    flex: 0 0 auto !important; /* Prevents the card from squishing or shrinking */
+    width: calc((100% - 1 * 1.3rem) / 2) !important; /* Perfect 2 columns */
+  }
+}
+
+@media (max-width: 480px) {
+  .product-list-item {
+    flex: 0 0 auto !important;
+    width: calc((100% - 0 * 1.3rem) / 1) !important; /* Perfect 1 column without overflow */
+  }
+}
+
+
+
+/* Arrow buttons: absolute, floating over the row edges */
+.product-list-arrow {
+  position: absolute;
+  top: 38%;
+  transform: translateY(-50%);
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 0px solid var(--forest, #2f4f3f);
+  background-color: #ffff;
+  /* color: var(--forest, #ffff); */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 3;
+  transition: background-color 0.25s ease, color 0.25s ease,
+    box-shadow 0.25s ease, opacity 0.25s ease;
+  opacity: 0.8;
+
+}
+
+.product-list-arrow:hover:not(.is-disabled) {
+  background-color: var(--forest, #2f4f3f);
+  color: #fff;
+  opacity: 1;
+}
+
+.product-list-arrow.is-disabled {
+  cursor: default;
+}
+
+.arrow-left {
+  left: 8px;
+}
+
+.arrow-right {
+  right: 8px;
+}
+
+.product-list-view-all {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.2rem;
+  font-weight: 300;
+  font-style: italic;
+  padding: 10px 40px;
+  background-color: #ffffff;
+  color: var(--forest);
+  border: 2px solid var(--forest);
+  transition: all 0.3s ease;
+}
+
+.product-list-view-all:hover {
+  background-color: var(--forest);
+  color: #ffffff;
+}
+

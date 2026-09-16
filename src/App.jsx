@@ -54,6 +54,7 @@ import LandingPage from './layout/components/landingPage'
 import Contact from './layout/components/Contact';
 import AuthPage from './layout/home/AuthPage'
 import PolicyPage from './layout/pages/policies/PolicyPage'
+import ProductCollection from './layout/pages/product/ProductCollection'
 
 /**
  * Main Application Component
@@ -110,6 +111,7 @@ const App = () => {
             <Route index element={<LandingPage />} />
             <Route exact path="contact" name="Contact Page" element={<Contact />} />
             <Route exact path="product-details/:id" name="Product Details Page" element={<ProductDetails />} />
+            <Route exact path="collections" name="Collection Page" element={<ProductCollection />} />
 
             <Route path="/policies/:policy" element={<PolicyPage />} />
           </Route>
@@ -125,7 +127,7 @@ const App = () => {
             }
           />
 
-          <Route exact path="/authentication/login" name="Login Page" element={<Login />} />
+          {/* <Route exact path="/authentication/login" name="Login Page" element={<Login />} />
           <Route
             exact
             path="/authentication/register"
@@ -155,7 +157,7 @@ const App = () => {
             path="/authentication/password-changed"
             name="Password Changed Page"
             element={<PasswordChanged />}
-          />
+          /> */}
           <Route exact path="/error-pages/404" name="Page 404" element={<Page404 />} />
           <Route exact path="/error-pages/500" name="Page 500" element={<Page500 />} />
         </Routes>

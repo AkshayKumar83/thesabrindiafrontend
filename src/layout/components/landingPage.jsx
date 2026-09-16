@@ -1,38 +1,22 @@
 import {
-  CBadge,
   CButton,
   CCard,
-  CCardBody,
   CCardImage,
   CCol,
   CContainer,
-  CHeader,
-  CHeaderBrand,
-  CHeaderNav,
   CImage,
-  CNavItem,
-  CNavLink,
   CRow,
 } from '@coreui/react'
 
 import {
   ArrowRight,
-  Heart,
-  Search,
-  ShoppingBag,
   Sparkles,
 } from 'lucide-react'
-import ProductList from '../../components/product/ProductList';
+import ProductList from '../../components/product/productlist/ProductList.jsx';
 
-// import CartButton from "./components/cart/CartButton";
-import ResponsiveCart from "../../components/cart/ResponsiveCart.jsx";
-import { useState } from 'react';
-import Header from './header/Header.jsx';
 import Contact from './Contact.jsx';
 
 function LandingPage({ onNavigate }) {
-
-  const [cartVisible, setCartVisible] = useState(false);
 
   return (
     <>
@@ -151,8 +135,8 @@ function LandingPage({ onNavigate }) {
                 </CButton>
               </CCol>
             </CRow>
-            {/* Product List component */}
-            <ProductList/>
+            {/* Product List component 1 */}
+            <ProductList category={'Hello'}/>
             {/* ++++++++++++++ */}
           </CContainer>
         </section>
@@ -199,10 +183,11 @@ function LandingPage({ onNavigate }) {
             </CRow>
           </CContainer>
         </section>
+        {/* Product List component 2 */}
+            <ProductList category={'Hello'}/>
+            {/* ++++++++++++++ */}
       </main>
       <Contact /> 
-      {/* Responsive Cart */}
-        <ResponsiveCart visible={cartVisible} onClose={() => setCartVisible(false)}/>  
     </>
   )
 }

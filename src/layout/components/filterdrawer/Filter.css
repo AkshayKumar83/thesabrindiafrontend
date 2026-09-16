@@ -1,0 +1,484 @@
+/* =========================================================
+   FILTER DRAWER
+========================================================= */
+
+.filter-drawer {
+  width: 390px !important;
+  max-width: 92vw;
+  border: none !important;
+  background: #fff;
+  box-shadow: 8px 0 35px rgba(0, 0, 0, 0.08);
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.filter-drawer-header {
+  min-height: 72px;
+  padding: 0 24px !important;
+
+  display: flex;
+  align-items: center;
+
+  border-bottom: 1px solid #eee7df;
+  background: #fff;
+}
+
+.filter-drawer-title {
+  margin: 0;
+
+  font-size: 1.25rem;
+  font-weight: 600;
+
+  letter-spacing: 0.01em;
+  color: #29251f;
+}
+
+.filter-close-btn {
+  width: 34px;
+  height: 34px;
+  margin:10px;
+  justify-content: end;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #e8e1d9;
+  border-radius: 50%;
+
+  background: #faf8f5;
+  color: #55504a;
+
+  font-size: 1.35rem;
+  font-weight: 300;
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.filter-close-btn:hover {
+  background: #f1ece6;
+  border-color: #dcd2c8;
+  transform: rotate(90deg);
+}
+
+
+/* =========================================================
+   BODY
+========================================================= */
+
+.filter-drawer-body {
+  padding: 0 24px !important;
+  overflow-y: auto;
+
+  scrollbar-width: thin;
+  scrollbar-color: #d7cec4 transparent;
+}
+
+.filter-drawer-body::-webkit-scrollbar {
+  width: 5px;
+}
+
+.filter-drawer-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.filter-drawer-body::-webkit-scrollbar-thumb {
+  background: #d7cec4;
+  border-radius: 10px;
+}
+
+
+/* =========================================================
+   FILTER SECTION
+========================================================= */
+
+.filter-section {
+  padding: 24px 0;
+  border-bottom: 1px solid #eee8e1;
+}
+
+.filter-section:last-child {
+  border-bottom: none;
+}
+
+
+/* =========================================================
+   CLICKABLE SECTION HEADER
+========================================================= */
+
+.filter-section-header {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 20px;
+}
+
+
+/* IMPORTANT:
+   Remove default button styling
+*/
+
+.filter-section-toggle {
+  padding: 0;
+
+  border: none;
+  background: transparent;
+
+  text-align: left;
+
+  cursor: pointer;
+}
+
+.filter-section-toggle:hover {
+  background: transparent;
+}
+
+
+/* =========================================================
+   SECTION TITLE
+========================================================= */
+
+.filter-section-title {
+  font-size: 0.92rem;
+  font-weight: 600;
+
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+
+  color: #302c27;
+}
+
+
+/* =========================================================
+   ARROW
+========================================================= */
+
+.filter-section-arrow {
+  width: 25px;
+  height: 25px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--forest);
+  color: #ffff;
+  font-size: 18px;
+  transition:
+    transform 0.25s ease,
+    background-color 0.2s ease;
+}
+
+
+/* Arrow points UP when section is open */
+
+.filter-section-arrow.open {
+  transform: rotate(180deg);
+}
+
+.filter-section-toggle:hover
+.filter-section-arrow {
+  background: #ffff;
+  color:var(--forest);
+  border: 1px solid var(--forest);
+
+}
+
+
+/* =========================================================
+   AVAILABILITY
+========================================================= */
+
+.filter-switch-row {
+  min-height: 44px;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 10px 12px;
+
+  border: 1px solid #eee8e1;
+  
+  border-radius: 10px;
+
+  background: #faf9f7;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.filter-switch-row:hover {
+  background: #f7f4f1;
+  border-color: #e1d9d0;
+}
+
+
+/* CoreUI switch */
+
+.filter-switch-row .form-check {
+  margin: 0;
+  min-height: auto;
+}
+
+.filter-switch-row .form-check-input {
+  width: 2.25rem;
+  height: 1.25rem;
+
+  margin: 0;
+
+  cursor: pointer;
+
+  box-shadow: none !important;
+  border-color: #cfc5bb;
+}
+
+.filter-switch-row .form-check-input:checked {
+  background-color: #b8a18c;
+  border-color: #b8a18c;
+}
+
+.filter-switch-label {
+  margin: 0;
+
+  font-size: 0.9rem;
+  font-weight: 500;
+
+  color: #454039;
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   PRICE RANGE
+========================================================= */
+
+.filter-range-wrapper {
+  position: relative;
+
+  padding: 8px 4px 4px;
+  margin-bottom: 18px;
+}
+
+.filter-range {
+  width: 100%;
+  height: 6px;
+
+  cursor: pointer;
+
+  accent-color: #b8a18c;
+}
+
+.filter-range::-webkit-slider-runnable-track {
+  height: 5px;
+  border-radius: 10px;
+}
+
+.filter-range::-webkit-slider-thumb {
+  width: 18px;
+  height: 18px;
+
+  margin-top: -6px;
+
+  border: 3px solid #fff;
+  border-radius: 50%;
+
+  background: #b8a18c;
+
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   PRICE INPUTS
+========================================================= */
+
+.filter-price-inputs {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.filter-price-input {
+  height: 44px;
+
+  display: flex;
+  align-items: center;
+
+  flex: 1;
+  min-width: 0;
+
+  padding: 0 12px;
+
+  border: 1px solid #ded7d0;
+  border-radius: 9px;
+
+  background: #fff;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.filter-price-input:focus-within {
+  border-color: #b8a18c;
+
+  box-shadow:
+    0 0 0 3px rgba(184, 161, 140, 0.12);
+}
+
+.filter-currency {
+  margin-right: 5px;
+
+  font-size: 0.9rem;
+  font-weight: 500;
+
+  color: #766d64;
+}
+
+.filter-input {
+  width: 100%;
+
+  padding: 0 !important;
+
+  border: none !important;
+  outline: none !important;
+
+  background: transparent !important;
+
+  box-shadow: none !important;
+
+  font-size: 0.9rem;
+  font-weight: 500;
+
+  color: #332f2a;
+}
+
+.filter-input::-webkit-inner-spin-button,
+.filter-input::-webkit-outer-spin-button {
+  margin: 0;
+}
+
+.filter-price-to {
+  flex-shrink: 0;
+
+  font-size: 0.8rem;
+  font-weight: 500;
+
+  color: #9a9189;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.filter-drawer-footer {
+  padding: 18px 24px 22px;
+
+  border-top: 1px solid #eee7df;
+
+  background: #fff;
+}
+
+
+/* =========================================================
+   VIEW RESULTS
+========================================================= */
+
+.filter-result-btn {
+  width: 100%;
+  height: 48px;
+
+  border: none !important;
+  border-radius: 9px !important;
+
+  background: var(--forest) !important;
+
+  color: #fff !important;
+
+  font-size: 0.82rem;
+  font-weight: 600;
+
+  letter-spacing: 0.12em;
+
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.12);
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.filter-result-btn:hover {
+  background: #1c5c27 !important;
+
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.16);
+
+  transform: translateY(-1px);
+}
+
+.filter-result-btn:active {
+  transform: translateY(0);
+}
+
+
+/* =========================================================
+   BACKDROP
+========================================================= */
+
+.offcanvas-backdrop {
+  background-color: rgba(34, 30, 26, 0.38);
+}
+
+.offcanvas-backdrop.show {
+  opacity: 1;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 767.98px) {
+
+  .filter-drawer {
+    width: 86vw !important;
+    max-width: 360px;
+  }
+
+  .filter-drawer-header {
+    min-height: 64px;
+    padding: 0 18px !important;
+  }
+
+  .filter-drawer-body {
+    padding: 0 18px !important;
+  }
+
+  .filter-section {
+    padding: 20px 0;
+  }
+
+  .filter-drawer-footer {
+    padding: 14px 18px 18px;
+  }
+
+}

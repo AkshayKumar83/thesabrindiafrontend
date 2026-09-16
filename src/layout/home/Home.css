@@ -3,7 +3,25 @@
 :root { --ink:#23352f; --muted:#76817b; --line:#dfe5df; --paper:#f7f8f4; --forest:#263f35; --coral:#e28d6b; --cream:#eee9df; }
 * { box-sizing:border-box; }
 html { scroll-behavior:smooth; }
-body { margin:0; background:var(--paper); color:var(--ink); font-family:'DM Sans',sans-serif; }
+body { margin:0; background:var(--paper); color:var(--ink); }
+
+/* Headers (H1, H2, H3) */
+h1, h2, h3 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+/* Body Text & Content */
+body, p, span, button {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300; /* Keeps it light and elegant */
+  letter-spacing: 0.3px;
+}
+
+
+
+
 button,input,textarea { font:inherit; }
 button { cursor:pointer; }
 button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible { outline:2px solid var(--coral); outline-offset:3px; }
