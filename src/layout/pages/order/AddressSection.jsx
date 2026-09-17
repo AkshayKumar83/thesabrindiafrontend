@@ -87,11 +87,11 @@ const AddressSection = ({ addresses = [], selectedId, onSelect, onSave }) => {
   return (
     <CCard className="sabr-card sabr-card--current">
       <CCardHeader className="sabr-card__header">
-        {/* <div className="sabr-card__eyebrow">STEP 01</div> */}
-        <h2 className="sabr-card__title">
+        <div className="sabr-card__eyebrow">STEP 01</div>
+        <h6 className="sabr-card__title">
           <MapPin size={18} className="me-2 mb-1" />
           Delivery Address
-        </h2>
+        </h6>
       </CCardHeader>
 
       <CCardBody className="sabr-card__body">

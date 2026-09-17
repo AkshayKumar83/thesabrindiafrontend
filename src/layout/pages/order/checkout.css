@@ -72,7 +72,7 @@
   justify-content: center;
   gap: 0;
   max-width: 640px;
-  margin: 0 auto 2.5rem;
+  margin: 0 auto 1rem;
   padding: 0 0.5rem;
 }
 
@@ -446,7 +446,7 @@
 }
 
 .sabr-summary-total__value {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: serif;
   font-size: 1.7rem;
   font-weight: 700;
   color: var(--sabr-maroon);

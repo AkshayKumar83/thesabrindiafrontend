@@ -106,6 +106,7 @@ function MobileCartSheet({
                     console.log(
                       "Proceed to checkout"
                     );
+                      onClose();
                       navigate("/checkout");
                   }}
                   onContinueShopping={onClose}
