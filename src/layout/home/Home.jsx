@@ -11,7 +11,7 @@ function Home() {
   const [page, setPage] = useState('home')
   const handleNavigate = useNavigate();
   const [cartVisible, setCartVisible] = useState(false);
-   const { totalItems } = useCart();
+   const { items } = useCart();
   function navigate(nextPage) {
     // Account navigation
     if (
@@ -47,7 +47,7 @@ function Home() {
       <Header
         handleNavigate={handleNavigate}
         setCartVisible={setCartVisible}
-        cartCount={totalItems}
+        cartCount={items?.length || 0}
       />
       <Outlet />
       <Footer onNavigate={navigate} />

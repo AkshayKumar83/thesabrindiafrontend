@@ -16,10 +16,9 @@ import { useCart } from "../../../context/CartContext";
 import "./ProductCard.css";
 
 const ProductCard = memo(({ product }) => {
-  console.log("Product Card :::>>", product);
+  // console.log("Product Card :::>>", product);
   const { items, addToCart, increaseQuantity, decreaseQuantity } = useCart();
-
-  const cartItem = items.find((item) => item.id === product.id);
+  const cartItem = items.find((item) => item.variantId === product.id);
   const quantity = cartItem?.quantity || 0;
 
   const formattedPrice = product.price.toLocaleString("en-IN");

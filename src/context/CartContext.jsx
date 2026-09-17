@@ -16,6 +16,7 @@ import {
 } from "../services/cart.api.js";
 
 const CartContext = createContext(null);
+const API_BASE_IMAGE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8090';
 
 const initialState = {
   items: [],
@@ -55,9 +56,6 @@ export function CartProvider({ children }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // ==========================================
-  // GUEST CART HELPERS
-  // ==========================================
 
   const getGuestCart = () => {
     try {
@@ -123,12 +121,22 @@ export function CartProvider({ children }) {
     try {
       setLoading(true);
       setError(null);
-
       const response = await getCartApi();
-
+      const items = response?.data?.items?.map((item) => ({
+                      ...item,
+                      image: item?.variant?.images?.find(
+                        (image) => Number(image.isPrimary) === 1
+                      )
+                        ? `${API_BASE_IMAGE_URL}${
+                            item.variant.images.find(
+                              (image) => Number(image.isPrimary) === 1
+                            ).image_url
+                          }`
+                        : "",
+                    }));
       dispatch({
         type: "LOAD_CART",
-        payload: response.data?.items || [],
+        payload: items || [],
       });
     } catch (error) {
       console.error(
@@ -172,11 +180,8 @@ export function CartProvider({ children }) {
       // Add every guest item to user's DB cart
       for (const item of guestCart) {
         await addToCartApi({
-          productId:
-            item.productId || item.id,
-
+          productId: item.productId,
           variantId: item.variantId,
-
           quantity: Number(
             item.quantity || 1
           ),
@@ -215,42 +220,132 @@ export function CartProvider({ children }) {
   const addToCart = async (product) => {
     const token = localStorage.getItem("etoken");
 
-    // ------------------------------------------
+    // ==========================================
     // GUEST
-    // ------------------------------------------
+    // ==========================================
 
     if (!token) {
       const guestCart = getGuestCart();
-
       const productId =
-        product.productId || product.id;
+        product.productId;
 
-      const existingItem = guestCart.find(
-        (item) =>
-          item.variantId === product.variantId
-      );
+      const variantId =
+        product.id;
+
+      const existingItem =
+        guestCart.find(
+          (item) =>
+            item.variantId === variantId
+        );
 
       let updatedCart;
 
+      // ----------------------------------------
+      // ITEM ALREADY EXISTS
+      // ----------------------------------------
+
       if (existingItem) {
-        updatedCart = guestCart.map((item) =>
-          item.variantId === product.variantId
-            ? {
-                ...item,
-                quantity:
-                  Number(item.quantity) + 1,
-              }
-            : item
+        updatedCart = guestCart.map(
+          (item) => {
+            if (
+              item.variantId !==
+              variantId
+            ) {
+              return item;
+            }
+
+            const quantity =
+              Number(item.quantity) + 1;
+
+            return {
+              ...item,
+
+              quantity,
+
+              totalPrice:
+                Number(
+                  item.variant?.price || 0
+                ) * quantity,
+
+              updatedAt:
+                new Date().toISOString(),
+            };
+          }
         );
-      } else {
+      }
+
+      // ----------------------------------------
+      // NEW ITEM
+      // ----------------------------------------
+
+      else {
+        const quantity = 1;
+
+        const newCartItem = {
+          // Same structure as API
+          id: null,
+
+          userId: null,
+
+          productId,
+
+          variantId,
+
+          image:product.image,
+
+          quantity,
+
+          totalPrice:
+            Number(product.price) *
+            quantity,
+
+          createdAt: null,
+
+          updatedAt:
+            new Date().toISOString(),
+
+          // Product object
+          product: product.product,
+
+          // Variant object
+          variant: {
+            id: product.id,
+
+            productId:
+              product.productId,
+
+            name: product.name,
+
+            color: product.color,
+
+            price:
+              String(product.price),
+
+            inStock:
+              Number(
+                product.inStock || 0
+              ),
+
+            description:
+              product.description,
+
+            isPrimary:
+              product.isPrimary,
+
+            images:
+              product.images || [],
+
+            createdAt:
+              product.createdAt,
+
+            updatedAt:
+              product.updatedAt,
+          },
+        };
+
         updatedCart = [
           ...guestCart,
-          {
-            ...product,
-            productId,
-            variantId: product.variantId,
-            quantity: 1,
-          },
+          newCartItem,
         ];
       }
 
@@ -264,21 +359,24 @@ export function CartProvider({ children }) {
       return;
     }
 
-    // ------------------------------------------
+    // ==========================================
     // LOGGED IN
-    // ------------------------------------------
+    // ==========================================
 
     try {
       setError(null);
 
-      const response = await addToCartApi({
-        productId:
-          product.productId || product.id,
+      const response =
+        await addToCartApi({
+          productId:
+            product.productId,
 
-        variantId: product.variantId,
+          variantId:
+            product.id,
 
-        quantity: product.quantity || 1,
-      });
+          quantity:
+            product.quantity || 1,
+        });
 
       await loadCart();
 
@@ -299,26 +397,46 @@ export function CartProvider({ children }) {
   // INCREASE QUANTITY
   // ==========================================
 
-  const increaseQuantity = async (variantId) => {
-    const token = localStorage.getItem("etoken");
+  const increaseQuantity = async (
+    variantId
+  ) => {
+    const token =
+      localStorage.getItem("etoken");
 
-    // ------------------------------------------
+    // ==========================================
     // GUEST
-    // ------------------------------------------
+    // ==========================================
 
     if (!token) {
-      const guestCart = getGuestCart();
+      const guestCart =
+        getGuestCart();
 
-      const updatedCart = guestCart.map(
-        (item) =>
-          item.variantId === variantId
-            ? {
-                ...item,
-                quantity:
-                  Number(item.quantity) + 1,
-              }
-            : item
-      );
+      const updatedCart =
+        guestCart.map((item) => {
+          if (
+            item.variantId !==
+            variantId
+          ) {
+            return item;
+          }
+
+          const quantity =
+            Number(item.quantity) + 1;
+
+          return {
+            ...item,
+
+            quantity,
+
+            totalPrice:
+              Number(
+                item.variant?.price || 0
+              ) * quantity,
+
+            updatedAt:
+              new Date().toISOString(),
+          };
+        });
 
       saveGuestCart(updatedCart);
 
@@ -330,24 +448,27 @@ export function CartProvider({ children }) {
       return;
     }
 
-    // ------------------------------------------
+    // ==========================================
     // LOGGED IN
-    // ------------------------------------------
+    // ==========================================
 
     try {
       setError(null);
 
-      const currentItem = state.items.find(
-        (item) =>
-          item.variantId === variantId
-      );
+      const currentItem =
+        state.items.find(
+          (item) =>
+            item.variantId ===
+            variantId
+        );
 
       if (!currentItem) {
         return;
       }
 
       const newQuantity =
-        Number(currentItem.quantity) + 1;
+        Number(currentItem.quantity) +
+        1;
 
       await updateCartQuantityApi(
         variantId,
@@ -371,45 +492,83 @@ export function CartProvider({ children }) {
   // DECREASE QUANTITY
   // ==========================================
 
-  const decreaseQuantity = async (variantId) => {
-    const token = localStorage.getItem("etoken");
+  const decreaseQuantity = async (
+    variantId
+  ) => {
+    const token =
+      localStorage.getItem("etoken");
 
-    // ------------------------------------------
+    // ==========================================
     // GUEST
-    // ------------------------------------------
+    // ==========================================
 
     if (!token) {
-      const guestCart = getGuestCart();
+      const guestCart =
+        getGuestCart();
 
-      const currentItem = guestCart.find(
-        (item) =>
-          item.variantId === variantId
-      );
+      const currentItem =
+        guestCart.find(
+          (item) =>
+            item.variantId ===
+            variantId
+        );
 
       if (!currentItem) {
         return;
       }
 
       const newQuantity =
-        Number(currentItem.quantity) - 1;
+        Number(currentItem.quantity) -
+        1;
 
       let updatedCart;
 
+      // ----------------------------------------
+      // REMOVE ITEM
+      // ----------------------------------------
+
       if (newQuantity <= 0) {
-        updatedCart = guestCart.filter(
-          (item) =>
-            item.variantId !== variantId
-        );
-      } else {
-        updatedCart = guestCart.map(
-          (item) =>
-            item.variantId === variantId
-              ? {
-                  ...item,
-                  quantity: newQuantity,
-                }
-              : item
-        );
+        updatedCart =
+          guestCart.filter(
+            (item) =>
+              item.variantId !==
+              variantId
+          );
+      }
+
+      // ----------------------------------------
+      // DECREASE QUANTITY
+      // ----------------------------------------
+
+      else {
+        updatedCart =
+          guestCart.map(
+            (item) => {
+              if (
+                item.variantId !==
+                variantId
+              ) {
+                return item;
+              }
+
+              return {
+                ...item,
+
+                quantity:
+                  newQuantity,
+
+                totalPrice:
+                  Number(
+                    item.variant?.price ||
+                      0
+                  ) *
+                  newQuantity,
+
+                updatedAt:
+                  new Date().toISOString(),
+              };
+            }
+          );
       }
 
       saveGuestCart(updatedCart);
@@ -422,27 +581,32 @@ export function CartProvider({ children }) {
       return;
     }
 
-    // ------------------------------------------
+    // ==========================================
     // LOGGED IN
-    // ------------------------------------------
+    // ==========================================
 
     try {
       setError(null);
 
-      const currentItem = state.items.find(
-        (item) =>
-          item.variantId === variantId
-      );
+      const currentItem =
+        state.items.find(
+          (item) =>
+            item.variantId ===
+            variantId
+        );
 
       if (!currentItem) {
         return;
       }
 
       const newQuantity =
-        Number(currentItem.quantity) - 1;
+        Number(currentItem.quantity) -
+        1;
 
       if (newQuantity <= 0) {
-        await removeFromCartApi(variantId);
+        await removeFromCartApi(
+          variantId
+        );
       } else {
         await updateCartQuantityApi(
           variantId,
@@ -467,20 +631,26 @@ export function CartProvider({ children }) {
   // REMOVE FROM CART
   // ==========================================
 
-  const removeFromCart = async (variantId) => {
-    const token = localStorage.getItem("etoken");
+  const removeFromCart = async (
+    variantId
+  ) => {
+    const token =
+      localStorage.getItem("etoken");
 
-    // ------------------------------------------
+    // ==========================================
     // GUEST
-    // ------------------------------------------
+    // ==========================================
 
     if (!token) {
-      const guestCart = getGuestCart();
+      const guestCart =
+        getGuestCart();
 
-      const updatedCart = guestCart.filter(
-        (item) =>
-          item.variantId !== variantId
-      );
+      const updatedCart =
+        guestCart.filter(
+          (item) =>
+            item.variantId !==
+            variantId
+        );
 
       saveGuestCart(updatedCart);
 
@@ -492,14 +662,16 @@ export function CartProvider({ children }) {
       return;
     }
 
-    // ------------------------------------------
+    // ==========================================
     // LOGGED IN
-    // ------------------------------------------
+    // ==========================================
 
     try {
       setError(null);
 
-      await removeFromCartApi(variantId);
+      await removeFromCartApi(
+        variantId
+      );
 
       await loadCart();
     } catch (error) {
@@ -519,11 +691,12 @@ export function CartProvider({ children }) {
   // ==========================================
 
   const clearCart = async () => {
-    const token = localStorage.getItem("etoken");
+    const token =
+      localStorage.getItem("etoken");
 
-    // ------------------------------------------
+    // ==========================================
     // GUEST
-    // ------------------------------------------
+    // ==========================================
 
     if (!token) {
       clearGuestCart();
@@ -535,9 +708,9 @@ export function CartProvider({ children }) {
       return;
     }
 
-    // ------------------------------------------
+    // ==========================================
     // LOGGED IN
-    // ------------------------------------------
+    // ==========================================
 
     try {
       setError(null);
@@ -563,28 +736,39 @@ export function CartProvider({ children }) {
   // TOTAL ITEMS
   // ==========================================
 
-  const totalItems = state.items.reduce(
-    (total, item) =>
-      total + Number(item.quantity || 0),
-    0
-  );
+  const totalItems =
+    state.items.reduce(
+      (total, item) =>
+        total +
+        Number(item.quantity || 0),
+      0
+    );
 
   // ==========================================
   // SUBTOTAL
   // ==========================================
 
-  const subtotal = state.items.reduce(
-    (total, item) => {
-      const price =
-        item.totalPrice !== undefined
-          ? Number(item.totalPrice)
-          : Number(item.price || 0) *
-            Number(item.quantity || 0);
+  const subtotal =
+    state.items.reduce(
+      (total, item) => {
+        const price =
+          item.totalPrice !==
+          undefined
+            ? Number(
+                item.totalPrice
+              )
+            : Number(
+                item.variant?.price ||
+                  0
+              ) *
+              Number(
+                item.quantity || 0
+              );
 
-      return total + price;
-    },
-    0
-  );
+        return total + price;
+      },
+      0
+    );
 
   // ==========================================
   // SHIPPING
@@ -601,7 +785,12 @@ export function CartProvider({ children }) {
   // TOTAL
   // ==========================================
 
-  const total = subtotal + shipping;
+  const total =
+    subtotal + shipping;
+
+  // ==========================================
+  // CONTEXT VALUE
+  // ==========================================
 
   const value = useMemo(
     () => ({
@@ -636,14 +825,17 @@ export function CartProvider({ children }) {
   );
 
   return (
-    <CartContext.Provider value={value}>
+    <CartContext.Provider
+      value={value}
+    >
       {children}
     </CartContext.Provider>
   );
 }
 
 export function useCart() {
-  const context = useContext(CartContext);
+  const context =
+    useContext(CartContext);
 
   if (!context) {
     throw new Error(
@@ -653,4 +845,3 @@ export function useCart() {
 
   return context;
 }
-

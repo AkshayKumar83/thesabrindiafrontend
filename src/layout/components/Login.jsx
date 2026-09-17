@@ -2,8 +2,10 @@ import { useState } from 'react'
 import { Eye, EyeOff, Mail } from 'lucide-react'
 import API_BASE_URL, { API_ROUTES } from '../../config/api.js'
 import { useCart } from '../../context/CartContext.jsx';
+import { useNavigate } from 'react-router-dom';
 
 function Login({ onForgot }) {
+  const navigate = useNavigate();
   const { syncGuestCart } = useCart();
   const [form, setForm] = useState({ email: '', password: '' })
   const [showPassword, setShowPassword] = useState(false)
@@ -29,8 +31,10 @@ function Login({ onForgot }) {
       })
       const data = await response.json()
       if (!response.ok) throw new Error(data.message || 'Unable to login')
-      localStorage.setItem('etoken', data.token)
+      localStorage.setItem('etoken', data.token);
+      setForm({ email: '', password: '' });
       await syncGuestCart();
+      navigate('/');
       setMessage({ type: 'success', text: data.message })
     } catch (error) {
       setMessage({ type: 'error', text: error.message })

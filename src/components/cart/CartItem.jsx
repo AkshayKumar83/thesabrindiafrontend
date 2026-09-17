@@ -28,7 +28,7 @@ function CartItem({ item }) {
     removeFromCart,
   } = useCart();
 
-  const itemTotal = item.price * item.quantity;
+  const itemTotal = item?.variant?.price * item?.quantity;
 
   return (
     <CListGroupItem className="cart-item px-0 py-3">
@@ -53,11 +53,11 @@ function CartItem({ item }) {
 
               <div className="pe-2">
                 <div className="fw-semibold cart-product-name">
-                  {item.name}
+                  {item?.variant?.name}
                 </div>
 
                 <div className="small text-body-secondary">
-                  ₹{item.price.toLocaleString("en-IN")} each
+                  ₹{item?.variant?.price?.toLocaleString("en-IN")} each
                 </div>
               </div>
 
@@ -66,8 +66,8 @@ function CartItem({ item }) {
                 variant="ghost"
                 size="sm"
                 className="cart-remove-button"
-                onClick={() => removeFromCart(item.id)}
-                aria-label={`Remove ${item.name}`}
+                onClick={() => removeFromCart(item.variantId)}
+                aria-label={`Remove ${item?.variant?.name}`}
               >
                 <CIcon icon={cilTrash} />
               </CButton>
@@ -83,7 +83,7 @@ function CartItem({ item }) {
                 <CButton
                   color="secondary"
                   variant="outline"
-                  onClick={() => decreaseQuantity(item.id)}
+                  onClick={() => decreaseQuantity(item.variantId)}
                   aria-label="Decrease quantity"
                 >
                   <CIcon icon={cilMinus} />
@@ -99,7 +99,7 @@ function CartItem({ item }) {
                 <CButton
                   color="secondary"
                   variant="outline"
-                  onClick={() => increaseQuantity(item.id)}
+                  onClick={() => increaseQuantity(item.variantId)}
                   aria-label="Increase quantity"
                 >
                   <CIcon icon={cilPlus} />
