@@ -1,6 +1,29 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;1,500;1,600&display=swap');
 
-:root { --ink:#23352f; --muted:#76817b; --line:#dfe5df; --paper:#f7f8f4; --forest:#263f35; --coral:#e28d6b; --cream:#eee9df; }
+:root {
+  --ink:#23352f;
+  --muted:#76817b;
+  --line:#dfe5df;
+  --paper:#f7f8f4;
+  /* --forest:#263f35; */
+   --forest:#7b1e2d;
+  --coral:#e28d6b;
+  --cream:#eee9df;
+  --sabr-maroon: #7b1e2d;
+  --sabr-maroon-dark: #5a1520;
+
+  /* ================================
+     THE SABR INDIA FOOTER
+     ================================ */
+
+  --footer-bg:#1c0f12;
+  --footer-bg-soft:#241317;
+  --footer-gold:#c9a45c;
+  --footer-text:#d7c5b3;
+  --footer-muted:#a99687;
+  --footer-line:rgba(201,164,92,.25);
+}
+
 * { box-sizing:border-box; }
 html { scroll-behavior:smooth; }
 body { margin:0; background:var(--paper); color:var(--ink); }

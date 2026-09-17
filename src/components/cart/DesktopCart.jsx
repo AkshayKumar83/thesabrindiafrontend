@@ -16,11 +16,16 @@ import CartActions from "./CartActions";
 import CartEmpty from "./CartEmpty";
 
 import { useCart } from "../../context/CartContext";
+import { useNavigate } from "react-router-dom";
 
 function DesktopCart({
   visible,
   onClose,
 }) {
+
+const navigate = useNavigate();
+
+
   const {
     items,
     totalItems,
@@ -96,7 +101,9 @@ function DesktopCart({
                   console.log(
                     "Proceed to checkout"
                   );
+                  navigate("/checkout");
                 }}
+                
                 onContinueShopping={onClose}
               />
 

@@ -55,6 +55,7 @@ import Contact from './layout/components/Contact';
 import AuthPage from './layout/home/AuthPage'
 import PolicyPage from './layout/pages/policies/PolicyPage'
 import ProductCollection from './layout/pages/product/ProductCollection'
+import CheckoutPage from './layout/pages/order/CheckoutPage'
 
 /**
  * Main Application Component
@@ -112,6 +113,8 @@ const App = () => {
             <Route exact path="contact" name="Contact Page" element={<Contact />} />
             <Route exact path="product-details/:id" name="Product Details Page" element={<ProductDetails />} />
             <Route exact path="collections" name="Collection Page" element={<ProductCollection />} />
+         
+            <Route path="/checkout" element={<CheckoutPage />} />
 
             <Route path="/policies/:policy" element={<PolicyPage />} />
           </Route>

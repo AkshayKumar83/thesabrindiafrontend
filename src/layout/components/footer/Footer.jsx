@@ -1,37 +1,9 @@
-// import { Camera, Mail, MapPin, Phone } from 'lucide-react'
-
-// function Footer({ onNavigate }) {
-//   return (
-//     <footer className="site-footer">
-//       <div className="footer-main">
-//         <div className="footer-brand">
-//           <div className="footer-mark">S</div>
-//           <p className="footer-title">The Sabr India</p>
-//           <p>Handpicked sarees for the rituals, celebrations, and quiet moments of life.</p>
-//           <a className="social-link" href="https://instagram.com" target="_blank" rel="noreferrer"><Camera size={16} /> Follow our drape diary</a>
-//         </div>
-//         <div className="footer-column"><p className="footer-heading">Explore</p><button onClick={() => onNavigate('home')}>Home</button><button onClick={() => onNavigate('shop')}>Shop sarees</button><button onClick={() => onNavigate('contact')}>Contact us</button></div>
-//         <div className="footer-column"><p className="footer-heading">Help</p><button>Shipping & returns</button><button>Care guide</button><button onClick={() => onNavigate('login')}>My account</button></div>
-//         <div className="footer-column contact-column"><p className="footer-heading">Come say hello</p><p><MapPin size={15} /> Jaipur, Rajasthan</p><p><Phone size={15} /> +91 98765 43210</p><p><Mail size={15} /> hello@thesabrindia.com</p></div>
-//       </div>
-//       <div className="footer-bottom"><span>© 2026 The Sabr India</span><span>Made slowly, worn often.</span></div>
-//     </footer>
-//   )
-// }
-
-// export default Footer
-
-
-
-
 import React from 'react'
 
 import {
-  CButton,
   CCol,
   CContainer,
   CFooter,
-  CLink,
   CRow,
 } from '@coreui/react'
 
@@ -40,17 +12,20 @@ import CIcon from '@coreui/icons-react'
 import {
   cibInstagram,
   cibFacebook,
+  cibYoutube,
 } from '@coreui/icons'
 
 import {
   Mail,
   MapPin,
   Phone,
+  Sparkles,
 } from 'lucide-react'
 
 import { Link } from 'react-router-dom'
 
-import logoSabr from '../../../assets/brand/logoSabr.jpeg'
+// import logoSabr from '../../../assets/brand/logoSabr.jpeg'
+import logoSabr from '../../../assets/brand/logoSabr.png'
 import footerImage from '../../../assets/brand/footerImage.png'
 
 import './Footer.css'
@@ -62,11 +37,23 @@ function Footer({ onNavigate }) {
      SOCIAL LINKS
      ===================================================== */
 
-  const instagramUsername = 'your_username'
-  const facebookUsername = 'your_username'
+  const instagramUrl = 'https://instagram.com/your_username'
+  const facebookUrl = 'https://facebook.com/your_username'
+  const youtubeUrl = 'https://youtube.com/'
+  const twitterUrl = 'https://twitter.com/'
 
-  const instagramUrl = `https://instagram.com/${instagramUsername}`
-  const facebookUrl = `https://facebook.com/${facebookUsername}`
+
+  /* =====================================================
+     NAVIGATION
+     ===================================================== */
+
+  const handleNavigate = (path) => {
+
+    if (onNavigate) {
+      onNavigate(path)
+    }
+
+  }
 
 
   return (
@@ -74,12 +61,12 @@ function Footer({ onNavigate }) {
 
 
       {/* =====================================================
-          MAIN FOOTER
+          FOOTER MAIN
           ===================================================== */}
 
-      <CContainer fluid className="sabr-footer-main">
+      <div className="sabr-footer-main">
 
-        <div className="sabr-footer-container">
+        <CContainer className="sabr-footer-container">
 
           <CRow className="sabr-footer-row">
 
@@ -91,7 +78,7 @@ function Footer({ onNavigate }) {
             <CCol
               xs={12}
               sm={6}
-              lg={3}
+              lg={4}
               className="sabr-footer-col"
             >
 
@@ -99,13 +86,11 @@ function Footer({ onNavigate }) {
 
                 {/* LOGO */}
 
-                <CLink
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault()
-                    onNavigate('home')
-                  }}
+                <button
+                  type="button"
                   className="sabr-footer-logo-link"
+                  onClick={() => handleNavigate('/')}
+                  aria-label="Go to home"
                 >
 
                   <img
@@ -114,68 +99,82 @@ function Footer({ onNavigate }) {
                     className="sabr-footer-logo"
                   />
 
-                </CLink>
+                </button>
 
 
-                {/* TITLE */}
+                {/* BRAND NAME */}
 
                 <h5 className="sabr-footer-title">
-                  The Sabr India
+                  THE SABR INDIA
                 </h5>
+
+
+                <p className="sabr-footer-tagline">
+                  HERITAGE SAREES · ESTD 1984
+                </p>
 
 
                 {/* DESCRIPTION */}
 
                 <p className="sabr-footer-description">
-                  Handpicked sarees for the rituals,
+                  Handpicked sarees for rituals,
                   celebrations, and quiet moments of life.
+                  Crafted with care, worn with grace.
                 </p>
 
 
                 {/* SOCIAL */}
 
-                <div className="sabr-footer-social">
+              <div className="sabr-footer-social">
 
-                  {/* INSTAGRAM */}
+  {/* INSTAGRAM */}
 
-                  <CButton
-                    component="a"
-                    href={instagramUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="sabr-social-btn"
-                    aria-label="Instagram"
-                    title="Instagram"
-                  >
-
-                    <CIcon
-                      icon={cibInstagram}
-                      size="lg"
-                    />
-
-                  </CButton>
+  <a
+    href={instagramUrl}
+    target="_blank"
+    rel="noreferrer"
+    className="sabr-social-btn"
+    aria-label="Instagram"
+  >
+    <CIcon
+      icon={cibInstagram}
+      size="lg"
+    />
+  </a>
 
 
-                  {/* FACEBOOK */}
+  {/* FACEBOOK */}
 
-                  <CButton
-                    component="a"
-                    href={facebookUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="sabr-social-btn"
-                    aria-label="Facebook"
-                    title="Facebook"
-                  >
+  <a
+    href={facebookUrl}
+    target="_blank"
+    rel="noreferrer"
+    className="sabr-social-btn"
+    aria-label="Facebook"
+  >
+    <CIcon
+      icon={cibFacebook}
+      size="lg"
+    />
+  </a>
 
-                    <CIcon
-                      icon={cibFacebook}
-                      size="lg"
-                    />
 
-                  </CButton>
+  {/* YOUTUBE */}
 
-                </div>
+  <a
+    href={youtubeUrl}
+    target="_blank"
+    rel="noreferrer"
+    className="sabr-social-btn"
+    aria-label="YouTube"
+  >
+    <CIcon
+      icon={cibYoutube}
+      size="lg"
+    />
+  </a>
+
+</div>
 
 
                 <p className="sabr-social-text">
@@ -188,68 +187,66 @@ function Footer({ onNavigate }) {
 
 
 
-       {/* =================================================
-    EXPLORE
-    ================================================= */}
+            {/* =================================================
+                EXPLORE
+                ================================================= */}
 
-{/* =================================================
-    EXPLORE
-    ================================================= */}
+            <CCol
+              xs={6}
+              sm={3}
+              lg={2}
+              className="sabr-footer-col"
+            >
 
-<CCol
-  xs={6}
-  sm={3}
-  lg={2}
-  className="sabr-footer-col"
->
-  <div className="sabr-footer-section">
+              <div className="sabr-footer-section">
 
-    <h6 className="sabr-footer-heading">
-      EXPLORE
-    </h6>
+                <h6 className="sabr-footer-heading">
+                  EXPLORE
+                </h6>
 
-    <CButton
-      color="link"
-      className="sabr-footer-link"
-      onClick={() => handleNavigate('/')}
-    >
-      Home
-    </CButton>
 
-    <CButton
-      color="link"
-      className="sabr-footer-link"
-      onClick={() => handleNavigate('/shop')}
-    >
-      Shop sarees
-    </CButton>
+                <button
+                  className="sabr-footer-link"
+                  onClick={() => handleNavigate('/')}
+                >
+                  Home
+                </button>
 
-    <CButton
-      color="link"
-      className="sabr-footer-link"
-      onClick={() => handleNavigate('/shop/chiffon')}
-    >
-      Chiffon Sarees
-    </CButton>
 
-    <CButton
-      color="link"
-      className="sabr-footer-link"
-      onClick={() => handleNavigate('/shop/georgette')}
-    >
-      Georgette Sarees
-    </CButton>
+                <button
+                  className="sabr-footer-link"
+                  onClick={() => handleNavigate('/shop')}
+                >
+                  Shop Sarees
+                </button>
 
-    <CButton
-      color="link"
-      className="sabr-footer-link"
-      onClick={() => handleNavigate('/contact')}
-    >
-      Contact us
-    </CButton>
 
-  </div>
-</CCol>
+                <button
+                  className="sabr-footer-link"
+                  onClick={() => handleNavigate('/shop/chiffon')}
+                >
+                  Chiffon Sarees
+                </button>
+
+
+                <button
+                  className="sabr-footer-link"
+                  onClick={() => handleNavigate('/shop/georgette')}
+                >
+                  Georgette Sarees
+                </button>
+
+
+                <button
+                  className="sabr-footer-link"
+                  onClick={() => handleNavigate('/contact')}
+                >
+                  Contact Us
+                </button>
+
+              </div>
+
+            </CCol>
 
 
 
@@ -273,27 +270,34 @@ function Footer({ onNavigate }) {
 
                 <Link
                   to="/policies/shipping"
-                  className="sabr-footer-link sabr-policy-link"
+                  className="sabr-footer-link"
                 >
-                  Shipping & returns
+                  Shipping & Returns
                 </Link>
 
 
                 <Link
                   to="/policies/care"
-                  className="sabr-footer-link sabr-policy-link"
+                  className="sabr-footer-link"
                 >
-                  Care guide
+                  Care Guide
                 </Link>
 
 
-                <CButton
-                  color="link"
+                <button
                   className="sabr-footer-link"
-                  onClick={() => onNavigate('login')}
+                  onClick={() => handleNavigate('/login')}
                 >
-                  My account
-                </CButton>
+                  My Account
+                </button>
+
+
+                <Link
+                  to="/policies/return"
+                  className="sabr-footer-link"
+                >
+                  Return Policy
+                </Link>
 
               </div>
 
@@ -321,7 +325,7 @@ function Footer({ onNavigate }) {
 
                 <Link
                   to="/policies/return"
-                  className="sabr-footer-link sabr-policy-link"
+                  className="sabr-footer-link"
                 >
                   Return Policy
                 </Link>
@@ -329,7 +333,7 @@ function Footer({ onNavigate }) {
 
                 <Link
                   to="/policies/refund"
-                  className="sabr-footer-link sabr-policy-link"
+                  className="sabr-footer-link"
                 >
                   Refund Policy
                 </Link>
@@ -337,7 +341,7 @@ function Footer({ onNavigate }) {
 
                 <Link
                   to="/policies/shipping"
-                  className="sabr-footer-link sabr-policy-link"
+                  className="sabr-footer-link"
                 >
                   Shipping Policy
                 </Link>
@@ -345,7 +349,7 @@ function Footer({ onNavigate }) {
 
                 <Link
                   to="/policies/cancellation"
-                  className="sabr-footer-link sabr-policy-link"
+                  className="sabr-footer-link"
                 >
                   Cancellation Policy
                 </Link>
@@ -353,7 +357,7 @@ function Footer({ onNavigate }) {
 
                 <Link
                   to="/policies/terms"
-                  className="sabr-footer-link sabr-policy-link"
+                  className="sabr-footer-link"
                 >
                   Terms & Services
                 </Link>
@@ -361,7 +365,7 @@ function Footer({ onNavigate }) {
 
                 <Link
                   to="/policies/privacy"
-                  className="sabr-footer-link sabr-policy-link"
+                  className="sabr-footer-link"
                 >
                   Privacy Policy
                 </Link>
@@ -379,7 +383,7 @@ function Footer({ onNavigate }) {
             <CCol
               xs={12}
               sm={6}
-              lg={3}
+              lg={2}
               className="sabr-footer-col"
             >
 
@@ -392,7 +396,7 @@ function Footer({ onNavigate }) {
 
                 <div className="sabr-contact-item">
 
-                  <MapPin size={17} />
+                  <MapPin size={16} />
 
                   <span>
                     Jaipur, Rajasthan
@@ -403,7 +407,7 @@ function Footer({ onNavigate }) {
 
                 <div className="sabr-contact-item">
 
-                  <Phone size={17} />
+                  <Phone size={16} />
 
                   <span>
                     +91 98765 43210
@@ -414,7 +418,7 @@ function Footer({ onNavigate }) {
 
                 <div className="sabr-contact-item">
 
-                  <Mail size={17} />
+                  <Mail size={16} />
 
                   <span>
                     hello@thesabrindia.com
@@ -429,24 +433,78 @@ function Footer({ onNavigate }) {
 
           </CRow>
 
+
+
+          {/* =====================================================
+              NEWSLETTER
+              ===================================================== */}
+
+          <div className="sabr-newsletter">
+
+            <div className="sabr-newsletter-content">
+
+              <div className="sabr-newsletter-copy">
+
+                <div className="sabr-newsletter-title">
+
+                  <Sparkles size={19} />
+
+                  <span>
+                    The Inner Circle
+                  </span>
+
+                </div>
+
+
+                <p>
+                  10% off your first order, private previews,
+                  and weaving stories — twice a month, never more.
+                </p>
+
+              </div>
+
+
+              <form
+                className="sabr-newsletter-form"
+                onSubmit={(e) => e.preventDefault()}
+              >
+
+                <input
+                  type="email"
+                  placeholder="Your email address"
+                  aria-label="Email address"
+                />
+
+                <button type="submit">
+                  JOIN
+                </button>
+
+              </form>
+
+            </div>
+
+          </div>
+
+
+        </CContainer>
+
+
+        {/* =====================================================
+            DECORATIVE FOOTER IMAGE
+            ===================================================== */}
+
+        <div className="sabr-footer-illustration">
+
+          <img
+            src={footerImage}
+            alt=""
+            aria-hidden="true"
+          />
+
         </div>
 
-      </CContainer>
 
-
-
-      {/* =====================================================
-          FOOTER ILLUSTRATION
-          ===================================================== */}
-
-      {/* <div className="sabr-footer-illustration">
-
-        <img
-          src={footerImage}
-          alt="The Sabr India saree collection"
-        />
-
-      </div> */}
+      </div>
 
 
 
@@ -456,21 +514,22 @@ function Footer({ onNavigate }) {
 
       <div className="sabr-footer-bottom">
 
-        <div className="sabr-footer-container">
+        <CContainer className="sabr-footer-container">
 
           <div className="sabr-footer-bottom-content">
 
             <span>
-              © 2026 The Sabr India
+              © 2026 The Sabr India. All rights reserved.
             </span>
 
-            <span>
-              Made slowly, worn often.
+
+            <span className="sabr-footer-certified">
+              ✦ Handloom Inspired · Secure Payments · UPI · Cards
             </span>
 
           </div>
 
-        </div>
+        </CContainer>
 
       </div>
 
