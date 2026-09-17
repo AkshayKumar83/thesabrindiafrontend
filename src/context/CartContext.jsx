@@ -134,6 +134,7 @@ export function CartProvider({ children }) {
                           }`
                         : "",
                     }));
+                    console.log("Loaded cart items:", items);
       dispatch({
         type: "LOAD_CART",
         payload: items || [],

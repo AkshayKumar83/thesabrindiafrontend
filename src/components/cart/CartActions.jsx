@@ -23,6 +23,7 @@ function CartActions({
     <div className="d-flex flex-column gap-2 mt-3">
 
       <CButton
+      
         style={{background:"var(--forest)", color:"var(--paper)"}}
         size="lg"
         className="fw-semibold"

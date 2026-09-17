@@ -12,11 +12,17 @@ import CartActions from "./CartActions";
 import CartEmpty from "./CartEmpty";
 
 import { useCart } from "../../context/CartContext";
+import { useNavigate } from "react-router-dom";
 
 function MobileCartSheet({
   visible,
   onClose,
 }) {
+
+
+  const navigate = useNavigate();
+
+
   const {
     items,
     totalItems,
@@ -100,6 +106,7 @@ function MobileCartSheet({
                     console.log(
                       "Proceed to checkout"
                     );
+                      navigate("/checkout");
                   }}
                   onContinueShopping={onClose}
                 />

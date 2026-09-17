@@ -1,0 +1,664 @@
+/* ==========================================================================
+   THE SABR INDIA — Checkout UI styling
+   Scoped under .sabr-checkout so it never leaks into the rest of the app.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap');
+
+.sabr-checkout {
+  --sabr-bg: #faf6ee;
+  --sabr-surface: #ffffff;
+  --sabr-surface-soft: #f4eee0;
+  --sabr-maroon: #7b1e2d;
+  --sabr-maroon-dark: #5a1520;
+  --sabr-maroon-tint: #f6e9ea;
+  --sabr-gold: #ad8438;
+  --sabr-gold-soft: #e7d5ac;
+  --sabr-ink: #2b211c;
+  --sabr-ink-soft: #756b5f;
+  --sabr-ink-faint: #a89d8e;
+  --sabr-line: #e8dfcc;
+  --sabr-success: #3f6b4f;
+  --sabr-success-tint: #eaf1ec;
+  --sabr-danger: #a83b2c;
+
+  background: var(--sabr-bg);
+  color: var(--sabr-ink);
+  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+  min-height: 100vh;
+  padding-block: 2.5rem 4rem;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.sabr-checkout * {
+  box-sizing: border-box;
+}
+
+.sabr-serif {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+}
+
+/* ---------- Header / brand ---------- */
+.sabr-brand {
+  text-align: center;
+  margin-bottom: 2.25rem;
+}
+
+.sabr-brand__mark {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--sabr-maroon);
+  margin: 0;
+}
+
+.sabr-brand__mark span {
+  color: var(--sabr-gold);
+}
+
+.sabr-brand__sub {
+  font-size: 0.8rem;
+  color: var(--sabr-ink-soft);
+  letter-spacing: 0.18em;
+  margin-top: 0.15rem;
+}
+
+/* ---------- Step rail ---------- */
+.sabr-steps {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0;
+  max-width: 640px;
+  margin: 0 auto 2.5rem;
+  padding: 0 0.5rem;
+}
+
+.sabr-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  position: relative;
+  text-align: center;
+}
+
+.sabr-step__line {
+  position: absolute;
+  top: 15px;
+  left: -50%;
+  width: 100%;
+  height: 1px;
+  background: var(--sabr-line);
+  z-index: 0;
+}
+
+.sabr-step:first-child .sabr-step__line {
+  display: none;
+}
+
+.sabr-step__line--done {
+  background: var(--sabr-gold);
+}
+
+.sabr-step__dot {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: var(--sabr-surface);
+  border: 1px solid var(--sabr-line);
+  color: var(--sabr-ink-faint);
+  position: relative;
+  z-index: 1;
+  transition: all 0.25s ease;
+}
+
+.sabr-step__dot--active {
+  background: var(--sabr-maroon);
+  border-color: var(--sabr-maroon);
+  color: #fff;
+}
+
+.sabr-step__dot--done {
+  background: var(--sabr-gold);
+  border-color: var(--sabr-gold);
+  color: #fff;
+}
+
+.sabr-step__label {
+  margin-top: 0.5rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  color: var(--sabr-ink-faint);
+}
+
+.sabr-step__label--active {
+  color: var(--sabr-maroon);
+  font-weight: 600;
+}
+
+.sabr-step__label--done {
+  color: var(--sabr-ink-soft);
+}
+
+/* ---------- Cards ---------- */
+.sabr-card {
+  background: var(--sabr-surface);
+  border: 1px solid var(--sabr-line);
+  border-radius: 6px;
+  box-shadow: none;
+}
+
+.sabr-card--current {
+  border-top: 2px solid var(--sabr-gold);
+}
+
+.sabr-card__header {
+  border-bottom: 1px solid var(--sabr-line);
+  background: transparent;
+  padding: 1.25rem 1.5rem;
+}
+
+.sabr-card__eyebrow {
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  color: var(--sabr-gold);
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+
+.sabr-card__title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--sabr-ink);
+}
+
+.sabr-card__body {
+  padding: 1.5rem;
+}
+
+/* ---------- Address ---------- */
+.sabr-addr-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.sabr-addr-card {
+  border: 1px solid var(--sabr-line);
+  border-radius: 6px;
+  padding: 1rem 1.1rem;
+  cursor: pointer;
+  position: relative;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  background: var(--sabr-surface);
+}
+
+.sabr-addr-card:hover {
+  box-shadow: 0 4px 16px rgba(43, 33, 28, 0.06);
+}
+
+.sabr-addr-card--selected {
+  border-color: var(--sabr-maroon);
+  background: var(--sabr-maroon-tint);
+  box-shadow: 0 4px 16px rgba(123, 30, 45, 0.08);
+}
+
+.sabr-addr-card__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.sabr-addr-card__name {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--sabr-ink);
+}
+
+.sabr-addr-card__tag {
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  padding: 0.15rem 0.5rem;
+  border-radius: 3px;
+  background: var(--sabr-surface-soft);
+  color: var(--sabr-ink-soft);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.sabr-addr-card__text {
+  font-size: 0.85rem;
+  color: var(--sabr-ink-soft);
+  line-height: 1.5;
+  margin-top: 0.4rem;
+}
+
+.sabr-addr-card__radio {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid var(--sabr-ink-faint);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sabr-addr-card--selected .sabr-addr-card__radio {
+  border-color: var(--sabr-maroon);
+}
+
+.sabr-addr-card__radio-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--sabr-maroon);
+}
+
+.sabr-addr-card__edit {
+  position: absolute;
+  top: 0.9rem;
+  right: 0.9rem;
+  background: none;
+  border: none;
+  color: var(--sabr-ink-faint);
+  cursor: pointer;
+  padding: 0.15rem;
+}
+
+.sabr-addr-card__edit:hover {
+  color: var(--sabr-maroon);
+}
+
+.sabr-addr-add {
+  border: 1.5px dashed var(--sabr-gold-soft);
+  border-radius: 6px;
+  padding: 1rem 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  color: var(--sabr-maroon);
+  font-weight: 600;
+  font-size: 0.88rem;
+  min-height: 88px;
+  background: transparent;
+  transition: background 0.2s ease;
+}
+
+.sabr-addr-add:hover {
+  background: var(--sabr-surface-soft);
+}
+
+.sabr-form-label {
+  font-size: 0.75rem;
+  color: var(--sabr-ink-soft);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  margin-bottom: 0.3rem;
+}
+
+.sabr-checkout .form-control,
+.sabr-checkout .form-select {
+  border-color: var(--sabr-line);
+  border-radius: 5px;
+  font-size: 0.9rem;
+  padding: 0.55rem 0.75rem;
+  background-color: var(--sabr-surface);
+}
+
+.sabr-checkout .form-control:focus,
+.sabr-checkout .form-select:focus {
+  border-color: var(--sabr-maroon);
+  box-shadow: 0 0 0 0.15rem rgba(123, 30, 45, 0.12);
+}
+
+.sabr-checkout .form-check-input:checked {
+  background-color: var(--sabr-maroon);
+  border-color: var(--sabr-maroon);
+}
+
+/* ---------- Buttons ---------- */
+.sabr-btn-primary {
+  background: var(--sabr-maroon) !important;
+  border-color: var(--sabr-maroon) !important;
+  color: #fff !important;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  border-radius: 5px;
+  padding: 0.65rem 1.5rem;
+  transition: background 0.2s ease;
+}
+
+.sabr-btn-primary:hover,
+.sabr-btn-primary:focus {
+  background: var(--sabr-maroon-dark) !important;
+  border-color: var(--sabr-maroon-dark) !important;
+}
+
+.sabr-btn-primary:disabled {
+  background: var(--sabr-ink-faint) !important;
+  border-color: var(--sabr-ink-faint) !important;
+  opacity: 0.7;
+}
+
+.sabr-btn-outline {
+  background: transparent !important;
+  border: 1px solid var(--sabr-ink) !important;
+  color: var(--sabr-ink) !important;
+  font-weight: 600;
+  border-radius: 5px;
+  padding: 0.65rem 1.5rem;
+}
+
+.sabr-btn-outline:hover {
+  background: var(--sabr-ink) !important;
+  color: #fff !important;
+}
+
+.sabr-btn-ghost {
+  background: transparent !important;
+  border: none !important;
+  color: var(--sabr-maroon) !important;
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 0.3rem 0;
+}
+
+/* ---------- Order review ---------- */
+.sabr-item-row {
+  display: flex;
+  gap: 0.9rem;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--sabr-line);
+}
+
+.sabr-item-row:last-child {
+  border-bottom: none;
+}
+
+.sabr-item-row__img {
+  width: 64px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid var(--sabr-line);
+  flex-shrink: 0;
+  background: var(--sabr-surface-soft);
+}
+
+.sabr-item-row__name {
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--sabr-ink);
+}
+
+.sabr-item-row__meta {
+  font-size: 0.78rem;
+  color: var(--sabr-ink-soft);
+  margin-top: 0.15rem;
+}
+
+.sabr-item-row__price {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--sabr-ink);
+  white-space: nowrap;
+}
+
+.sabr-summary-line {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.88rem;
+  color: var(--sabr-ink-soft);
+  padding: 0.35rem 0;
+}
+
+.sabr-summary-line--discount {
+  color: var(--sabr-success);
+}
+
+.sabr-summary-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-top: 0.75rem;
+  margin-top: 0.4rem;
+  border-top: 1px solid var(--sabr-line);
+}
+
+.sabr-summary-total__label {
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.sabr-summary-total__value {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--sabr-maroon);
+}
+
+.sabr-sidebar {
+  position: sticky;
+  top: 1.5rem;
+}
+
+/* ---------- Payment ---------- */
+.sabr-pay-option {
+  border: 1px solid var(--sabr-line);
+  border-radius: 6px;
+  padding: 1.1rem 1.2rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+  cursor: pointer;
+  margin-bottom: 0.9rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  background: var(--sabr-surface);
+}
+
+.sabr-pay-option:hover {
+  box-shadow: 0 4px 16px rgba(43, 33, 28, 0.06);
+}
+
+.sabr-pay-option--selected {
+  border-color: var(--sabr-maroon);
+  background: var(--sabr-maroon-tint);
+}
+
+.sabr-pay-option__icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--sabr-surface-soft);
+  color: var(--sabr-maroon);
+  flex-shrink: 0;
+}
+
+.sabr-pay-option--selected .sabr-pay-option__icon {
+  background: var(--sabr-maroon);
+  color: #fff;
+}
+
+.sabr-pay-option__title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--sabr-ink);
+}
+
+.sabr-pay-option__desc {
+  font-size: 0.8rem;
+  color: var(--sabr-ink-soft);
+  margin-top: 0.15rem;
+}
+
+.sabr-pay-option__radio {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid var(--sabr-ink-faint);
+  flex-shrink: 0;
+  margin-left: auto;
+  margin-top: 0.15rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sabr-pay-option--selected .sabr-pay-option__radio {
+  border-color: var(--sabr-maroon);
+}
+
+.sabr-pay-option__radio-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--sabr-maroon);
+}
+
+.sabr-trust-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.78rem;
+  color: var(--sabr-ink-soft);
+  margin-top: 1rem;
+  justify-content: center;
+}
+
+.sabr-pay-cta {
+  width: 100%;
+  font-size: 1.02rem;
+  padding: 0.9rem 1.5rem;
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+/* ---------- Success ---------- */
+.sabr-success {
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.sabr-success__icon {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: var(--sabr-success-tint);
+  color: var(--sabr-success);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.25rem;
+  animation: sabr-pop 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes sabr-pop {
+  0% { transform: scale(0.6); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sabr-success__icon {
+    animation: none;
+  }
+}
+
+.sabr-success__title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.35rem;
+}
+
+.sabr-success__sub {
+  color: var(--sabr-ink-soft);
+  font-size: 0.92rem;
+  margin-bottom: 1.75rem;
+}
+
+.sabr-order-id {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--sabr-surface-soft);
+  border: 1px solid var(--sabr-line);
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  margin-bottom: 1.75rem;
+}
+
+.sabr-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 0.25rem 0.65rem;
+  border-radius: 3px;
+  background: var(--sabr-success-tint);
+  color: var(--sabr-success);
+}
+
+.sabr-status-badge--cod {
+  background: var(--sabr-surface-soft);
+  color: var(--sabr-ink-soft);
+}
+
+.sabr-success-actions {
+  display: flex;
+  gap: 0.9rem;
+  justify-content: center;
+  margin-top: 1.75rem;
+  flex-wrap: wrap;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 991.98px) {
+  .sabr-sidebar {
+    position: static;
+    margin-top: 1.5rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .sabr-checkout {
+    padding-block: 1.5rem 3rem;
+  }
+  .sabr-card__body {
+    padding: 1.1rem;
+  }
+  .sabr-step__label {
+    display: none;
+  }
+  .sabr-success-actions {
+    flex-direction: column;
+  }
+  .sabr-success-actions .btn {
+    width: 100%;
+  }
+}
