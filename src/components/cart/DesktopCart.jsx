@@ -101,6 +101,7 @@ const navigate = useNavigate();
                   console.log(
                     "Proceed to checkout"
                   );
+                  onClose();
                   navigate("/checkout");
                 }}
                 

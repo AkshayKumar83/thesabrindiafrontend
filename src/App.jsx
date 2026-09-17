@@ -56,6 +56,7 @@ import AuthPage from './layout/home/AuthPage'
 import PolicyPage from './layout/pages/policies/PolicyPage'
 import ProductCollection from './layout/pages/product/ProductCollection'
 import CheckoutPage from './layout/pages/order/CheckoutPage'
+import OrderSuccess from './layout/pages/order/OrderSuccess'
 
 /**
  * Main Application Component
@@ -115,6 +116,7 @@ const App = () => {
             <Route exact path="collections" name="Collection Page" element={<ProductCollection />} />
          
             <Route path="/checkout" element={<CheckoutPage />} />
+            <Route path="/order-success" element={<OrderSuccess />} />
 
             <Route path="/policies/:policy" element={<PolicyPage />} />
           </Route>

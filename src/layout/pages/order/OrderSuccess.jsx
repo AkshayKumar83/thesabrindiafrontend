@@ -17,6 +17,7 @@ const currency = (n) =>
  * @param {() => void} onTrackOrder
  * @param {() => void} onContinueShopping
  */
+
 const OrderSuccess = ({
   orderNumber,
   paymentStatus = 'paid',
@@ -26,10 +27,22 @@ const OrderSuccess = ({
   total = 0,
   onTrackOrder,
   onContinueShopping,
+  compact=false
 }) => {
   const itemCount = items.reduce((sum, it) => sum + it.qty, 0);
-
+  console.log("order success page:: here");
   return (
+    <div style={!compact ? {paddingBlock:"1.5rem 5rem"}: {}}>
+    {
+      !compact && (
+        <div className="sabr-brand">
+          <h1 className="sabr-brand__mark">
+            THE SABR <span>INDIA</span>
+          </h1>
+          <div className="sabr-brand__sub">SECURE CHECKOUT</div>
+        </div>
+      )
+    }
     <div className="sabr-success">
       <div className="sabr-success__icon">
         <CheckCircle2 size={40} strokeWidth={2} />
@@ -61,14 +74,14 @@ const OrderSuccess = ({
                 <MapPin size={12} /> DELIVERY ADDRESS
               </div>
               <div className="fw-semibold" style={{ fontSize: '0.92rem' }}>
-                {address.fullName}
+                {address?.fullName}
               </div>
               <div className="small" style={{ color: 'var(--sabr-ink-soft)' }}>
-                {address.line1}
-                {address.line2 ? `, ${address.line2}` : ''}, {address.city}, {address.state} –{' '}
-                {address.pincode}
+                {address?.line1}
+                {address?.line2 ? `, ${address?.line2}` : ''}, {address?.city}, {address?.state} –{' '}
+                {address?.pincode}
                 <br />
-                Phone: {address.phone}
+                Phone: {address?.phone}
               </div>
             </div>
           )}
@@ -94,6 +107,7 @@ const OrderSuccess = ({
           Continue Shopping
         </CButton>
       </div>
+    </div>
     </div>
   );
 };

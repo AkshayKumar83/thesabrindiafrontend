@@ -16,14 +16,11 @@ const OrderReview = ({
   total = 0,
   compact = false,
   stepLabel = 'STEP 02',
+  currentStep = 1
 }) => {
   const itemCount = items.reduce((sum, it) => sum + it.qty, 0);
-  
-
-  console.log('OrderReview props:',items )
-
   return (
-    <CCard className={`sabr-card ${!compact ? 'sabr-card--current' : ''}`}>
+    <CCard className={`sabr-card ${!compact || currentStep===1 ? 'sabr-card--current' : ''}`}>
       <CCardHeader className="sabr-card__header">
         {!compact && <div className="sabr-card__eyebrow">{stepLabel}</div>}
         <h2 className="sabr-card__title" style={{ fontSize: compact ? '1.25rem' : undefined }}>
