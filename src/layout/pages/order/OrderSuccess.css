@@ -1,0 +1,281 @@
+/* ==========================================================
+   OrderSuccess (sos = sabr order success)
+   Uses only your palette. If --sabr-maroon etc. are already
+   defined globally they are picked up; otherwise the fallback
+   values below apply.
+   ========================================================== */
+
+.sos {
+  --sos-maroon: var(--sabr-maroon, #7b1e2d);
+  --sos-maroon-dark: var(--sabr-maroon-dark, #5a1520);
+  --sos-ink: var(--forest-dark, #630313f5);
+  --sos-coral: var(--coral, #e28d6b);
+  --sos-cream: var(--cream, #f8ef77);
+
+  /* tints mixed from the palette */
+  /* --sos-panel: color-mix(in srgb, var(--sos-maroon) 4%, var(--sos-cream)); */
+  --sos-panel: #fcf9d4;
+  --sos-line: color-mix(in srgb, var(--sos-maroon) 20%, var(--sos-cream));
+  --sos-muted: color-mix(in srgb, var(--sos-maroon-dark) 75%, var(--sos-cream));
+
+  color: var(--sos-ink);
+  line-height: 1.55;
+}
+.sos:not(.sos--compact) { padding-block: 1.5rem 5rem; }
+.sos *, .sos *::before, .sos *::after { box-sizing: border-box; }
+.sos ul, .sos ol { list-style: none; margin: 0; padding: 0; }
+.sos dl, .sos dd, .sos p { margin: 0; }
+.sos .sos-muted { color: var(--sos-muted); font-size: 0.9rem; }
+
+.sos-wrap { width: 100%; max-width: 1040px; margin: 0 auto; padding: 0 1rem; }
+
+/* ---------- Hero ---------- */
+.sos-hero {
+  background: var(--sos-maroon-dark);
+  color: var(--sos-cream);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+.sos-hero__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem 2rem;
+  padding: 2rem;
+}
+.sos-hero__main { display: flex; align-items: center; gap: 1.25rem; flex: 1 1 380px; min-width: 0; }
+
+.sos-check {
+  flex: none;
+  width: 64px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--sos-maroon);
+  border: 2px solid var(--sos-coral);
+  color: var(--sos-cream);
+  animation: sos-pop 0.5s ease-out both;
+}
+@keyframes sos-pop {
+  from { transform: scale(0.6); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.sos .sos-title {
+  margin: 0;
+  font-size: clamp(1.5rem, 3.2vw, 2.2rem);
+  line-height: 1.2;
+  color: inherit;
+}
+.sos .sos-sub { margin-top: 0.5rem; max-width: 54ch; opacity: 0.88; }
+
+/* order number tag */
+.sos-tag {
+  display: grid;
+  justify-items: start;
+  gap: 2px;
+  min-width: 240px;
+  max-width: 100%;
+  padding: 1rem 1.25rem;
+  border: 1px dashed var(--sos-coral);
+  border-radius: 6px;
+}
+.sos-tag__label { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; opacity: 0.85; }
+.sos-tag__value { font-weight: 700; font-size: 1.1rem; letter-spacing: 0.02em; overflow-wrap: anywhere; }
+.sos-tag__date { font-size: 0.85rem; opacity: 0.85; margin-bottom: 6px; }
+.sos-tag .sos-copy { color: var(--sos-coral); }
+
+/* woven border strip */
+.sos-border {
+  height: 22px;
+  border-top: 2px solid var(--sos-coral);
+  background-color: var(--sos-maroon);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='18' viewBox='0 0 28 18'%3E%3Crect width='28' height='18' fill='%237b1e2d'/%3E%3Cpath d='M14 2 22 9 14 16 6 9Z' fill='none' stroke='%23e28d6b' stroke-width='1.4'/%3E%3Ccircle cx='14' cy='9' r='1.8' fill='%23e28d6b'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-position: center;
+  background-size: 28px 18px;
+}
+
+/* ---------- Layout ---------- */
+.sos-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  gap: 1.5rem;
+  align-items: start;
+}
+
+/* CoreUI card overrides */
+.sos .sos-panel.card {
+  --cui-card-bg: var(--sos-panel);
+  --cui-card-border-color: var(--sos-line);
+  background: var(--sos-panel);
+  border: 1px solid var(--sos-line);
+  border-radius: 8px;
+  box-shadow: none;
+  color: inherit;
+  margin: 0;
+}
+.sos .sos-items .card-body { padding: 1.5rem 1.75rem 0.5rem; }
+.sos .sos-side .card-body { padding: 0.25rem 1.5rem; }
+.sos .sos-side.card { position: sticky; top: 1.5rem; }
+
+.sos .sos-h {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--sos-maroon);
+}
+.sos-head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; margin-bottom: 0.5rem; }
+
+/* ---------- Items ---------- */
+.sos-item {
+  display: grid;
+  grid-template-columns: 76px minmax(0, 1fr) auto;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-top: 1px solid var(--sos-line);
+  align-items: start;
+}
+.sos-thumb {
+  width: 76px;
+  aspect-ratio: 4 / 5;
+  border-radius: 4px;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--sos-coral) 35%, var(--sos-cream));
+}
+.sos-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.sos-item__name { font-weight: 600; line-height: 1.3; }
+.sos-item__variant { text-transform: capitalize; }
+.sos-item__total { font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+.sos-totals { border-top: 1px solid var(--sos-line); padding: 1rem 0 1.25rem; display: grid; gap: 0.5rem; }
+.sos-totals > div { display: flex; justify-content: space-between; gap: 1rem; }
+.sos-totals dt { font-weight: 400; color: var(--sos-muted); }
+.sos-totals dd { font-variant-numeric: tabular-nums; }
+.sos-totals .sos-grand {
+  margin-top: 0.4rem;
+  padding-top: 0.9rem;
+  border-top: 2px solid var(--sos-maroon);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--sos-maroon);
+}
+.sos-totals .sos-grand dt { color: inherit; font-weight: 700; }
+
+/* ---------- Details column ---------- */
+.sos-block { padding: 1.25rem 0; border-bottom: 1px solid var(--sos-line); }
+.sos-block:last-child { border-bottom: 0; }
+.sos-block .sos-h { margin-bottom: 0.75rem; }
+
+.sos-steps { display: grid; gap: 0.9rem; }
+.sos-step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  column-gap: 0.75rem;
+  align-items: center;
+}
+.sos-step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 9px;
+  top: 20px;
+  bottom: -0.9rem;
+  width: 2px;
+  background: var(--sos-line);
+}
+.sos-step.is-done:not(:last-child)::after { background: var(--sos-maroon); }
+.sos-dot {
+  z-index: 1;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--sos-line);
+  background: var(--sos-cream);
+}
+.sos-step.is-done .sos-dot { background: var(--sos-maroon); border-color: var(--sos-maroon); }
+.sos-step.is-current .sos-dot {
+  border-color: var(--sos-maroon);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--sos-coral) 55%, transparent);
+}
+.sos-step.is-todo .sos-step__label { color: var(--sos-muted); }
+.sos-step.is-current .sos-step__label { font-weight: 700; }
+.sos-step__note { grid-column: 2; }
+
+.sos-address { font-style: normal; display: grid; gap: 1px; margin: 0; }
+.sos-address strong { margin-bottom: 2px; }
+.sos-address__phone { margin-top: 0.4rem; }
+
+.sos-pay { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; margin-bottom: 0.25rem; }
+.sos-pill {
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 1px 12px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--sos-coral) 45%, var(--sos-cream));
+  color: var(--sos-maroon-dark);
+}
+.sos-pill.is-paid { background: var(--sos-maroon); color: var(--sos-cream); }
+
+.sos-ref { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 0.75rem; margin-top: 0.5rem; align-items: center; }
+.sos-ref > .sos-muted { grid-column: 1 / -1; }
+.sos-ref__value { font-weight: 600; overflow-wrap: anywhere; }
+
+.sos-copy {
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--sos-maroon);
+  background: none;
+  border: 0;
+  padding: 4px 0;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ---------- Actions ---------- */
+.sos-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.5rem; }
+
+.sos a:focus-visible, .sos button:focus-visible {
+  outline: 3px solid var(--sos-maroon-dark);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+.sos-hero button:focus-visible { outline-color: var(--sos-coral); }
+
+/* Empty state */
+.sos-empty { padding: 2rem 1.75rem; }
+.sos .sos-empty .sos-title { font-size: 1.5rem; color: var(--sos-maroon); }
+.sos-empty .sos-muted { margin: 0.5rem 0 0; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .sos-grid { grid-template-columns: minmax(0, 1fr); }
+  .sos .sos-side.card { position: static; }
+  .sos-tag { width: 100%; }
+}
+@media (max-width: 520px) {
+  .sos-wrap { padding: 0 0.75rem; }
+  .sos-hero__inner { padding: 1.5rem 1.25rem; }
+  .sos-hero__main { flex-direction: column; align-items: flex-start; gap: 0.9rem; }
+  .sos-grid { gap: 1rem; }
+  .sos .sos-items .card-body { padding: 1.25rem 1rem 0.25rem; }
+  .sos .sos-side .card-body { padding: 0.25rem 1rem; }
+  .sos-item { grid-template-columns: 64px minmax(0, 1fr); gap: 0.75rem; }
+  .sos-thumb { width: 64px; }
+  .sos-item__total { grid-column: 2; }
+  .sos-actions { flex-direction: column; }
+  .sos-actions .btn { width: 100%; justify-content: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sos-check { animation: none; }
+}
