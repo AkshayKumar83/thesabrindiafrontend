@@ -439,7 +439,7 @@ function Footer({ onNavigate }) {
               NEWSLETTER
               ===================================================== */}
 
-          <div className="sabr-newsletter">
+          {/* <div className="sabr-newsletter">
 
             <div className="sabr-newsletter-content">
 
@@ -483,7 +483,7 @@ function Footer({ onNavigate }) {
 
             </div>
 
-          </div>
+          </div> */}
 
 
         </CContainer>
@@ -493,7 +493,7 @@ function Footer({ onNavigate }) {
             DECORATIVE FOOTER IMAGE
             ===================================================== */}
 
-        <div className="sabr-footer-illustration">
+        {/* <div className="sabr-footer-illustration">
 
           <img
             src={footerImage}
@@ -501,7 +501,7 @@ function Footer({ onNavigate }) {
             aria-hidden="true"
           />
 
-        </div>
+        </div> */}
 
 
       </div>
