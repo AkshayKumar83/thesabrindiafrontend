@@ -103,17 +103,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible 
 .story-copy h2 em { color:#b8d0bc; }
 .story-copy > p:not(.section-kicker) { max-width:340px; margin:29px 0 31px; color:#c2d0c5; font-size:14px; line-height:1.75; }
 .story-copy .text-arrow { width:max-content; border-color:#b8d0bc; color:#f7f8f4; }
-.contact-section { padding:clamp(65px,9vw,115px) clamp(22px,8vw,120px); background:var(--cream); }
-.contact-grid { display:grid; grid-template-columns:1.15fr .85fr; gap:50px; align-items:end; }
-.contact-grid h2 { font-size:clamp(40px,5vw,70px); }
-.contact-grid > div:first-child > p { max-width:390px; margin:25px 0 0; color:var(--muted); font-size:14px; line-height:1.7; }
-.contact-details { display:grid; gap:14px; padding-bottom:4px; }
-.contact-details a,.contact-details p { display:flex; align-items:center; gap:10px; margin:0; color:var(--ink); font-size:13px; text-decoration:none; }
-.contact-details svg { color:var(--coral); }
-.contact-form { display:grid; grid-template-columns:1fr 1fr; gap:12px; max-width:800px; margin-top:30px; }
-.contact-form input,.contact-form textarea { width:100%; padding:13px 14px; border:1px solid #d6d8d0; outline:0; background:#f7f8f4; color:var(--ink); font-size:12px; }
-.contact-form textarea { grid-column:span 2; resize:vertical; }
-.contact-form .dark-button { grid-column:span 2; }
+
 .site-footer { padding:60px clamp(22px,6vw,90px) 22px; background:var(--forest); color:#c2d0c5; }
 .footer-main { display:grid; grid-template-columns:1.5fr .8fr .8fr 1.2fr; gap:36px; padding-bottom:55px; }
 .footer-brand { max-width:265px; }

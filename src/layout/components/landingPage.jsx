@@ -14,7 +14,7 @@ import {
 } from 'lucide-react'
 import ProductList from '../../components/product/productlist/ProductList.jsx';
 
-import Contact from './Contact.jsx';
+import Contact from './contact/Contact.jsx';
 
 function LandingPage({ onNavigate }) {
 

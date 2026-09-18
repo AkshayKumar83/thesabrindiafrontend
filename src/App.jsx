@@ -51,7 +51,7 @@ import UserRegister from './layout/user/UserRegister'
 import AdminLogin from './admin/auth/AdminLogin'
 import ProductDetails from './components/product/ProductDetails'
 import LandingPage from './layout/components/landingPage'
-import Contact from './layout/components/Contact';
+import Contact from './layout/components/contact/Contact';
 import AuthPage from './layout/home/AuthPage'
 import PolicyPage from './layout/pages/policies/PolicyPage'
 import ProductCollection from './layout/pages/product/ProductCollection'
