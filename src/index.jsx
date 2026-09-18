@@ -7,11 +7,16 @@ import './fontAwesome'
 import App from './App'
 import store from './store'
 import { CartProvider } from './context/CartContext'
+import { AuthProvider } from "./context/AuthContext";
 
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>
-     <CartProvider>
-      <App />
-     </CartProvider>
+     <Provider store={store}>
+      <AuthProvider>
+        <CartProvider>
+          <App />
+        </CartProvider>
+      </AuthProvider>
+    </Provider>
   </Provider>,
 )

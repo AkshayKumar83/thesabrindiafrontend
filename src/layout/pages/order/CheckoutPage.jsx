@@ -6,48 +6,10 @@ import StepIndicator from './StepIndicator'
 import AddressSection from './AddressSection'
 import OrderReview from './OrderReview'
 import PaymentSection from './PaymentSection'
-import OrderSuccess from './OrderSuccess'
-
 import './checkout.css'
-
 import { useCart } from '../../../context/CartContext'
-
-// ---------------------------------------------------------------------------
-// Sample address data
-// Replace this later with your real address API.
-// ---------------------------------------------------------------------------
-
-const SAMPLE_ADDRESSES = [
-  {
-    id: 'addr-1',
-    fullName: 'Ananya Sharma',
-    phone: '9876543210',
-    line1: '14, Rosewood Apartments',
-    line2: 'Sector 21',
-    city: 'Gurugram',
-    state: 'Haryana',
-    pincode: '122016',
-    type: 'Home',
-    isDefault: true,
-  },
-
-  {
-    id: 'addr-2',
-    fullName: 'Ananya Sharma',
-    phone: '9876543210',
-    line1: '4th Floor, Meridian Business Park',
-    line2: '',
-    city: 'Gurugram',
-    state: 'Haryana',
-    pincode: '122002',
-    type: 'Office',
-    isDefault: false,
-  },
-]
-
-// ---------------------------------------------------------------------------
-// Checkout steps
-// ---------------------------------------------------------------------------
+import { useNavigate } from 'react-router-dom'
+import { createOrderApi } from '../../../services/order.api'
 
 const STEPS = [
   {
@@ -64,27 +26,17 @@ const STEPS = [
     key: 'payment',
     label: 'Payment',
   },
-
-  {
-    key: 'success',
-    label: 'Done',
-  },
 ]
-
-// ---------------------------------------------------------------------------
-// Order charges
-// ---------------------------------------------------------------------------
 
 const SHIPPING = 0
 const DISCOUNT = 1000
 
 const CheckoutPage = () => {
-  const { items, totalItems } = useCart()
-  const [addresses, setAddresses] = useState(SAMPLE_ADDRESSES)
+  const navigate = useNavigate();
+  const { items, totalItems, loadCart } = useCart()
   const [currentStep, setCurrentStep] = useState(1)
-  const [selectedAddressId, setSelectedAddressId] = useState(
-    SAMPLE_ADDRESSES.find((a) => a.isDefault)?.id ?? SAMPLE_ADDRESSES[0]?.id ?? null,
-  )
+  const [addresses, setAddresses] = useState([]);
+  const [selectedAddressId, setSelectedAddressId] = useState(addresses.find((a) => a.isDefault)?.id ?? addresses[0]?.id ?? null,);
   const [paymentMethod, setPaymentMethod] = useState(null)
   const [isPaying, setIsPaying] = useState(false)
   const [order, setOrder] = useState(null)
@@ -137,302 +89,249 @@ const CheckoutPage = () => {
     })
   }, [items])
 
-  /* =====================================================
-     SUBTOTAL
-     ===================================================== */
-
   const subtotal = useMemo(() => {
     return mappedItems.reduce((sum, item) => {
       return sum + item.price * item.qty
     }, 0)
   }, [mappedItems])
-
-  /* =====================================================
-     FINAL TOTAL
-     ===================================================== */
-
   const total = Math.max(subtotal + SHIPPING - DISCOUNT, 0)
-
-  /* =====================================================
-     SELECTED ADDRESS OBJECT
-     ===================================================== */
-
-  const selectedAddress = addresses.find((address) => address.id === selectedAddressId)
-
-  /* =====================================================
-     SAVE ADDRESS
-     ===================================================== */
-
-  const handleSaveAddress = (addr) => {
-    setAddresses((prev) => {
-      const exists = prev.some((address) => address.id === addr.id)
-
-      const next = exists
-        ? prev.map((address) => (address.id === addr.id ? addr : address))
-        : [...prev, addr]
-
-      /* ================================================
-         MAKE SELECTED ADDRESS DEFAULT
-         ================================================ */
-
-      return addr.isDefault
-        ? next.map((address) => ({
-            ...address,
-
-            isDefault: address.id === addr.id,
-          }))
-        : next
-    })
-
-    setSelectedAddressId(addr.id)
-  }
-
-  /* =====================================================
-     GO TO CHECKOUT STEP
-     ===================================================== */
-
   const goToStep = (step) => {
     setCurrentStep(step)
   }
-
-  /* =====================================================
-     PAY NOW
-     ===================================================== */
-
-  const handlePayNow = () => {
-    setIsPaying(true)
-
-    /*
-      Replace this later with:
-
-      Razorpay payment API
-      OR
-      COD order creation API
-    */
-
-    setTimeout(() => {
-      setOrder({
-        orderNumber: `SABR${Math.floor(100000 + Math.random() * 900000)}`,
-
-        paymentStatus: paymentMethod === 'cod' ? 'cod' : 'paid',
-      })
-
-      setIsPaying(false)
-
-      setCurrentStep(4)
-    }, 1200)
-  }
-
-  /* =====================================================
-     RESET CHECKOUT
-     ===================================================== */
-
   const resetCheckout = () => {
     setCurrentStep(1)
-
     setPaymentMethod(null)
-
     setOrder(null)
+  } 
+  const selectedAddress = addresses.find((address) => address.id === selectedAddressId)
+  const handleAddressSelect = (id) => {
+    setSelectedAddressId(id);
+  };
+
+  const handleAddressesChange = (data) => {
+    setAddresses(data);
+  };
+
+ const handleAddressSave = (address) => {
+    if (address?.__type === "LOAD_ADDRESSES") {
+      setAddresses(address.addresses || []);
+      if (address.addresses?.length) {
+        setSelectedAddressId(address.addresses[0].id);
+      }
+      return;
+    }
+    if (!address?.id) return;
+    setAddresses((prev) => {
+      const exists = prev.some(
+        (item) => item.id === address.id
+      );
+
+      if (exists) {
+        return prev.map((item) =>
+          item.id === address.id ? address : item
+        );
+      }
+
+      return [...prev, address];
+    });
+
+    setSelectedAddressId(address.id);
+  };
+  const handlePayNow = async () => {
+  try {
+    setIsPaying(true);
+    const payload = {
+      items: items.map((item) => ({
+        productId: item.productId,
+        variantId: item.variantId,
+        quantity: item.quantity,
+      })),
+      paymentMethod,
+      shippingAddress: selectedAddress,
+    };
+    console.log("Order Payload ::>>", payload);
+    const response = await createOrderApi(payload);
+    console.log("Create Order Response ::>>", response);
+    // Save order response if required
+    setOrder(response);
+    resetCheckout();
+    loadCart();
+    navigate(`/order-success/${response.orderId}/${response.orderNumber}`);
+    // setCurrentStep(4);
+    // setTimeout(() => {
+    //   setOrder({
+    //     orderNumber: `SABR${Math.floor(100000 + Math.random() * 900000)}`,
+        
+    //     paymentStatus: paymentMethod === 'cod' ? 'cod' : 'paid',
+    //   })
+      
+    //   setIsPaying(false)
+    //   // Move to next step
+    //   setCurrentStep(4)
+    // }, 1200)
+  } catch (error) {
+    console.error("Create Order Error ::>>", error);
+    // You can show your checkout error here
+    // setError(error?.message || "Unable to create order");
+  } finally {
+    setIsPaying(false);
   }
-
-  /* =====================================================
-     RENDER
-     ===================================================== */
-
+};
   return (
     <div className="sabr-checkout">
       <CContainer fluid="lg">
-        {/* =================================================
-            BRAND
-            ================================================= */}
-
         <div className="sabr-brand">
           <h1 className="sabr-brand__mark">
             THE SABR <span>INDIA</span>
           </h1>
-
           <div className="sabr-brand__sub">SECURE CHECKOUT</div>
         </div>
-
-        {/* =================================================
-            STEP INDICATOR
-            ================================================= */}
-
         {currentStep < 4 && <StepIndicator steps={STEPS.slice(0, 3)} currentStep={currentStep} />}
-
-        {/* =================================================
-            CHECKOUT STEPS
-            ================================================= */}
-
-        {currentStep < 4 ? (
-          <>
-          <CRow className="g-4 px-4">
+            <CRow className="g-4 px-4">
               <CCol xs={12} lg={7}>
-                <CButton 
-                  className={`sabr-btn-ghost mb-3 d-inline-flex align-items-center gap-1 ${currentStep > 1 ? 'visible' : 'invisible'}`} 
+                <CButton
+                  className={`sabr-btn-ghost mb-3 d-inline-flex align-items-center gap-1 ${currentStep > 1 ? 'visible' : 'invisible'}`}
                   onClick={() => goToStep(currentStep - 1)}
                   disabled={currentStep <= 1}
-                  >
-                  <ArrowLeft size={15} /> 
+                >
+                  <ArrowLeft size={15} />
                   Back
                 </CButton>
               </CCol>
             </CRow>
-          <CRow className="g-4 px-4">
-            {/* =================================================
+            <CRow className="g-4 px-4">
+              {/* =================================================
                 LEFT CONTENT
                 ================================================= */}
-            <CCol xs={12} lg={7}>
-              {/* =================================================
+              <CCol xs={12} lg={7}>
+                {/* =================================================
                   STEP 1 — ADDRESS
                   ================================================= */}
-              {currentStep === 1 && (
-                <>
-                  <AddressSection
-                    addresses={addresses}
-                    selectedId={selectedAddressId}
-                    onSelect={setSelectedAddressId}
-                    onSave={handleSaveAddress}
-                  />
-                </>
-              )}
-              {/* =================================================
+                {currentStep === 1 && (
+                  <>
+                    <AddressSection
+                      addresses={addresses}
+                      selectedId={selectedAddressId}
+                      onSelect={handleAddressSelect}
+                      onSave={handleAddressSave}
+                      onAddressesChange={handleAddressesChange}
+                    />
+                  </>
+                )}
+                {/* =================================================
                   STEP 2 — ORDER REVIEW
                   ================================================= */}
-              {currentStep === 2 && (
-                <>
+                {currentStep === 2 && (
+                  <>
+                    <OrderReview
+                      items={mappedItems}
+                      subtotal={subtotal}
+                      shipping={SHIPPING}
+                      discount={DISCOUNT}
+                      currentStep={currentStep}
+                      total={total}
+                    />
+                  </>
+                )}
+                {/* =================================================
+                  STEP 3 — PAYMENT
+                  ================================================= */}
+                {currentStep === 3 && (
+                  <PaymentSection
+                    selectedMethod={paymentMethod}
+                    onSelectMethod={setPaymentMethod}
+                    onPayNow={handlePayNow}
+                    total={total}
+                    loading={isPaying}
+                  />
+                )}
+              </CCol>
+              {/* =================================================
+                RIGHT SIDEBAR
+                ================================================= */}
+              <CCol xs={12} lg={5}>
+                <div className="sabr-sidebar">
+                  {/* =================================================
+                    DELIVERY ADDRESS
+                    ================================================= */}
+
+                  {selectedAddress && currentStep !== 1 && (
+                    <div
+                      className="sabr-card mb-3 sabr-card--current"
+                      style={{
+                        padding: '0.9rem 1.1rem',
+                      }}
+                    >
+                      <div className="sabr-card__eyebrow mb-1">DELIVERING TO</div>
+
+                      <div className="small fw-semibold">{selectedAddress.name}</div>
+
+                      <div
+                        className="small"
+                        style={{
+                          color: 'var(--sabr-ink-soft)',
+                        }}
+                      >
+                        {selectedAddress.addressLine1}<br/>
+                        {selectedAddress.addressLine2}
+
+                        {', '}
+
+                        {selectedAddress.city}
+
+                        {' – '}
+
+                        {selectedAddress.pincode}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* =================================================
+                    COMPACT ORDER REVIEW
+                    ================================================= */}
+
                   <OrderReview
                     items={mappedItems}
                     subtotal={subtotal}
                     shipping={SHIPPING}
                     discount={DISCOUNT}
-                    currentStep={currentStep}
                     total={total}
+                    currentStep={currentStep}
+                    compact
                   />
-                </>
-              )}
-              {/* =================================================
-                  STEP 3 — PAYMENT
-                  ================================================= */}
-              {currentStep === 3 && (
-                <PaymentSection
-                  selectedMethod={paymentMethod}
-                  onSelectMethod={setPaymentMethod}
-                  onPayNow={handlePayNow}
-                  total={total}
-                  loading={isPaying}
-                />
-              )}
-            </CCol>
-            {/* =================================================
-                RIGHT SIDEBAR
-                ================================================= */}
-            <CCol xs={12} lg={5}>
-              <div className="sabr-sidebar">
+                </div>
                 {/* =================================================
-                    DELIVERY ADDRESS
-                    ================================================= */}
-
-                {selectedAddress && currentStep !== 1 && (
-                  <div
-                    className="sabr-card mb-3 sabr-card--current"
-                    style={{
-                      padding: '0.9rem 1.1rem',
-                    }}
-                  >
-                    <div className="sabr-card__eyebrow mb-1">DELIVERING TO</div>
-
-                    <div className="small fw-semibold">{selectedAddress.fullName}</div>
-
-                    <div
-                      className="small"
-                      style={{
-                        color: 'var(--sabr-ink-soft)',
-                      }}
-                    >
-                      {selectedAddress.line1}
-
-                      {', '}
-
-                      {selectedAddress.city}
-
-                      {' – '}
-
-                      {selectedAddress.pincode}
-                    </div>
-                  </div>
-                )}
-
-                {/* =================================================
-                    COMPACT ORDER REVIEW
-                    ================================================= */}
-
-                <OrderReview
-                  items={mappedItems}
-                  subtotal={subtotal}
-                  shipping={SHIPPING}
-                  discount={DISCOUNT}
-                  total={total}
-                  currentStep={currentStep}
-                  compact
-                />
-              </div>
-              {/* =================================================
                   STEP 1 — ADDRESS BUTTON
                   ================================================= */}
-              {currentStep === 1 && (
-                <>
-                  {/* <div className="d-flex justify-content-end mt-3"> */}
-                  <div className="d-flex justify-content-center mt-3">
-                    <CButton className="sabr-btn-primary"
-                      disabled={!selectedAddressId}
-                      onClick={() => goToStep(2)}>
-                      Continue to Review
-                    </CButton>
-                  </div>
-                </>
-              )}
-              {/* =================================================
+                {currentStep === 1 && (
+                  <>
+                    {/* <div className="d-flex justify-content-end mt-3"> */}
+                    <div className="d-flex justify-content-center mt-3">
+                      <CButton
+                        className="sabr-btn-primary"
+                        disabled={!selectedAddressId}
+                        onClick={() => goToStep(2)}
+                      >
+                        Continue to Review
+                      </CButton>
+                    </div>
+                  </>
+                )}
+                {/* =================================================
                   STEP 2 — ORDER REVIEW BUTTON
                   ================================================= */}
-              {currentStep === 2 && (
-                <>
-                  {/* <div className="d-flex justify-content-end mt-3"> */}
-                  <div className="d-flex justify-content-center mt-3">
-                    <CButton
-                      className="sabr-btn-primary"
-                      onClick={() => goToStep(3)}
-                    >
-                      Continue to Payment
-                    </CButton>
-                  </div>
-                </>
-              )}
-            </CCol>
-          </CRow>
-          </>
-        ) : (
-          /* =====================================================
-             ORDER SUCCESS
-             ===================================================== */
-
-          <OrderSuccess
-            orderNumber={order?.orderNumber}
-            paymentStatus={order?.paymentStatus}
-            paymentMethod={paymentMethod}
-            address={selectedAddress}
-            items={mappedItems}
-            total={total}
-            onTrackOrder={() => {
-              /*
-                Wire this later with your
-                order tracking route.
-              */
-            }}
-            onContinueShopping={resetCheckout}
-            compact={true}
-          />
-        )}
+                {currentStep === 2 && (
+                  <>
+                    {/* <div className="d-flex justify-content-end mt-3"> */}
+                    <div className="d-flex justify-content-center mt-3">
+                      <CButton className="sabr-btn-primary" onClick={() => goToStep(3)}>
+                        Continue to Payment
+                      </CButton>
+                    </div>
+                  </>
+                )}
+              </CCol>
+            </CRow>
       </CContainer>
     </div>
   )

@@ -156,9 +156,8 @@ const Header = ({ onNavigate, setCartVisible, cartCount = 0, activePage = 'home'
 
               {cartCount > 0 && (
                 <CBadge
-                  color="danger"
                   shape="rounded-pill"
-                  className="cart-badge"
+                  className="cart-badge position-absolute"
                 >
                   {cartCount > 99 ? '99+' : cartCount}
                 </CBadge>

@@ -405,12 +405,10 @@
   width: 100%;
   height: 48px;
 
-  border: none !important;
-  border-radius: 9px !important;
+  color: var(--forest-dark);
+  border: 1px solid var(--forest-dark);
+  border-radius: 9px;
 
-  background: var(--forest) !important;
-
-  color: #fff !important;
 
   font-size: 0.82rem;
   font-weight: 600;
@@ -427,8 +425,8 @@
 }
 
 .filter-result-btn:hover {
-  background: #1c5c27 !important;
-
+  background: var(--forest-dark) !important;
+  color: #ffff;
   box-shadow:
     0 6px 16px rgba(0, 0, 0, 0.16);
 

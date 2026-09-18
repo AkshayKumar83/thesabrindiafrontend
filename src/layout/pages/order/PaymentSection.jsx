@@ -17,13 +17,13 @@ const currency = (n) =>
 const PaymentSection = ({ selectedMethod, onSelectMethod, onPayNow, total, loading = false }) => {
   const options = [
     {
-      key: 'online',
+      key: 'ONLINE',
       icon: CreditCard,
       title: 'Pay Online',
       desc: 'UPI, Credit/Debit Card, Netbanking & Wallets — powered by Razorpay',
     },
     {
-      key: 'cod',
+      key: 'COD',
       icon: Wallet,
       title: 'Cash on Delivery',
       desc: 'Pay in cash when your order is delivered to your doorstep',
@@ -77,7 +77,7 @@ const PaymentSection = ({ selectedMethod, onSelectMethod, onPayNow, total, loadi
             <>
               <CSpinner size="sm" /> Processing...
             </>
-          ) : selectedMethod === 'cod' ? (
+          ) : selectedMethod === 'COD' ? (
             `Place Order · ${currency(total)}`
           ) : (
             `Pay ${currency(total)}`
