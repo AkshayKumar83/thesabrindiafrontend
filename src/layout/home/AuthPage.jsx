@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Login from '../components/Login.jsx'
 import Register from '../components/Register.jsx'
 import ForgotPassword from '../components/ForgotPassword.jsx'
-
+import logoSabr from '../../assets/brand/logoSabr.jpeg'
 const AuthPage = ()=>{
     const [mode, setMode] = useState('login');
     const navigate = useNavigate();
@@ -19,7 +19,11 @@ const AuthPage = ()=>{
                 navigate('/')
               }}
             >
-              S
+  <img
+    src={logoSabr}
+    alt="The Sabr India"
+    className="store-logo-image"
+  />
             </div>
 
             <div className="brand-copy">
