@@ -1,8 +1,12 @@
 import { useState } from 'react'
 import { Eye, EyeOff, Mail, UserRound } from 'lucide-react'
 import API_BASE_URL, { API_ROUTES } from '../../config/api.js'
+import { useLocation } from 'react-router-dom';
 
 function Register() {
+
+  const location = useLocation();
+  const redirectTo = location.state?.redirectTo || "/";
   const [form, setForm] = useState({ firstName: '', lastName: '', contactNo: '', email: '', password: '' })
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -13,26 +17,56 @@ function Register() {
     setForm((current) => ({ ...current, [name]: value }))
     setMessage(null)
   }
-
   async function handleSubmit(event) {
-    event.preventDefault()
-    setMessage(null)
-    setIsLoading(true)
+    event.preventDefault();
+
+    setMessage(null);
+    setIsLoading(true);
 
     try {
-      const response = await fetch(`${API_BASE_URL}${API_ROUTES.signup}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
-      })
-      const data = await response.json()
-      if (!response.ok) throw new Error(data.message || 'Unable to create account')
-      localStorage.setItem('etoken', data.token)
-      setMessage({ type: 'success', text: data.message })
+      const response = await fetch(
+        `${API_BASE_URL}${API_ROUTES.signup}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(form),
+        }
+      );
+
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(
+          data.message || "Unable to create account"
+        );
+      }
+      login({
+        token: data.token,
+        user: data.user,
+      });
+      setForm({
+        firstName: "",
+        lastName: "",
+        contactNo: "",
+        email: "",
+        password: "",
+      });
+      await syncGuestCart();
+      navigate(redirectTo, {
+        replace: true,
+      });
+      setMessage({
+        type: "success",
+        text: data.message,
+      });
     } catch (error) {
-      setMessage({ type: 'error', text: error.message })
+      setMessage({
+        type: "error",
+        text: error.message,
+      });
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
   }
 

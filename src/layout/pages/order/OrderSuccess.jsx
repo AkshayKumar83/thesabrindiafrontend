@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { CCard, CCardBody, CButton } from '@coreui/react';
 import { CheckCircle2, Truck, Compass, ShoppingBag, MapPin } from 'lucide-react';
+import { getOrderByIdApi } from '../../../services/order.api';
+import { useNavigate, useParams } from 'react-router-dom';
+import Loader from '../../components/Loader/Loader';
 
 const currency = (n) =>
   `₹${Number(n).toLocaleString('en-IN', { maximumFractionDigits: 0 })}`;
@@ -18,19 +21,33 @@ const currency = (n) =>
  * @param {() => void} onContinueShopping
  */
 
-const OrderSuccess = ({
-  orderNumber,
-  paymentStatus = 'paid',
-  paymentMethod = 'online',
-  address,
-  items = [],
-  total = 0,
-  onTrackOrder,
-  onContinueShopping,
-  compact=false
-}) => {
-  const itemCount = items.reduce((sum, it) => sum + it.qty, 0);
-  console.log("order success page:: here");
+const OrderSuccess = ({compact=false}) => {
+  const {id, orderNo} = useParams()
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({});
+  const [order, setOrder] = useState(null)
+  useEffect(()=>{
+    const loadAddresses = async () => {
+          try {
+            if(!id || !orderNo) return;
+            setLoading(true);
+            const response = await getOrderByIdApi(id, orderNo);
+            const data = response?.order;
+            console.log("Get Order :>>>", data);
+            setOrder(data);
+          } catch (error) {
+            console.error("Load order error:", error);
+          } finally {
+            setLoading(false);
+          }
+        }
+    loadAddresses();
+  },[]);
+  
+
+  const itemCount = order?.items?.reduce((sum, it) => sum + it.quantity, 0);
+  if(loading) return <Loader/>
   return (
     <div style={!compact ? {paddingBlock:"1.5rem 5rem"}: {}}>
     {
@@ -55,33 +72,33 @@ const OrderSuccess = ({
 
       <div className="sabr-order-id">
         <ShoppingBag size={16} />
-        Order #{orderNumber}
+        Order #{order?.orderNumber}
       </div>
 
       <CCard className="sabr-card text-start mb-3">
         <CCardBody className="sabr-card__body">
           <div className="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
             <span className="sabr-card__eyebrow mb-0">PAYMENT STATUS</span>
-            <span className={`sabr-status-badge ${paymentMethod === 'cod' ? 'sabr-status-badge--cod' : ''}`}>
-              {paymentMethod === 'cod' ? 'Cash on Delivery' : 'Paid'} ·{' '}
-              {paymentStatus === 'paid' ? 'Confirmed' : 'Pending'}
+            <span className={`sabr-status-badge ${order?.paymentMethod === 'cod' ? 'sabr-status-badge--cod' : ''}`}>
+              {order?.paymentMethod === 'cod' ? 'Cash on Delivery' : 'Paid'} ·{' '}
+              {order?.paymentStatus === 'paid' ? 'Confirmed' : 'Pending'}
             </span>
           </div>
 
-          {address && (
+          {order && (
             <div className="mb-3 pb-3" style={{ borderBottom: '1px solid var(--sabr-line)' }}>
               <div className="sabr-card__eyebrow d-flex align-items-center gap-1">
                 <MapPin size={12} /> DELIVERY ADDRESS
               </div>
               <div className="fw-semibold" style={{ fontSize: '0.92rem' }}>
-                {address?.fullName}
+                {order?.shippingName}
               </div>
               <div className="small" style={{ color: 'var(--sabr-ink-soft)' }}>
-                {address?.line1}
-                {address?.line2 ? `, ${address?.line2}` : ''}, {address?.city}, {address?.state} –{' '}
-                {address?.pincode}
+                {order?.shippingAddressLine1}
+                {order?.shippingAddressLine2 ? `, ${order?.shippingAddressLine2}` : ''}, {order?.shippingCity}, {order?.shippingState} –{' '}
+                {order?.shippingPincode}
                 <br />
-                Phone: {address?.phone}
+                Phone: {order?.shippingPhone}
               </div>
             </div>
           )}
@@ -91,18 +108,18 @@ const OrderSuccess = ({
               {itemCount} item{itemCount > 1 ? 's' : ''} ordered
             </span>
             <span className="sabr-summary-total__value" style={{ fontSize: '1.35rem' }}>
-              {currency(total)}
+              {currency(order?.totalAmount)}
             </span>
           </div>
         </CCardBody>
       </CCard>
 
       <div className="sabr-success-actions">
-        <CButton className="sabr-btn-primary d-flex align-items-center gap-2" onClick={onTrackOrder}>
+        {/* <CButton className="sabr-btn-primary d-flex align-items-center gap-2" onClick={()=>{console.log("ON TRC ORDER")}}>
           <Truck size={17} />
           Track Order
-        </CButton>
-        <CButton className="sabr-btn-outline d-flex align-items-center gap-2" onClick={onContinueShopping}>
+        </CButton> */}
+        <CButton className="sabr-btn-outline d-flex align-items-center gap-2" onClick={()=>{navigate('/collections')}}>
           <Compass size={17} />
           Continue Shopping
         </CButton>

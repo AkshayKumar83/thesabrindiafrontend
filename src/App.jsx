@@ -44,7 +44,7 @@ const Page404 = React.lazy(() => import('./views/error-pages/page404/Page404'))
 const Page500 = React.lazy(() => import('./views/error-pages/page500/Page500'))
 
 // Protected Route
-import ProtectedRoute from './ProtectedRoute'
+import ProtectedRoute from './protectedroutes/ProtectedRoute'
 import Home from './layout/home/Home'
 import UserLogin from './layout/user/UserLogin'
 import UserRegister from './layout/user/UserRegister'
@@ -57,6 +57,7 @@ import PolicyPage from './layout/pages/policies/PolicyPage'
 import ProductCollection from './layout/pages/product/ProductCollection'
 import CheckoutPage from './layout/pages/order/CheckoutPage'
 import OrderSuccess from './layout/pages/order/OrderSuccess'
+import UserProtectedRoute from './protectedroutes/UserProtectedRoute'
 
 /**
  * Main Application Component
@@ -114,9 +115,10 @@ const App = () => {
             <Route exact path="contact" name="Contact Page" element={<Contact />} />
             <Route exact path="product-details/:id" name="Product Details Page" element={<ProductDetails />} />
             <Route exact path="collections" name="Collection Page" element={<ProductCollection />} />
-         
-            <Route path="/checkout" element={<CheckoutPage />} />
-            <Route path="/order-success" element={<OrderSuccess />} />
+            <Route path="/" element={<UserProtectedRoute />}>
+              <Route path="/checkout" element={<CheckoutPage />} />
+              <Route path="/order-success/:id/:orderNo" element={<OrderSuccess />} />
+            </Route>
 
             <Route path="/policies/:policy" element={<PolicyPage />} />
           </Route>

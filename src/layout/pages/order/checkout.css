@@ -355,17 +355,17 @@
 }
 
 .sabr-btn-outline {
-  background: transparent !important;
-  border: 1px solid var(--sabr-ink) !important;
-  color: var(--sabr-ink) !important;
+  background: transparent;
+  border: 1px solid var(--forest-dark);
+  color: var(--forest-dark);
   font-weight: 600;
   border-radius: 5px;
   padding: 0.65rem 1.5rem;
 }
 
 .sabr-btn-outline:hover {
-  background: var(--sabr-ink) !important;
-  color: #fff !important;
+  color: #ffff;
+  background: var(--forest-dark) !important;
 }
 
 .sabr-btn-ghost {

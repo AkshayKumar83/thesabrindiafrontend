@@ -457,10 +457,8 @@ export default function ProductCollection() {
 
         <CCol xs="auto">
           <CButton
-            color="dark"
-            variant="outline"
             size="sm"
-            className="d-flex align-items-center gap-1 px-2"
+            className="d-flex align-items-center gap-1 px-2 drawerFilterBtn"
             onClick={() =>
               setFilterOpen(true)
             }
