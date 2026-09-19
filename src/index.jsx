@@ -8,9 +8,10 @@ import App from './App'
 import store from './store'
 import { CartProvider } from './context/CartContext'
 import { AuthProvider } from "./context/AuthContext";
+import ToastProvider from "../src/layout/components/toast/Toast"
 
 createRoot(document.getElementById('root')).render(
-  <Provider store={store}>
+  <ToastProvider position="center">
      <Provider store={store}>
       <AuthProvider>
         <CartProvider>
@@ -18,5 +19,6 @@ createRoot(document.getElementById('root')).render(
         </CartProvider>
       </AuthProvider>
     </Provider>
-  </Provider>,
+    </ToastProvider>
+
 )
