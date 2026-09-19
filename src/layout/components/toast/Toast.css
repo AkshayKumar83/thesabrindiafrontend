@@ -1,0 +1,125 @@
+/* ==========================================================
+   Toast (sct = sabr toast)
+   Uses your palette variables when defined, otherwise the
+   fallback hex values.
+   ========================================================== */
+
+.sct-container {
+  --sct-maroon: var(--sabr-maroon, #7b1e2d);
+  --sct-maroon-dark: var(--sabr-maroon-dark, #5a1520);
+  --sct-coral: var(--coral, #e28d6b);
+  --sct-cream: var(--cream, #eee9df);
+
+  position: fixed;
+  z-index: 3000; /* above the confirm modal (2000) */
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  width: min(92vw, 380px);
+  pointer-events: none;
+}
+.sct-container *, .sct-container *::before, .sct-container *::after { box-sizing: border-box; }
+
+.sct-container--center {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.sct-container--top-center {
+  top: max(1rem, env(safe-area-inset-top));
+  left: 50%;
+  transform: translateX(-50%);
+}
+.sct-container--bottom-center {
+  bottom: max(1rem, env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* ---------- Toast ---------- */
+.sct-toast {
+  pointer-events: auto;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.9rem 0.9rem 1rem 1rem;
+  background: var(--sct-maroon-dark);
+  color: var(--sct-cream);
+  border: 1px solid color-mix(in srgb, var(--sct-coral) 40%, transparent);
+  border-radius: 10px;
+  box-shadow: 0 16px 40px color-mix(in srgb, var(--sct-maroon-dark) 45%, transparent);
+  animation: sct-in 0.22s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.sct-toast.is-leaving { animation: sct-out 0.18s ease-in both; }
+
+.sct-icon {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--sct-coral);
+  color: var(--sct-maroon-dark);
+}
+/* errors use a cream icon so they read differently from the others */
+.sct-toast--error .sct-icon { background: var(--sct-cream); color: var(--sct-maroon); }
+
+.sct-text { flex: 1; min-width: 0; padding-top: 1px; }
+.sct-container .sct-title { margin: 0; font-weight: 700; line-height: 1.3; }
+.sct-container .sct-message {
+  margin: 2px 0 0;
+  font-size: 0.92rem;
+  line-height: 1.45;
+  opacity: 0.9;
+  overflow-wrap: anywhere;
+}
+
+.sct-close {
+  flex: none;
+  display: grid;
+  place-items: center;
+  padding: 4px;
+  background: none;
+  border: 0;
+  border-radius: 4px;
+  color: var(--sct-cream);
+  opacity: 0.75;
+  cursor: pointer;
+}
+.sct-close:hover { opacity: 1; }
+.sct-close:focus-visible { outline: 2px solid var(--sct-coral); outline-offset: 2px; opacity: 1; }
+
+/* time-left bar */
+.sct-progress {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--sct-coral);
+  transform-origin: left;
+  animation-name: sct-bar;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+@keyframes sct-in {
+  from { opacity: 0; transform: translateY(8px) scale(0.96); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes sct-out {
+  from { opacity: 1; transform: none; }
+  to { opacity: 0; transform: scale(0.96); }
+}
+@keyframes sct-bar {
+  from { transform: scaleX(1); }
+  to { transform: scaleX(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sct-toast, .sct-toast.is-leaving { animation: none; }
+  .sct-progress { animation: none; transform: none; opacity: 0.5; }
+}
