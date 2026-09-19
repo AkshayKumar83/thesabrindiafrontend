@@ -236,6 +236,7 @@ import {
 } from 'lucide-react'
 
 import { useAuth } from '../../../context/AuthContext.jsx'
+import { useConfirm } from '../confirm/ConfirmModal.jsx'
 
 const Header = ({
   onNavigate,
@@ -245,7 +246,7 @@ const Header = ({
   handleNavigate,
 }) => {
   const { user, isLoggedIn, logout } = useAuth()
-
+  const { confirm, modal } = useConfirm();
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
   const [accountMenuOpen, setAccountMenuOpen] = useState(false)
 
@@ -304,13 +305,20 @@ const Header = ({
   /*
    * Handle logout
    */
-  const handleLogout = () => {
-    logout()
-    setAccountMenuOpen(false)
-    setMobileNavOpen(false)
-
-    handleNavigate('/')
-  }
+  const handleLogout = async () => {
+    const ok = await confirm({
+      variant: 'logout',
+      title: 'Log out?',
+      message: 'You will need to sign in again to view your orders.',
+      onConfirm: async () => {
+        // await new Promise((r) => setTimeout(r, 2000));
+        await logout();
+        setAccountMenuOpen(false);
+        setMobileNavOpen(false);
+        handleNavigate('/');
+      },
+    });
+  };
 
   return (
     <>
@@ -520,10 +528,7 @@ const Header = ({
         <button
           type="button"
           className="account-dropdown-item logout-item"
-          onClick={() => {
-            logout()
-            handleNavigate('/')
-          }}
+          onClick={handleLogout}
         >
           <LogOut size={17} />
           <span>Logout</span>
@@ -574,6 +579,7 @@ const Header = ({
 
         </CContainer>
       </CHeader>
+      {modal}
     </>
   )
 }

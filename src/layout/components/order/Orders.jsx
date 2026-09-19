@@ -9,7 +9,6 @@ import {
   CCol,
   CContainer,
   CRow,
-  CSpinner,
 } from '@coreui/react'
 
 import {
@@ -24,9 +23,11 @@ import {
 } from 'lucide-react'
 
 import { useAuth } from '../../../context/AuthContext.jsx'
-import API_BASE_URL, { API_ROUTES } from '../../../config/api.js'
+const API_BASE_URL = import.meta.env.API_BASE_IMAGE_URL || 'http://localhost:8090';
 
 import './Orders.css'
+import { getOrdersApi } from '../../../services/order.api.js'
+import Loader from '../Loader/Loader.jsx'
 
 const Order = () => {
   const { token } = useAuth()
@@ -43,43 +44,9 @@ const Order = () => {
   const loadOrders = async () => {
     setLoading(true)
     setMessage(null)
-
     try {
-      const response = await fetch(
-        `${API_BASE_URL}${API_ROUTES.orders}`,
-        {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-
-      const data = await response.json()
-
-      if (!response.ok) {
-        throw new Error(
-          data.message || 'Unable to load orders'
-        )
-      }
-
-      /*
-        Supports:
-        [
-          {...order}
-        ]
-
-        OR
-
-        {
-          orders: [...]
-        }
-      */
-
-      const orderList = Array.isArray(data)
-        ? data
-        : data.orders || []
-
+      const data = await getOrdersApi();
+      const orderList = data?.orders || [];
       setOrders(orderList)
     } catch (error) {
       setMessage({
@@ -152,15 +119,7 @@ const Order = () => {
   }
 
   if (loading) {
-    return (
-      <div className="orders-loading">
-        <CSpinner />
-
-        <p>
-          Loading your orders...
-        </p>
-      </div>
-    )
+    return <Loader/>
   }
 
   return (
@@ -700,7 +659,7 @@ const Order = () => {
                             </div>
 
                             <div className="price-row total">
-                              <span>
+                              <span className='totalPriceSpan'>
                                 Total
                               </span>
 

@@ -31,6 +31,7 @@ import {
   deleteAddressApi,
 } from "../../../services/address.api";
 import ConfirmationModal from "../../../admin/common/ConfirmationModal";
+import { useConfirm } from "../../components/confirm/ConfirmModal";
 
 const emptyForm = {
   name: "",
@@ -53,7 +54,7 @@ const AddressSection = ({
 }) => {
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState(null);
-  const [deletingId, setDeletingId] = useState(null);
+  const { confirm, modal } = useConfirm();
 
   const [form, setForm] = useState(emptyForm);
   const [errors, setErrors] = useState({});
@@ -65,7 +66,6 @@ const AddressSection = ({
   // ==========================================
   // LOAD ADDRESSES
   // ==========================================
-  console.log("Adress addresses.length  ::>>",addresses, addresses.length)
 
   const loadAddresses = async () => {
     try {
@@ -95,10 +95,6 @@ const AddressSection = ({
       setLoading(false);
     }
   };
-  const openDeleteModal = (address) => {
-    setDeletingId(address)
-    setConfirmVisible(true)
-  }
   useEffect(() => {
     loadAddresses();
   }, []);
@@ -302,26 +298,25 @@ const AddressSection = ({
   // DELETE
   // ==========================================
 
-  const handleDelete = async (id) => {
-    try {
-      setLoading(true);
-
-      await deleteAddressApi(id);
-      setConfirmVisible(false)
-      // Reload addresses after deletion
-      await loadAddresses();
-
-      if (selectedId === id) {
-        onSelect?.(null);
-      }
-    } catch (error) {
-      console.error(
-        "Delete address error:",
-        error
-      );
-    } finally {
-      setLoading(false);
-    }
+  const handleDeleteHelper = async (id) => {
+  try {
+    await deleteAddressApi(id);
+    await loadAddresses();
+    if (selectedId === id) onSelect?.(null);
+  } catch (error) {
+    console.error('Delete address error:', error);
+    throw error; 
+  }
+};
+  const handleDelete = async (address) => {
+    const ok = await confirm({
+      variant: 'danger',
+      title: 'Delete this address?',
+      message: 'This action cannot be undone.',
+      // details: address.name,          
+      confirmText: 'Yes, delete',
+      onConfirm: () => handleDeleteHelper(address),
+    });
   };
 
   return (
@@ -408,7 +403,7 @@ const AddressSection = ({
                       aria-label={`Delete address for ${address.name}`}
                       onClick={(e) => {
                         e.stopPropagation();
-                        openDeleteModal(address.id);
+                        handleDelete(address.id);
                       }}
                     >
                       <Trash2 size={15} />
@@ -723,15 +718,7 @@ const AddressSection = ({
 
       </CCardBody>
     </CCard>
-    <ConfirmationModal
-            visible={confirmVisible}
-            title="Delete Adress"
-            message={`Are you sure you want to delete this Address?`}
-            confirmLabel="Delete"
-            loading={loading}
-            onClose={() => setConfirmVisible(false)}
-            onConfirm={() => handleDelete(deletingId)}
-          />
+    {modal}
     </>
   );
 };

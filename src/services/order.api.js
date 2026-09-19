@@ -20,3 +20,14 @@ export const getOrderByIdApi = async (id, orderNo) => {
     },
   });
 };
+
+export const getOrdersApi = async (data) => {
+  return request({
+    method: "get",
+    url: "/orders/users",
+    data,
+    headers: {
+      etoken: localStorage.getItem("etoken"),
+    },
+  });
+};

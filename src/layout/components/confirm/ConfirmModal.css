@@ -1,0 +1,140 @@
+/* ==========================================================
+   ConfirmModal (scm = sabr confirm modal)
+   Palette variables from your theme are used when defined,
+   otherwise the fallback hex values apply.
+   ========================================================== */
+
+.scm-backdrop {
+  --scm-maroon: var(--sabr-maroon, #7b1e2d);
+  --scm-maroon-dark: var(--sabr-maroon-dark, #5a1520);
+  --scm-ink: var(--forest-dark, #630313f5);
+  --scm-coral: var(--coral, #e28d6b);
+  --scm-cream: var(--cream, #eee9df);
+  --scm-muted: color-mix(in srgb, var(--scm-maroon-dark) 75%, var(--scm-cream));
+  --scm-line: color-mix(in srgb, var(--scm-maroon) 20%, var(--scm-cream));
+
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: color-mix(in srgb, var(--scm-maroon-dark) 65%, transparent);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  animation: scm-fade 0.18s ease-out both;
+}
+.scm-backdrop *, .scm-backdrop *::before, .scm-backdrop *::after { box-sizing: border-box; }
+
+.scm-dialog {
+  width: 100%;
+  max-width: 420px;
+  max-height: calc(100vh - 2rem);
+  overflow: auto;
+  text-align: center;
+  color: var(--scm-ink);
+  background: var(--scm-cream);
+  border-radius: 12px;
+  box-shadow: 0 24px 60px color-mix(in srgb, var(--scm-maroon-dark) 45%, transparent);
+  animation: scm-pop 0.22s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+/* woven border strip along the top edge */
+.scm-border {
+  height: 20px;
+  border-bottom: 2px solid var(--scm-coral);
+  background-color: var(--scm-maroon);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='18' viewBox='0 0 28 18'%3E%3Crect width='28' height='18' fill='%237b1e2d'/%3E%3Cpath d='M14 2 22 9 14 16 6 9Z' fill='none' stroke='%23e28d6b' stroke-width='1.4'/%3E%3Ccircle cx='14' cy='9' r='1.8' fill='%23e28d6b'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-position: center;
+  background-size: 28px 18px;
+}
+
+.scm-body { padding: 1.75rem 1.75rem 1.5rem; }
+
+.scm-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--scm-maroon-dark);
+  border: 2px solid var(--scm-coral);
+  color: var(--scm-cream);
+}
+
+.scm-dialog .scm-title {
+  margin: 1rem 0 0.5rem;
+  font-size: 1.4rem;
+  line-height: 1.25;
+  color: var(--scm-maroon);
+}
+.scm-dialog .scm-message { margin: 0; color: var(--scm-muted); line-height: 1.55; }
+
+.scm-details {
+  margin-top: 1rem;
+  padding: 0.6rem 0.9rem;
+  border-radius: 8px;
+  border: 1px dashed color-mix(in srgb, var(--scm-maroon) 35%, var(--scm-cream));
+  background: color-mix(in srgb, var(--scm-maroon) 8%, var(--scm-cream));
+  color: var(--scm-maroon-dark);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.scm-actions { display: flex; gap: 0.75rem; margin-top: 1.5rem; }
+
+.scm-btn {
+  flex: 1;
+  min-height: 46px;
+  padding: 0 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font: inherit;
+  font-weight: 600;
+  border-radius: 8px;
+  border: 2px solid var(--scm-maroon);
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.scm-btn--ghost { background: transparent; color: var(--scm-maroon); }
+.scm-btn--ghost:hover:not(:disabled) { background: var(--scm-maroon); color: var(--scm-cream); }
+.scm-btn--solid { background: var(--scm-maroon); color: var(--scm-cream); }
+.scm-btn--solid:hover:not(:disabled) { background: var(--scm-maroon-dark); border-color: var(--scm-maroon-dark); }
+.scm-btn:disabled { opacity: 0.65; cursor: not-allowed; }
+
+.scm-btn:focus-visible {
+  outline: 3px solid var(--scm-maroon-dark);
+  outline-offset: 3px;
+}
+
+.scm-spinner {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 3px solid color-mix(in srgb, var(--scm-cream) 35%, transparent);
+  border-top-color: var(--scm-cream);
+  animation: scm-spin 0.7s linear infinite;
+}
+
+@keyframes scm-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes scm-pop {
+  from { opacity: 0; transform: translateY(8px) scale(0.96); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes scm-spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 400px) {
+  .scm-body { padding: 1.5rem 1.25rem 1.25rem; }
+  /* stack the buttons, confirm on top */
+  .scm-actions { flex-direction: column-reverse; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scm-backdrop, .scm-dialog { animation: none; }
+  .scm-spinner { animation-duration: 1.6s; }
+  .scm-btn { transition: none; }
+}
