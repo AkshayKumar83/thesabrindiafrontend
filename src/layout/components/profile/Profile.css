@@ -1,0 +1,826 @@
+/* =========================================================
+   PROFILE PAGE
+========================================================= */
+
+.profile-page {
+  min-height: calc(100vh - 100px);
+
+  padding: 55px 0 80px;
+
+  background: var(--paper);
+  color: var(--ink);
+}
+
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.profile-page-header {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 25px;
+
+  margin-bottom: 35px;
+}
+
+.profile-eyebrow {
+  margin: 0 0 9px;
+
+  color: var(--coral);
+
+  font-size: 11px;
+
+  font-weight: 600;
+
+  letter-spacing: 0.2em;
+}
+
+.profile-page-header h1 {
+  margin: 0 0 8px;
+
+  color: var(--ink);
+
+  font-family: 'Playfair Display', serif;
+
+  font-size: clamp(35px, 4vw, 52px);
+
+  font-weight: 500;
+
+  line-height: 1.05;
+}
+
+.profile-page-header p:not(.profile-eyebrow) {
+  margin: 0;
+
+  color: var(--muted);
+
+  font-size: 13px;
+}
+
+.profile-avatar {
+  width: 58px;
+  height: 58px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: var(--forest);
+
+  color: #fff;
+}
+
+
+/* =========================================================
+   PROFILE CARD
+========================================================= */
+
+.profile-card {
+  margin-bottom: 25px;
+
+  border: 1px solid var(--line) !important;
+
+  border-radius: 8px !important;
+
+  background: #fff;
+
+  box-shadow:
+    0 5px 20px rgba(35, 53, 47, 0.04);
+}
+
+
+/* =========================================================
+   CARD HEADER
+========================================================= */
+
+.profile-card-header {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 20px 22px;
+
+  border-bottom: 1px solid var(--line);
+
+  background: #fff !important;
+}
+
+.profile-section-title {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  color: var(--forest);
+}
+
+.profile-section-title > svg {
+  flex-shrink: 0;
+}
+
+.profile-section-title h2 {
+  margin: 0 0 3px;
+
+  color: var(--ink);
+
+  font-family: 'Playfair Display', serif;
+
+  font-size: 21px;
+
+  font-weight: 500;
+}
+
+.profile-section-title p {
+  margin: 0;
+
+  color: var(--muted);
+
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   PROFILE ALERT
+========================================================= */
+
+.profile-alert {
+  margin-bottom: 20px;
+
+  border-radius: 5px;
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.profile-card .form-label,
+.profile-card label {
+  margin-bottom: 6px;
+
+  color: var(--ink);
+
+  font-size: 12px;
+
+  font-weight: 600;
+}
+
+.profile-card .form-control,
+.profile-card .form-select {
+  min-height: 43px;
+
+  border-color: var(--line);
+
+  border-radius: 4px;
+
+  color: var(--ink);
+
+  font-size: 13px;
+
+  box-shadow: none;
+}
+
+.profile-card .form-control:focus,
+.profile-card .form-select:focus {
+  border-color: var(--coral);
+
+  box-shadow:
+    0 0 0 2px rgba(226, 141, 107, 0.12);
+}
+
+.profile-card .form-control:disabled {
+  background: #f5f6f3;
+
+  color: #7d8780;
+
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   INPUT ICON
+========================================================= */
+
+.profile-input-icon {
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+}
+
+.profile-input-icon > svg {
+  position: absolute;
+
+  left: 13px;
+
+  z-index: 1;
+
+  color: #839089;
+
+  pointer-events: none;
+}
+
+.profile-input-icon .form-control {
+  padding-left: 38px;
+}
+
+.profile-field-note {
+  display: block;
+
+  margin-top: 5px;
+
+  color: #9aa49e;
+
+  font-size: 10px;
+}
+
+
+/* =========================================================
+   PRIMARY BUTTON
+========================================================= */
+
+.profile-primary-button {
+  display: inline-flex !important;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  min-height: 42px;
+
+  padding: 0 18px !important;
+
+  border: 1px solid var(--forest) !important;
+
+  border-radius: 4px !important;
+
+  background: var(--forest) !important;
+
+  color: #fff !important;
+
+  font-size: 12px !important;
+
+  font-weight: 600 !important;
+
+  box-shadow: none !important;
+}
+
+.profile-primary-button:hover {
+  background: var(--forest-dark) !important;
+
+  border-color: var(--forest-dark) !important;
+}
+
+
+/* =========================================================
+   OUTLINE BUTTON
+========================================================= */
+
+.profile-outline-button {
+  display: inline-flex !important;
+
+  align-items: center;
+
+  gap: 6px;
+
+  min-height: 38px;
+
+  padding: 0 13px !important;
+
+  border: 1px solid var(--forest) !important;
+
+  border-radius: 4px !important;
+
+  background: transparent !important;
+
+  color: var(--forest) !important;
+
+  font-size: 11px !important;
+
+  font-weight: 600 !important;
+}
+
+.profile-outline-button:hover {
+  background: var(--forest) !important;
+
+  color: #fff !important;
+}
+
+
+/* =========================================================
+   FORM ACTIONS
+========================================================= */
+
+.profile-form-actions {
+  display: flex;
+
+  justify-content: flex-end;
+
+  margin-top: 24px;
+}
+
+
+/* =========================================================
+   ADDRESS GRID
+========================================================= */
+
+.address-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 18px;
+}
+
+
+/* =========================================================
+   ADDRESS CARD
+========================================================= */
+
+.address-card {
+  position: relative;
+
+  padding: 18px;
+
+  border: 1px solid var(--line);
+
+  border-radius: 7px;
+
+  background: #fff;
+
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.address-card:hover {
+  border-color: #cbd5cd;
+
+  box-shadow:
+    0 5px 18px rgba(35, 53, 47, 0.06);
+}
+
+
+/* =========================================================
+   ADDRESS CARD TOP
+========================================================= */
+
+.address-card-top {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 10px;
+
+  margin-bottom: 15px;
+}
+
+.address-type {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  color: var(--forest);
+
+  font-size: 12px;
+}
+
+.address-type strong {
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   DEFAULT BADGE
+========================================================= */
+
+.default-badge {
+  padding: 5px 8px !important;
+
+  border-radius: 20px !important;
+
+  background: #eaf3eb !important;
+
+  color: #3e6b4c !important;
+
+  font-size: 9px !important;
+
+  font-weight: 600 !important;
+}
+
+
+/* =========================================================
+   ADDRESS CONTENT
+========================================================= */
+
+.address-card-content h3 {
+  margin: 0 0 5px;
+
+  color: var(--ink);
+
+  font-family: 'Playfair Display', serif;
+
+  font-size: 19px;
+
+  font-weight: 500;
+}
+
+.address-card-content p {
+  margin: 3px 0;
+
+  color: var(--muted);
+
+  font-size: 11px;
+
+  line-height: 1.5;
+}
+
+.address-card-content .address-phone {
+  margin-bottom: 10px;
+
+  color: var(--ink);
+
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   ADDRESS ACTIONS
+========================================================= */
+
+.address-card-actions {
+  display: flex;
+
+  align-items: center;
+
+  gap: 16px;
+
+  margin-top: 17px;
+
+  padding-top: 13px;
+
+  border-top: 1px solid var(--line);
+}
+
+.address-card-actions button {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 5px;
+
+  padding: 0;
+
+  border: none;
+
+  background: transparent;
+
+  color: var(--forest);
+
+  font-family: inherit;
+
+  font-size: 11px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.address-card-actions button:hover {
+  color: var(--forest-dark);
+}
+
+.address-card-actions .delete-address-button {
+  color: #8b5c5c;
+}
+
+.address-card-actions .delete-address-button:hover {
+  color: #6d3333;
+}
+
+
+/* =========================================================
+   ADDRESS FORM
+========================================================= */
+
+.address-form-wrapper {
+  padding: 20px;
+
+  border: 1px solid var(--line);
+
+  border-radius: 7px;
+
+  background: #fafbf8;
+}
+
+.address-form-heading {
+  display: flex;
+
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-bottom: 22px;
+}
+
+.address-form-heading h3 {
+  margin: 0 0 4px;
+
+  color: var(--ink);
+
+  font-family: 'Playfair Display', serif;
+
+  font-size: 21px;
+
+  font-weight: 500;
+}
+
+.address-form-heading p {
+  margin: 0;
+
+  color: var(--muted);
+
+  font-size: 11px;
+}
+
+.address-close-button {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 32px;
+  height: 32px;
+
+  border: 1px solid var(--line);
+
+  border-radius: 50%;
+
+  background: #fff;
+
+  color: #666;
+
+  cursor: pointer;
+}
+
+.address-close-button:hover {
+  background: #f1f2ef;
+
+  color: #222;
+}
+
+
+/* =========================================================
+   DEFAULT ADDRESS CHECKBOX
+========================================================= */
+
+.default-address-check {
+  display: inline-flex !important;
+
+  align-items: center;
+
+  gap: 8px;
+
+  cursor: pointer;
+}
+
+.default-address-check input {
+  width: 15px;
+  height: 15px;
+
+  accent-color: var(--forest);
+
+  cursor: pointer;
+}
+
+.default-address-check span {
+  color: var(--muted);
+
+  font-size: 11px;
+
+  font-weight: 400;
+}
+
+
+/* =========================================================
+   ADDRESS FORM ACTIONS
+========================================================= */
+
+.address-form-actions {
+  display: flex;
+
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 10px;
+
+  margin-top: 24px;
+}
+
+.profile-cancel-button {
+  min-height: 42px;
+
+  padding: 0 17px !important;
+
+  border: 1px solid var(--line) !important;
+
+  border-radius: 4px !important;
+
+  background: #fff !important;
+
+  color: #666 !important;
+
+  font-size: 12px !important;
+}
+
+.profile-cancel-button:hover {
+  background: #f5f5f3 !important;
+}
+
+
+/* =========================================================
+   EMPTY ADDRESS
+========================================================= */
+
+.empty-address {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-direction: column;
+
+  min-height: 220px;
+
+  text-align: center;
+
+  color: var(--muted);
+}
+
+.empty-address > svg {
+  margin-bottom: 12px;
+
+  color: #aab4ad;
+}
+
+.empty-address h3 {
+  margin: 0 0 5px;
+
+  color: var(--ink);
+
+  font-family: 'Playfair Display', serif;
+
+  font-size: 20px;
+
+  font-weight: 500;
+}
+
+.empty-address p {
+  margin: 0 0 18px;
+
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.profile-page-loading {
+  min-height: 70vh;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-direction: column;
+
+  gap: 12px;
+
+  color: var(--muted);
+}
+
+.profile-page-loading p {
+  margin: 0;
+
+  font-size: 12px;
+}
+
+.address-loading {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  min-height: 150px;
+
+  color: var(--muted);
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 767.98px) {
+
+  .profile-page {
+    padding: 35px 0 55px;
+  }
+
+  .profile-page-header {
+    align-items: flex-start;
+
+    margin-bottom: 25px;
+  }
+
+  .profile-avatar {
+    width: 48px;
+    height: 48px;
+  }
+
+  .profile-card-header {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    padding: 17px;
+  }
+
+  .address-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-form-actions {
+    justify-content: stretch;
+  }
+
+  .profile-form-actions .profile-primary-button {
+    width: 100%;
+  }
+
+  .address-form-wrapper {
+    padding: 15px;
+  }
+
+}
+
+
+@media (max-width: 575.98px) {
+
+  .profile-page-header h1 {
+    font-size: 34px;
+  }
+
+  .profile-page-header p:not(.profile-eyebrow) {
+    max-width: 280px;
+
+    line-height: 1.5;
+  }
+
+  .profile-card-header {
+    gap: 15px;
+  }
+
+  .profile-section-title h2 {
+    font-size: 19px;
+  }
+
+  .address-form-actions {
+    flex-direction: column-reverse;
+
+    align-items: stretch;
+  }
+
+  .address-form-actions button {
+    width: 100%;
+  }
+
+}

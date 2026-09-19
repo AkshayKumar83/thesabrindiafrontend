@@ -6,6 +6,10 @@ export const API_ROUTES = {
   login: '/users/login',
   signup: '/users/signup',
   forgotPassword: '/users/forgot-password',
+  profile: '/users/profile',
+  addresses: '/users/addresses',
+  changePassword: '/users/change-password',
+  orders: '/orders/my-orders',
   // Products 
   productVariants: "/products/variants/list",
 }

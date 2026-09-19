@@ -1,3 +1,8 @@
+
+/* =========================================================
+   PRE HEADER
+========================================================= */
+
 .store-preheader {
   background: var(--forest);
   color: #fff;
@@ -13,47 +18,66 @@
 }
 
 
+/* =========================================================
+   MAIN HEADER
+========================================================= */
+
 .store-header {
   background: #fff;
   z-index: 1030;
+
   padding-top: 0.65rem;
   padding-bottom: 0.65rem;
+
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
 }
 
-/* Logo */
+
+/* =========================================================
+   LOGO
+========================================================= */
+
 .store-logo {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+
   font-weight: 700;
   letter-spacing: 0.03em;
   font-size: 0.95rem;
+
+  cursor: pointer;
 }
 
 .store-logo-image {
   height: 75px;
   width: auto;
+
   object-fit: contain;
   display: block;
 }
 
-/* .store-logo-image {
-  height: 50px;
-  width: auto;
-  object-fit: contain;
-  display: block;
-} */
 
-/* Nav links */
+/* =========================================================
+   DESKTOP NAVIGATION
+========================================================= */
+
 .store-nav .nav-link,
 .store-nav-mobile .nav-link {
   color: #444;
+
   font-weight: 500;
   font-size: 0.92rem;
+
   padding: 0.4rem 1rem;
+
   position: relative;
-  transition: color 0.15s ease;
+
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease;
+
+  cursor: pointer;
 }
 
 .store-nav .nav-link:hover,
@@ -69,25 +93,44 @@
 
 .store-nav .nav-link.active::after {
   content: '';
+
   position: absolute;
+
   left: 1rem;
   right: 1rem;
+
   bottom: -2px;
+
   height: 2px;
+
   background: #111;
+
   border-radius: 2px;
 }
 
-/* Icon buttons */
+
+/* =========================================================
+   HEADER ICON BUTTON
+========================================================= */
+
 .header-icon-button {
   width: 45px;
   height: 50px;
+
   border-radius: 50%;
+
   display: inline-flex;
+
   align-items: center;
   justify-content: center;
+
   color: #333;
-  transition: background-color 0.15s ease;
+
+  border: none;
+
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
 }
 
 .header-icon-button:hover {
@@ -95,32 +138,316 @@
   color: #111;
 }
 
-/* Cart badge */
+
+/* =========================================================
+   CART BADGE
+========================================================= */
+
 .cart-badge {
   position: absolute;
+
   top: 2px;
   right: 2px;
+
   min-width: 17px;
   height: 17px;
+
   padding: 0 4px;
+
   font-size: 0.62rem;
   font-weight: 600;
+
   line-height: 17px;
+
   display: flex;
+
   align-items: center;
   justify-content: center;
+
   border: 2px solid #fff;
 }
 
 
+/* =========================================================
+   ACCOUNT MENU WRAPPER
+========================================================= */
+
+.account-menu-wrapper {
+  position: relative;
+}
+
+
+/* =========================================================
+   ACCOUNT DROPDOWN
+========================================================= */
+
+.account-dropdown {
+  position: absolute;
+
+  /*
+   * Keep dropdown very close to icon.
+   * This prevents hover from breaking.
+   */
+  top: calc(100% + 2px);
+  right: 0;
+
+  width: 210px;
+
+  background: #fff;
+
+  border: 1px solid #e8e8e8;
+
+  border-radius: 12px;
+
+  padding: 7px;
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.10),
+    0 2px 8px rgba(0, 0, 0, 0.04);
+
+  z-index: 1100;
+
+
+  /* Hidden initially */
+
+  opacity: 0;
+
+  visibility: hidden;
+
+  pointer-events: none;
+
+  transform: translateY(-5px);
+
+
+  /* Smooth hover animation */
+
+  transition:
+    opacity 0.15s ease,
+    visibility 0.15s ease,
+    transform 0.15s ease;
+}
+
+
+/* =========================================================
+   SHOW DROPDOWN ON HOVER
+========================================================= */
+
+.account-menu-wrapper:hover .account-dropdown {
+  opacity: 1;
+
+  visibility: visible;
+
+  pointer-events: auto;
+
+  transform: translateY(0);
+}
+
+
+/* =========================================================
+   DROPDOWN ARROW
+========================================================= */
+
+.account-dropdown::before {
+  content: '';
+
+  position: absolute;
+
+  top: -6px;
+  right: 16px;
+
+  width: 11px;
+  height: 11px;
+
+  background: #fff;
+
+  border-left: 1px solid #e8e8e8;
+  border-top: 1px solid #e8e8e8;
+
+  transform: rotate(45deg);
+}
+
+
+/* =========================================================
+   ACCOUNT USER INFO
+========================================================= */
+
+.account-user-info {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 10px 9px;
+}
+
+.account-user-icon {
+  width: 34px;
+  height: 34px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: #f4f4f4;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  color: #333;
+}
+
+.account-user-details {
+  min-width: 0;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 2px;
+}
+
+.account-user-label {
+  font-size: 0.68rem;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.07em;
+
+  color: #999;
+
+  font-weight: 600;
+}
+
+.account-user-name {
+  font-size: 0.86rem;
+
+  color: #222;
+
+  font-weight: 600;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  max-width: 135px;
+}
+
+
+/* =========================================================
+   DROPDOWN DIVIDER
+========================================================= */
+
+.account-dropdown-divider {
+  height: 1px;
+
+  background: #eeeeee;
+
+  margin: 5px 4px;
+}
+
+
+/* =========================================================
+   DROPDOWN ITEMS
+========================================================= */
+
+.account-dropdown-item {
+  width: 100%;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  background: transparent;
+
+  border: none;
+
+  text-align: left;
+
+  padding: 10px 9px;
+
+  font-size: 0.88rem;
+
+  font-family: inherit;
+
+  color: #333;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.account-dropdown-item svg {
+  flex-shrink: 0;
+
+  color: #666;
+
+  transition: color 0.15s ease;
+}
+
+.account-dropdown-item:hover {
+  background-color: #f5f5f5;
+
+  color: #111;
+}
+
+.account-dropdown-item:hover svg {
+  color: #111;
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+.logout-item {
+  color: #444;
+}
+
+.logout-item:hover {
+  background-color: #f7f7f7;
+
+  color: #111;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
 @media (max-width: 767.98px) {
+
   .store-preheader {
     display: none;
   }
-}
 
-@media (max-width: 767.98px) {
   .store-logo-image {
     height: 42px;
   }
+
 }
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 575.98px) {
+
+  .header-icon-button {
+    width: 42px;
+    height: 46px;
+  }
+
+}
+
