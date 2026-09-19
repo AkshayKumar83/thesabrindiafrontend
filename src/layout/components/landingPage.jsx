@@ -15,13 +15,16 @@ import {
 import ProductList from '../../components/product/productlist/ProductList.jsx';
 
 import Contact from './contact/Contact.jsx';
+import Hero from './hero/Hero.jsx';
 
 function LandingPage({ onNavigate }) {
 
   return (
     <>
       <main className="storefront">
-        <section className="hero-section">
+
+
+        {/* <section className="hero-section">
           <CContainer fluid="xxl">
             <CRow className="align-items-center g-4 g-lg-5">
               <CCol xs={12} lg={5}>
@@ -64,7 +67,11 @@ function LandingPage({ onNavigate }) {
               </CCol>
             </CRow>
           </CContainer>
-        </section>
+        </section> */}
+
+      <Hero />
+
+
         <section className="promise-strip">
           <CContainer fluid="xxl">
             <CRow className="g-4">
