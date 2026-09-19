@@ -31,3 +31,13 @@ export const getOrdersApi = async (data) => {
     },
   });
 };
+
+export const getAllOrdersListApi = async () => {
+  return request({
+    method: "get",
+    url: "/orders/list",
+    headers: {
+      etoken: localStorage.getItem("etoken"),
+    },
+  });
+};

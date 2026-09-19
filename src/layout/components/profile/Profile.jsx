@@ -34,6 +34,8 @@ import API_BASE_URL, { API_ROUTES } from '../../../config/api.js'
 
 import './Profile.css'
 import { getAddressesApi } from '../../../services/address.api.js'
+import { getProfileByUserIdApi, getUpdateProfileApi, updateUserPasswordApi } from '../../../services/profile.api.js'
+import { useToast } from '../toast/Toast.jsx'
 
 
 const Profile = () => {
@@ -78,6 +80,7 @@ const Profile = () => {
 
   const [addressMessage, setAddressMessage] = useState(null)
 
+  const toast = useToast();
 
   /* =========================================================
      ADDRESS FORM
@@ -136,37 +139,12 @@ const Profile = () => {
 
     try {
 
-      const response = await fetch(
-        `${API_BASE_URL}${API_ROUTES.profile}`,
-        {
-          method: 'GET',
 
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-
-      const data = await response.json()
-      const addressData = await getAddressesApi();
-      setAddresses(addressData?.data || []);
-      if (!response.ok) {
-        throw new Error(
-          data.message || 'Unable to load profile'
-        )
-      }
-
-
-      /*
-       * Expected backend response:
-       *
-       * {
-       *   user: {...},
-       *   addresses: [...]
-       * }
-       */
-
-      const profileUser = data.user || data
+      const data = await getProfileByUserIdApi()
+      // console.log("data",data)
+   
+    
+      const profileUser = data?.user
 
       setProfile({
         firstName: profileUser.firstName || '',
@@ -177,10 +155,12 @@ const Profile = () => {
 
     } catch (error) {
 
-      setProfileMessage({
-        type: 'danger',
-        text: error.message,
-      })
+      // setProfileMessage({
+      //   type: 'danger',
+      //   text: error.message,
+      // })
+
+      toast.error(error.message ||'Failed to load profile.');
 
     } finally {
 
@@ -224,37 +204,11 @@ const Profile = () => {
 
     try {
 
-      const response = await fetch(
-        `${API_BASE_URL}${API_ROUTES.profile}`,
-        {
-          method: 'PUT',
-
-          headers: {
-            'Content-Type': 'application/json',
-
-            Authorization: `Bearer ${token}`,
-          },
-
-          body: JSON.stringify({
+      const data = await getUpdateProfileApi({
             firstName: profile.firstName,
             lastName: profile.lastName,
             contactNo: profile.contactNo,
-          }),
-        }
-      )
-
-      const data = await response.json()
-
-      if (!response.ok) {
-        throw new Error(
-          data.message || 'Unable to update profile'
-        )
-      }
-
-
-      /*
-       * Update AuthContext user as well
-       */
+          })
 
       if (data.user) {
 
@@ -279,17 +233,11 @@ const Profile = () => {
       }
 
 
-      setProfileMessage({
-        type: 'success',
-        text: data.message || 'Profile updated successfully.',
-      })
+     toast.success('Profile updated successfully.');
 
     } catch (error) {
 
-      setProfileMessage({
-        type: 'danger',
-        text: error.message,
-      })
+       toast.error('Profile update failed.');
 
     } finally {
 
@@ -591,14 +539,15 @@ const Profile = () => {
     event.preventDefault()
 
     if (
-      passwordForm.newPassword !==
-      passwordForm.confirmPassword
+      passwordForm.newPassword !== passwordForm.confirmPassword
     ) {
 
-      setPasswordMessage({
-        type: 'danger',
-        text: 'New password and confirm password do not match.',
-      })
+      // setPasswordMessage({
+      //   type: 'danger',
+      //   text: 'New password and confirm password do not match.',
+      // })
+
+        toast.error('New password and confirm password do not match.');
 
       return
     }
@@ -608,54 +557,44 @@ const Profile = () => {
 
     try {
 
-      const response = await fetch(
-        `${API_BASE_URL}${API_ROUTES.changePassword}`,
-        {
-          method: 'PUT',
+      // const response = await fetch(
+      //   `${API_BASE_URL}${API_ROUTES.changePassword}`,
+      //   {
+      //     method: 'PUT',
 
-          headers: {
-            'Content-Type': 'application/json',
+      //     headers: {
+      //       'Content-Type': 'application/json',
 
-            Authorization: `Bearer ${token}`,
-          },
+      //       Authorization: `Bearer ${token}`,
+      //     },
 
-          body: JSON.stringify({
-            currentPassword:
-              passwordForm.currentPassword,
+      //     body: JSON.stringify({
+      //       currentPassword:
+      //         passwordForm.currentPassword,
 
-            newPassword:
-              passwordForm.newPassword,
-          }),
-        }
-      )
+      //       newPassword:
+      //         passwordForm.newPassword,
+      //     }),
+      //   }
+      // )
 
-      const data = await response.json()
+      const data = await updateUserPasswordApi({
+            oldPassword: passwordForm.currentPassword,
+            newPassword: passwordForm.newPassword,
+            confirmPassword: passwordForm.confirmPassword,
+          })
 
-      if (!response.ok) {
-        throw new Error(
-          data.message || 'Unable to change password'
-        )
-      }
-
+     
       setPasswordForm({
         currentPassword: '',
         newPassword: '',
         confirmPassword: '',
       })
 
-      setPasswordMessage({
-        type: 'success',
-        text:
-          data.message ||
-          'Password updated successfully.',
-      })
-
+        toast.success('Password updated successfully.');
     } catch (error) {
 
-      setPasswordMessage({
-        type: 'danger',
-        text: error.message,
-      })
+        toast.error('Password not update.');
 
     } finally {
 
@@ -754,17 +693,6 @@ const Profile = () => {
 
 
           <CCardBody>
-
-            {profileMessage && (
-              <CAlert
-                color={profileMessage.type}
-                className="profile-alert"
-              >
-                {profileMessage.text}
-              </CAlert>
-            )}
-
-
             <CForm onSubmit={handleProfileSubmit}>
 
               <CRow className="g-4">
@@ -885,11 +813,11 @@ const Profile = () => {
         </CCard>
 
 
-        {/* =====================================================
-            ADDRESSES
-        ===================================================== */}
+       
+           {/* ADDRESSES */}
+        
 
-        <CCard className="profile-card">
+        {/* <CCard className="profile-card">
 
           <CCardHeader className="profile-card-header">
 
@@ -938,7 +866,7 @@ const Profile = () => {
             )}
 
 
-            {/* ADDRESS FORM */}
+         
 
             {addressMode && (
 
@@ -1205,7 +1133,7 @@ const Profile = () => {
             )}
 
 
-            {/* ADDRESS LIST */}
+         
 
             {!addressMode && (
 
@@ -1358,7 +1286,7 @@ const Profile = () => {
 
           </CCardBody>
 
-        </CCard>
+        </CCard> */}
 
 
         {/* =====================================================
@@ -1391,16 +1319,6 @@ const Profile = () => {
 
 
           <CCardBody>
-
-            {passwordMessage && (
-              <CAlert
-                color={passwordMessage.type}
-                className="profile-alert"
-              >
-                {passwordMessage.text}
-              </CAlert>
-            )}
-
 
             <CForm onSubmit={handlePasswordSubmit}>
 
