@@ -74,6 +74,8 @@ function Register() {
     <form onSubmit={handleSubmit}>
       <div className="field-row">
         <label>First name<span className="input-with-icon"><UserRound size={16} aria-hidden="true" /><input name="firstName" value={form.firstName} onChange={updateField} placeholder="Aarav" required /></span></label>
+      </div>
+       <div className="field-row">
         <label>Last name<span className="input-with-icon"><UserRound size={16} aria-hidden="true" /><input name="lastName" value={form.lastName} onChange={updateField} placeholder="Sharma" required /></span></label>
       </div>
       <label>Contact number<input name="contactNo" value={form.contactNo} onChange={updateField} placeholder="98765 43210" inputMode="tel" required /></label>

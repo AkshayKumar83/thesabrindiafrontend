@@ -58,6 +58,8 @@ import ProductCollection from './layout/pages/product/ProductCollection'
 import CheckoutPage from './layout/pages/order/CheckoutPage'
 import OrderSuccess from './layout/pages/order/OrderSuccess'
 import UserProtectedRoute from './protectedroutes/UserProtectedRoute'
+import Profile from './layout/components/profile/Profile'
+import Orders from './layout/components/order/Orders'
 
 /**
  * Main Application Component
@@ -118,6 +120,8 @@ const App = () => {
             <Route path="/" element={<UserProtectedRoute />}>
               <Route path="/checkout" element={<CheckoutPage />} />
               <Route path="/order-success/:id/:orderNo" element={<OrderSuccess />} />
+               <Route exact path="/profile" name="User Profile" element={<Profile />} />
+               <Route exact path="/orders" name="User Profile" element={<Orders />} />
             </Route>
 
             <Route path="/policies/:policy" element={<PolicyPage />} />
@@ -125,6 +129,7 @@ const App = () => {
           <Route exact path="/login" name="Login Page" element={<UserLogin />} />
           <Route exact path="/signup" name="Sign Up Page" element={<UserRegister />} />
           <Route exact path="/admin/login" name="Admin Login Page" element={<AdminLogin />} />
+         
           <Route
             path="/admin/*"
             element={

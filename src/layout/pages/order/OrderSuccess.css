@@ -13,8 +13,8 @@
   --sos-cream: var(--cream, #f8ef77);
 
   /* tints mixed from the palette */
-  /* --sos-panel: color-mix(in srgb, var(--sos-maroon) 4%, var(--sos-cream)); */
-  --sos-panel: #fcf9d4;
+  --sos-panel: color-mix(in srgb, var(--sos-maroon) 4%, var(--sos-cream));
+  /* --sos-panel: #fcf9d4; */
   --sos-line: color-mix(in srgb, var(--sos-maroon) 20%, var(--sos-cream));
   --sos-muted: color-mix(in srgb, var(--sos-maroon-dark) 75%, var(--sos-cream));
 

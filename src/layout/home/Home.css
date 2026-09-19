@@ -129,18 +129,18 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible 
 .brand-copy h1 em { color:#b8d0bc; font-weight:500; }
 .brand-description { max-width:290px; margin:30px 0 0; color:#c2d0c5; font-size:15px; line-height:1.7; }
 .brand-footer { position:relative; z-index:1; margin:0; color:#91aa99; font-size:12px; }
-.form-panel { display:grid; place-items:center; padding:44px 7vw; background:var(--paper); }
+.form-panel { display:grid; place-items:center; padding:28px 7vw; background:var(--paper); }
 .form-wrap { width:min(100%,430px); animation:rise-in .6s ease both; }
 .mobile-brand { display:none; }
-.form-heading h2 { margin:0 0 10px; color:var(--ink); font-family:'Playfair Display',serif; font-size:clamp(30px,3vw,42px); font-weight:500; line-height:1.1; }
-.form-heading > p:last-child { margin:0; color:var(--muted); font-size:14px; line-height:1.6; }
-.form-heading .eyebrow { margin-bottom:13px; }
-.mode-switch { display:flex; gap:24px; margin:36px 0 28px; border-bottom:1px solid var(--line); }
-.mode-switch button { position:relative; padding:0 0 14px; border:0; background:transparent; color:#a2aaa4; font-size:13px; font-weight:600; }
+.form-heading h2 { margin:0 0 7px; color:var(--ink); font-family:'Playfair Display',serif; font-size:clamp(30px,3vw,42px); font-weight:500; line-height:1.05; }
+.form-heading > p:last-child { margin:0; color:var(--muted); font-size:13px; line-height:1.5; }
+.form-heading .eyebrow { margin-bottom:10px; }
+.mode-switch { display:flex; gap:24px; margin:24px 0 20px; border-bottom:1px solid var(--line); }
+.mode-switch button { position:relative; padding:0 0 11px; border:0; background:transparent; color:#a2aaa4; font-size:13px; font-weight:600; }
 .mode-switch button.active { color:var(--ink); }
 .mode-switch button.active::after { content:''; position:absolute; right:0; bottom:-1px; left:0; height:2px; background:var(--coral); }
-form { display:grid; gap:15px; }
-form label { display:grid; gap:6px; color:var(--ink); font-size:12px; font-weight:600; }
+form { display:grid; gap:10px; }
+form label { display:grid; gap:4px; color:var(--ink); font-size:12px; font-weight:600; }
 input:not([type=checkbox]) { width:100%; min-height:42px; padding:0 12px; border:1px solid var(--line); border-radius:3px; outline:0; background:#fff; color:var(--ink); font-size:13px; }
 .input-with-icon { position:relative; display:flex; align-items:center; }
 .input-with-icon > svg { position:absolute; left:12px; z-index:1; color:#839089; pointer-events:none; }

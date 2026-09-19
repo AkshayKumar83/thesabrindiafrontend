@@ -11,6 +11,8 @@ import {
   Phone,
 } from 'lucide-react'
 
+import './Contact.css'
+
 
 function Contact() {
 
@@ -60,35 +62,26 @@ function Contact() {
           <div className="contact-details">
 
             <a href="mailto:hello@thesabrindia.com">
-
               <Mail size={18} />
-
               <span>
                 hello@thesabrindia.com
               </span>
-
             </a>
 
 
             <a href="tel:+919876543210">
-
               <Phone size={18} />
-
               <span>
                 +91 98765 43210
               </span>
-
             </a>
 
 
             <div className="contact-location">
-
               <MapPin size={18} />
-
               <span>
                 Jaipur, Rajasthan, India
               </span>
-
             </div>
 
           </div>
@@ -98,66 +91,150 @@ function Contact() {
 
 
         {/* =================================================
-            RIGHT SIDE — FORM ONLY
+            RIGHT SIDE — FORM CARD
             ================================================= */}
 
         <div className="contact-form-wrapper">
 
-          <CForm
-            className="contact-form"
-            onSubmit={handleSubmit}
-          >
-
-            {/* NAME */}
-
-            <CFormInput
-              type="text"
-              placeholder="Your name"
-              aria-label="Your name"
-              required
-            />
+          <div className="contact-form-card">
 
 
-            {/* EMAIL */}
+            {/* =================================================
+                FORM HEADER
+                ================================================= */}
 
-            <CFormInput
-              type="email"
-              placeholder="Your email"
-              aria-label="Your email"
-              required
-            />
+            <div className="contact-form-header">
 
+              <span className="contact-form-kicker">
+                GET IN TOUCH
+              </span>
 
-            {/* PHONE */}
+              <h3>
+                Send us a note
+              </h3>
 
-            <CFormInput
-              type="tel"
-              placeholder="Phone No."
-              aria-label="Phone No."
-              required
-            />
+              <p>
+                Have a question about a saree or your order?
+                We'd love to hear from you.
+              </p>
 
-
-            {/* MESSAGE */}
-
-            <CFormTextarea
-              placeholder="How can we help?"
-              aria-label="Your message"
-              rows={5}
-              required
-            />
+            </div>
 
 
-            {/* SUBMIT */}
 
-            <CButton
-              type="submit"
-              className="dark-button"
+            {/* =================================================
+                FORM
+                ================================================= */}
+
+            <CForm
+              className="contact-form"
+              onSubmit={handleSubmit}
             >
-              Send a note <span>→</span>
-            </CButton>
 
-          </CForm>
+
+              {/* NAME */}
+
+              <div className="contact-field">
+
+                <label htmlFor="contact-name">
+                  Your Name
+                </label>
+
+                <CFormInput
+                  id="contact-name"
+                  type="text"
+                  placeholder="Enter your name"
+                  aria-label="Your name"
+                  required
+                />
+
+              </div>
+
+
+
+              {/* PHONE */}
+
+              <div className="contact-field">
+
+                <label htmlFor="contact-phone">
+                  Phone Number
+                </label>
+
+                <CFormInput
+                  id="contact-phone"
+                  type="tel"
+                  placeholder="Enter phone number"
+                  aria-label="Phone number"
+                  maxLength={10}
+                  required
+                />
+
+              </div>
+
+
+
+              {/* EMAIL */}
+
+              <div className="contact-field contact-field--full">
+
+                <label htmlFor="contact-email">
+                  Email Address
+                </label>
+
+                <CFormInput
+                  id="contact-email"
+                  type="email"
+                  placeholder="Enter your email address"
+                  aria-label="Your email"
+                  required
+                />
+
+              </div>
+
+
+
+              {/* MESSAGE */}
+
+              <div className="contact-field contact-field--full">
+
+                <label htmlFor="contact-message">
+                  Your Message
+                </label>
+
+                <CFormTextarea
+                  id="contact-message"
+                  placeholder="Tell us how we can help..."
+                  aria-label="Your message"
+                  rows={5}
+                  required
+                />
+
+              </div>
+
+
+
+              {/* SUBMIT */}
+
+              <CButton
+                type="submit"
+                className="dark-button contact-submit"
+              >
+
+                <span>
+                  Send a note
+                </span>
+
+                <span className="contact-submit-arrow">
+                  →
+                </span>
+
+              </CButton>
+
+
+            </CForm>
+
+
+          </div>
 
         </div>
 
