@@ -158,9 +158,6 @@ const CategoryDetails = () => {
                       required
                     />
                   </CCol>
-                </CRow>
-
-                <CRow className="mb-3">
                   <CCol md={6}>
                     <CFormLabel>Status</CFormLabel>
                     <CFormSelect value={status} onChange={(e) => setStatus(e.target.value)}>
@@ -170,9 +167,10 @@ const CategoryDetails = () => {
                   </CCol>
                 </CRow>
 
+
                 {/* Description */}
                 <CRow className="mb-3">
-                  <CCol md={8}>
+                  <CCol md={12}>
                     <CFormLabel>Description</CFormLabel>
                     <CFormTextarea
                       rows={4}
