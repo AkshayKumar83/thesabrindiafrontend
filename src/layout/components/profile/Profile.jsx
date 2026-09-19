@@ -33,6 +33,7 @@ import { useAuth } from '../../../context/AuthContext.jsx'
 import API_BASE_URL, { API_ROUTES } from '../../../config/api.js'
 
 import './Profile.css'
+import { getAddressesApi } from '../../../services/address.api.js'
 
 
 const Profile = () => {
@@ -147,7 +148,8 @@ const Profile = () => {
       )
 
       const data = await response.json()
-
+      const addressData = await getAddressesApi();
+      setAddresses(addressData?.data || []);
       if (!response.ok) {
         throw new Error(
           data.message || 'Unable to load profile'
@@ -172,8 +174,6 @@ const Profile = () => {
         contactNo: profileUser.contactNo || '',
         email: profileUser.email || '',
       })
-
-      setAddresses(data.addresses || [])
 
     } catch (error) {
 

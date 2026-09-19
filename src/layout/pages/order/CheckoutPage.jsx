@@ -10,6 +10,7 @@ import './checkout.css'
 import { useCart } from '../../../context/CartContext'
 import { useNavigate } from 'react-router-dom'
 import { createOrderApi } from '../../../services/order.api'
+import { useConfirm } from '../../components/confirm/ConfirmModal'
 
 const STEPS = [
   {
@@ -33,6 +34,7 @@ const DISCOUNT = 1000
 
 const CheckoutPage = () => {
   const navigate = useNavigate();
+  const { confirm, modal } = useConfirm();
   const { items, totalItems, loadCart } = useCart()
   const [currentStep, setCurrentStep] = useState(1)
   const [addresses, setAddresses] = useState([]);
@@ -137,46 +139,44 @@ const CheckoutPage = () => {
 
     setSelectedAddressId(address.id);
   };
+  const isCod = String(paymentMethod).toUpperCase() === 'COD';
+  const placeOrder = async () => {
+    try {
+      const payload = {
+        items: items.map((item) => ({
+          productId: item.productId,
+          variantId: item.variantId,
+          quantity: item.quantity,
+        })),
+        paymentMethod: String(paymentMethod).toUpperCase(),
+        shippingAddress: selectedAddress,
+      };
+      const response = await createOrderApi(payload);
+      setOrder(response);
+      resetCheckout();
+      loadCart();
+      navigate(`/order-success/${response.orderId}/${response.orderNumber}`);
+    } catch (error) {
+      console.error('Create Order Error ::>>', error);
+      // setError(error?.message || 'Unable to create order');
+      throw error;
+    }
+  };
+  const currency = (amount) => `₹${Number(amount || 0).toLocaleString('en-IN', { maximumFractionDigits: 0 })}`;
   const handlePayNow = async () => {
-  try {
-    setIsPaying(true);
-    const payload = {
-      items: items.map((item) => ({
-        productId: item.productId,
-        variantId: item.variantId,
-        quantity: item.quantity,
-      })),
-      paymentMethod,
-      shippingAddress: selectedAddress,
-    };
-    console.log("Order Payload ::>>", payload);
-    const response = await createOrderApi(payload);
-    console.log("Create Order Response ::>>", response);
-    // Save order response if required
-    setOrder(response);
-    resetCheckout();
-    loadCart();
-    navigate(`/order-success/${response.orderId}/${response.orderNumber}`);
-    // setCurrentStep(4);
-    // setTimeout(() => {
-    //   setOrder({
-    //     orderNumber: `SABR${Math.floor(100000 + Math.random() * 900000)}`,
-        
-    //     paymentStatus: paymentMethod === 'cod' ? 'cod' : 'paid',
-    //   })
-      
-    //   setIsPaying(false)
-    //   // Move to next step
-    //   setCurrentStep(4)
-    // }, 1200)
-  } catch (error) {
-    console.error("Create Order Error ::>>", error);
-    // You can show your checkout error here
-    // setError(error?.message || "Unable to create order");
-  } finally {
-    setIsPaying(false);
-  }
-};
+    const totalAmount = currency(total);
+    await confirm({
+      variant: 'payment',
+      title: isCod ? 'Place your order?' : 'Ready to pay?',
+      message: isCod
+        ? 'You will pay in cash when your order is delivered.'
+        : 'Please check your address and items before you pay.',
+      details: isCod ? `Amount to pay on delivery: ${totalAmount}` : `Total: ${totalAmount}`,
+      confirmText: isCod ? 'Place order' : `Pay ${totalAmount}`,
+      cancelText: 'Review order',
+      onConfirm: placeOrder,
+    });
+  };
   return (
     <div className="sabr-checkout">
       <CContainer fluid="lg">
@@ -333,6 +333,7 @@ const CheckoutPage = () => {
               </CCol>
             </CRow>
       </CContainer>
+      {modal}
     </div>
   )
 }
