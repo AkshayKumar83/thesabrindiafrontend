@@ -143,7 +143,7 @@ function LandingPage({ onNavigate }) {
               </CCol>
             </CRow>
             {/* Product List component 1 */}
-            <ProductList category={'Hello'}/>
+            <ProductList categoryName={'Chiffon Saree'}/>
             {/* ++++++++++++++ */}
           </CContainer>
         </section>
@@ -191,7 +191,7 @@ function LandingPage({ onNavigate }) {
           </CContainer>
         </section>
         {/* Product List component 2 */}
-            <ProductList category={'Hello'}/>
+            <ProductList categoryName={'Chiffon Saree'}/>
             {/* ++++++++++++++ */}
       </main>
       <Contact /> 

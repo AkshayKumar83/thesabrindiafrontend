@@ -1,6 +1,7 @@
 import React, {
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 
@@ -12,6 +13,7 @@ import {
   CButton,
 } from "@coreui/react";
 
+
 import CIcon from "@coreui/icons-react";
 import { cilFilter } from "@coreui/icons";
 
@@ -20,13 +22,12 @@ import { useCart } from "../../../context/CartContext";
 import FilterDrawer from "../../../layout/components/filterdrawer/Filter.jsx";
 
 import { request } from "../../../services/api.js";
-import { API_ROUTES } from "../../../config/api";
+import { API_BASE_IMAGE_URL, API_ROUTES } from "../../../config/api";
+import { useSearchParams } from "react-router-dom";
+import './ProductCollection.css';
+import CustomDropdown from "../../components/dropdown/CustomDropdown.jsx";
 
 const SORT_OPTIONS = [
-  {
-    value: "featured",
-    label: "Featured",
-  },
   {
     value: "price-asc",
     label: "Price: Low to High",
@@ -41,53 +42,44 @@ const SORT_OPTIONS = [
   },
 ];
 
+
 export default function ProductCollection() {
-  const { items } = useCart();
+ const { items } = useCart();
 
-  // =========================================================
-  // API STATE
-  // =========================================================
+  const [searchParams, setSearchParams] = useSearchParams();
 
+  /*
+   * Example:
+   * /shop?category=Silk
+   *
+   * or:
+   * /shop?category=4
+   */
+  const category = searchParams.get("category");
+
+  // API state
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  // =========================================================
-  // FILTER STATE
-  // =========================================================
-
+  // Filter state
   const [filterOpen, setFilterOpen] = useState(false);
+  const [inStockOnly, setInStockOnly] = useState(false);
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(3700);
+  const [sort, setSort] = useState("featured");
 
-  const [inStockOnly, setInStockOnly] =
-    useState(false);
-
-  const [minPrice, setMinPrice] =
-    useState(0);
-
-  const [maxPrice, setMaxPrice] =
-    useState(3700);
-
-  const [sort, setSort] =
-    useState("featured");
-
-  // =========================================================
-  // CART TOTAL
-  // =========================================================
-
+  // Cart total
   const cartTotalQty = useMemo(
     () =>
       items.reduce(
-        (sum, item) =>
-          sum + (item.quantity || 0),
+        (sum, item) => sum + (item.quantity || 0),
         0
       ),
     [items]
   );
 
-  // =========================================================
-  // FETCH PRODUCTS
-  // =========================================================
-
+  // Fetch products
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -99,14 +91,7 @@ export default function ProductCollection() {
           url: API_ROUTES.productVariants,
         });
 
-        console.log(
-          "Products API response:",
-          response
-        );
-
-        // =====================================================
-        // GET API ARRAY
-        // =====================================================
+        console.log("Products API response:", response);
 
         const apiProducts =
           Array.isArray(response)
@@ -117,132 +102,75 @@ export default function ProductCollection() {
             ? response.variants
             : [];
 
-        // =====================================================
-        // MAP API RESPONSE
-        // =====================================================
+        const formattedProducts = apiProducts.map((item) => {
+          const price = Number(item.price);
 
-        const formattedProducts =
-          apiProducts.map((item) => {
-            const price = Number(
-              item.price
-            );
+          const primaryImage =
+            item.images?.find(
+              (image) => Number(image.isPrimary) === 1
+            )?.image_url || "";
 
-            // Find ONLY primary image
-            const primaryImage =
-              item.images?.find(
-                (image) =>
-                  Number(
-                    image.isPrimary
-                  ) === 1
-              )?.image_url || "";
+          return {
+            // Variant information
+            id: item.id,
+            productId: item.productId,
+            name: item.name,
+            color: item.color,
+            price,
+            description: item.description || "",
 
-            return {
-              // Variant ID
-              id: item.id,
+            image: primaryImage
+              ? `${API_BASE_IMAGE_URL}${primaryImage}`
+              : "",
 
-              // Product ID
-              productId:
-                item.productId,
+            inStock: Number(item.inStock) > 0,
+            stockQuantity: Number(item.inStock),
 
-              // Variant name
-              name: item.name,
+            isPrimary: item.isPrimary,
+            createdAt: item.createdAt,
+            updatedAt: item.updatedAt,
 
-              // Variant color
-              color: item.color,
+            // Images
+            images: item.images || [],
 
-              // Price
-              price,
+            // Parent product
+            product: item.product,
 
-              // Description
-              description:
-                item.description || "",
+            // Category information
+            categoryId: item.product?.categoryId ?? null,
 
-              // Primary image only
-              image: primaryImage
-                ? `http://localhost:8090${primaryImage}`
-                : "",
+            // This will work when backend sends:
+            // product: {
+            //   category: {
+            //     name: "Silk"
+            //   }
+            // }
+            categoryName:
+              item.product?.category?.name || "",
 
-              // Stock
-              inStock:
-                Number(item.inStock) > 0,
+            // Other product information
+            skuNo: item.product?.skuNo || "",
+          };
+        });
+        console.log("Formatedd products :>>", formattedProducts)
+        setProducts(formattedProducts);
 
-              // Actual stock quantity
-              stockQuantity:
-                Number(item.inStock),
-
-              // Original API values
-              isPrimary:
-                item.isPrimary,
-
-              createdAt:
-                item.createdAt,
-
-              updatedAt:
-                item.updatedAt,
-
-              // Parent product
-              product: item.product,
-
-              // SKU
-              skuNo:
-                item.product?.skuNo || "",
-
-              // Keep images if needed later
-              images:
-                item.images || [],
-            };
-          });
-
-        setProducts(
-          formattedProducts
-        );
-
-        // =====================================================
-        // SET INITIAL PRICE RANGE
-        // =====================================================
-
-        if (
-          formattedProducts.length > 0
-        ) {
-          const prices =
-            formattedProducts
-              .map((product) =>
-                Number(product.price)
-              )
-              .filter(
-                (price) =>
-                  !Number.isNaN(price)
-              );
+        // Set price bounds
+        if (formattedProducts.length > 0) {
+          const prices = formattedProducts
+            .map((product) => Number(product.price))
+            .filter((price) => !Number.isNaN(price));
 
           if (prices.length > 0) {
-            const minimumPrice =
-              Math.floor(
-                Math.min(...prices)
-              );
-
-            const maximumPrice =
-              Math.ceil(
-                Math.max(...prices)
-              );
-
-            setMinPrice(
-              minimumPrice
-            );
-
-            setMaxPrice(
-              maximumPrice
-            );
+            setMinPrice(Math.floor(Math.min(...prices)));
+            setMaxPrice(Math.ceil(Math.max(...prices)));
           }
         }
       } catch (err) {
-        console.error(
-          "Product API error:",
-          err
-        );
+        console.error("Product API error:", err);
 
         setError(
-          err?.response?.data
-            ?.message ||
+          err?.response?.data?.message ||
             err.message ||
             "Unable to load products."
         );
@@ -256,10 +184,7 @@ export default function ProductCollection() {
     fetchProducts();
   }, []);
 
-  // =========================================================
-  // PRICE BOUNDS
-  // =========================================================
-
+  // Price bounds
   const priceBounds = useMemo(() => {
     if (!products.length) {
       return {
@@ -269,13 +194,8 @@ export default function ProductCollection() {
     }
 
     const prices = products
-      .map((product) =>
-        Number(product.price)
-      )
-      .filter(
-        (price) =>
-          !Number.isNaN(price)
-      );
+      .map((product) => Number(product.price))
+      .filter((price) => !Number.isNaN(price));
 
     if (!prices.length) {
       return {
@@ -285,72 +205,140 @@ export default function ProductCollection() {
     }
 
     return {
-      min: Math.floor(
-        Math.min(...prices)
-      ),
-      max: Math.ceil(
-        Math.max(...prices)
-      ),
+      min: Math.floor(Math.min(...prices)),
+      max: Math.ceil(Math.max(...prices)),
     };
   }, [products]);
 
-  // =========================================================
-  // FILTER + SORT
-  // =========================================================
-
+  /*
+   * FILTER + SORT
+   *
+   * Order:
+   *
+   * 1. Category
+   * 2. Stock
+   * 3. Price range
+   * 4. Sorting
+   */
   const filteredProducts = useMemo(() => {
-    let list = products.filter(
+    let list = [...products];
+
+    // --------------------------------
+    // 1. CATEGORY FILTER
+    // --------------------------------
+    console.log("CAtegory filter ::>", category);
+    if (category) {
+      const selectedCategory = String(category)
+        .trim()
+        .toLowerCase();
+
+      list = list.filter((product) => {
+        const productCategoryId = String(
+          product.categoryId ?? ""
+        )
+          .trim()
+          .toLowerCase();
+
+        const productCategoryName = String(
+          product.categoryName ?? ""
+        )
+          .trim()
+          .toLowerCase();
+        console.log(product, productCategoryName, productCategoryId === selectedCategory ,
+          productCategoryName === selectedCategory);
+        /*
+         * Supports both:
+         *
+         * ?category=4
+         *
+         * and
+         *
+         * ?category=Silk
+         */
+        return (
+          productCategoryId === selectedCategory ||
+          productCategoryName === selectedCategory
+        );
+      });
+    }
+    console.log("List::>>", list);
+    // --------------------------------
+    // 2. STOCK FILTER
+    // --------------------------------
+    if (inStockOnly) {
+      list = list.filter(
+        (product) => product.inStock
+      );
+    }
+
+    // --------------------------------
+    // 3. PRICE FILTER
+    // --------------------------------
+    list = list.filter(
       (product) =>
         product.price >= minPrice &&
         product.price <= maxPrice
     );
 
-    // In-stock filter
-    if (inStockOnly) {
-      list = list.filter(
-        (product) =>
-          product.inStock
-      );
-    }
-
-    // Sorting
+    // --------------------------------
+    // 4. SORTING
+    // --------------------------------
     switch (sort) {
       case "price-asc":
-        list = [...list].sort(
-          (a, b) =>
-            a.price - b.price
+        list.sort(
+          (a, b) => a.price - b.price
         );
         break;
 
       case "price-desc":
-        list = [...list].sort(
-          (a, b) =>
-            b.price - a.price
+        list.sort(
+          (a, b) => b.price - a.price
         );
         break;
 
       case "name-asc":
-        list = [...list].sort(
-          (a, b) =>
-            a.name.localeCompare(
-              b.name
-            )
+        list.sort((a, b) =>
+          a.name.localeCompare(
+            b.name,
+            undefined,
+            {
+              sensitivity: "base",
+            }
+          )
         );
         break;
 
       case "featured":
       default:
+        /*
+         * Keep API order for featured.
+         * No category priority is applied here
+         * because category is already a filter.
+         */
         break;
     }
 
     return list;
   }, [
     products,
+    category,
     inStockOnly,
     minPrice,
     maxPrice,
     sort,
   ]);
+
+  const handleClearFilters = () => {
+    setInStockOnly(false);
+    setMinPrice(priceBounds.min);
+    setMaxPrice(priceBounds.max);
+    setSort("featured");
+
+    searchParams.delete("category");
+    setSearchParams(searchParams);
+  };
+  
+
 
   // =========================================================
   // LOADING
@@ -449,8 +437,25 @@ export default function ProductCollection() {
               fontWeight: 600,
             }}
           >
-            Sarees
+            {category ? category : 'Sarees'}
           </h1>
+        </CCol>
+
+        {/* Filters */}
+
+        <CCol xs="auto">
+          <CButton
+            size="sm"
+            className="d-flex align-items-center gap-1 px-2 drawerFilterBtn"
+            onClick={handleClearFilters}
+          >
+            <CIcon
+              icon={cilFilter}
+              size="sm"
+            />
+
+            Clear Filters
+          </CButton>
         </CCol>
 
         {/* Filters */}
@@ -473,47 +478,29 @@ export default function ProductCollection() {
         </CCol>
 
         {/* Sort */}
-
         <CCol
-          xs="auto"
-          className="d-flex align-items-center gap-2"
-        >
-          <span className="text-muted small">
-            SORT BY:
-          </span>
-
-          <CFormSelect
-            size="sm"
-            value={sort}
-            onChange={(event) =>
-              setSort(
-                event.target.value
-              )
-            }
-            style={{
-              width: 200,
-            }}
+            xs="auto"
+            className="sort-control d-flex align-items-center gap-2"
           >
-            {SORT_OPTIONS.map(
-              (option) => (
-                <option
-                  key={option.value}
-                  value={
-                    option.value
-                  }
-                >
-                  {option.label}
-                </option>
-              )
-            )}
-          </CFormSelect>
-        </CCol>
+            <span className="sort-label">
+              SORT BY:
+            </span>
+
+            <div style={{width:"200px"}}>
+            <CustomDropdown
+              options={SORT_OPTIONS}
+              label={'label'}
+              value={sort}
+              onChange={setSort}
+            />
+            </div>
+          </CCol>
 
         {/* Product count */}
 
         <CCol
           xs="auto"
-          className="text-muted small"
+          className="text-muted medium"
         >
           {filteredProducts.length}{" "}
           products
@@ -583,3 +570,8 @@ export default function ProductCollection() {
     </CContainer>
   );
 }
+
+
+
+
+

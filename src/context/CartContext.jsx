@@ -14,9 +14,10 @@ import {
   removeFromCartApi,
   clearCartApi,
 } from "../services/cart.api.js";
+import { useToast } from "../layout/components/toast/Toast.jsx";
 
 const CartContext = createContext(null);
-const API_BASE_IMAGE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8090';
+const API_BASE_IMAGE_URL = import.meta.env.VITE_API_BASE_IMAGE_URL || 'http://localhost:8090';
 
 const initialState = {
   items: [],
@@ -55,8 +56,7 @@ export function CartProvider({ children }) {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
-
+  const toast = useToast();
   const getGuestCart = () => {
     try {
       const savedCart =
@@ -351,7 +351,7 @@ export function CartProvider({ children }) {
       }
 
       saveGuestCart(updatedCart);
-
+      toast.success('Product added to you cart');
       dispatch({
         type: "SET_CART",
         payload: updatedCart,
@@ -378,7 +378,7 @@ export function CartProvider({ children }) {
           quantity:
             product.quantity || 1,
         });
-
+      toast.success('Product added to you cart');
       await loadCart();
 
       return response;
@@ -387,6 +387,7 @@ export function CartProvider({ children }) {
         "Add to cart error:",
         error
       );
+      toast.error(error.message ||'Add to cart error');
 
       setError(error.message);
 
@@ -440,7 +441,7 @@ export function CartProvider({ children }) {
         });
 
       saveGuestCart(updatedCart);
-
+      toast.success('Product quantity increased.');
       dispatch({
         type: "SET_CART",
         payload: updatedCart,
@@ -475,13 +476,14 @@ export function CartProvider({ children }) {
         variantId,
         newQuantity
       );
-
+      toast.success('Product quantity increased.');
       await loadCart();
     } catch (error) {
       console.error(
         "Increase quantity error:",
         error
       );
+      toast.error(error.message ||'Increase quantity error');
 
       setError(error.message);
 
@@ -573,7 +575,7 @@ export function CartProvider({ children }) {
       }
 
       saveGuestCart(updatedCart);
-
+      toast.success('Product quantity decreased');
       dispatch({
         type: "SET_CART",
         payload: updatedCart,
@@ -614,14 +616,14 @@ export function CartProvider({ children }) {
           newQuantity
         );
       }
-
+      toast.success('Product quantity decreased');
       await loadCart();
     } catch (error) {
       console.error(
         "Decrease quantity error:",
         error
       );
-
+      toast.error(error.message ||'Decrease quantity error');
       setError(error.message);
 
       throw error;
@@ -654,7 +656,7 @@ export function CartProvider({ children }) {
         );
 
       saveGuestCart(updatedCart);
-
+      toast.success('Product removed from you cart');
       dispatch({
         type: "SET_CART",
         payload: updatedCart,
@@ -673,14 +675,14 @@ export function CartProvider({ children }) {
       await removeFromCartApi(
         variantId
       );
-
+      toast.success('Product removed from you cart');
       await loadCart();
     } catch (error) {
       console.error(
         "Remove from cart error:",
         error
       );
-
+      toast.error(error.message ||'Remove from cart error');
       setError(error.message);
 
       throw error;

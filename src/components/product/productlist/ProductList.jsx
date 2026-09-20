@@ -6,7 +6,9 @@ import { cilChevronLeft, cilChevronRight } from "@coreui/icons";
 import ProductCard from "../productcard/ProductCard";
 import "./ProductList.css";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-
+import { getProductByCategoryApi } from "../../../services/order.api";
+import { API_BASE_IMAGE_URL } from "../../../config/api";
+import { useNavigate } from "react-router-dom";
 const products = [
   {
     id: "oyy8s4",
@@ -19,90 +21,15 @@ const products = [
       "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=900&q=85",
     tag: "New arrival",
   },
-  {
-    id: "neelambari-cotton",
-    name: "Neelambari Cotton",
-    price: 3600,
-    originalPrice: 4500,
-    discount: 20,
-    description: "Soft kala cotton",
-    image:
-      "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=900&q=85",
-    tag: "Everyday edit",
-  },
-  {
-    id: "mogra-organza",
-    name: "Mogra Organza",
-    price: 6200,
-    originalPrice: 7800,
-    discount: 21,
-    description: "Lightweight silk organza",
-    image:
-      "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=900&q=85",
-    tag: "Bestseller",
-  },
-  {
-    id: "gulabi-banarasi",
-    name: "Gulabi Banarasi",
-    price: 7800,
-    originalPrice: 9500,
-    discount: 18,
-    description: "Rich handwoven Banarasi silk",
-    image:
-      "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=900&q=85",
-    tag: "Festive edit",
-  },
-  {
-    id: "chandni-chanderi",
-    name: "Chandni Chanderi",
-    price: 5200,
-    originalPrice: 6500,
-    discount: 20,
-    description: "Elegant handloom Chanderi silk",
-    image:
-      "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=900&q=85",
-    tag: "New arrival",
-  },
-  {
-    id: "meher-kanjeevaram",
-    name: "Meher Kanjeevaram",
-    price: 12500,
-    originalPrice: 15000,
-    discount: 17,
-    description: "Traditional Kanjeevaram silk",
-    image:
-      "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=900&q=85",
-    tag: "Premium",
-  },
-  {
-    id: "gulmohar-linen",
-    name: "Gulmohar Linen",
-    price: 4200,
-    originalPrice: 5200,
-    discount: 19,
-    description: "Breathable linen handloom",
-    image:
-      "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=900&q=85",
-    tag: "Summer edit",
-  },
-  {
-    id: "noor-tissue",
-    name: "Noor Tissue Silk",
-    price: 6900,
-    originalPrice: 8500,
-    discount: 19,
-    description: "Shimmering tissue silk",
-    image:
-      "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=900&q=85",
-    tag: "Party wear",
-  },
 ];
 
-const ProductList = () => {
+const ProductList = ({categoryName="Chiffon Saree"}) => {
   const scrollRef = useRef(null);
+  const navigate = useNavigate();
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
-
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false)
   const updateArrows = () => {
     const container = scrollRef.current;
     if (!container) return;
@@ -111,9 +38,59 @@ const ProductList = () => {
       container.scrollLeft + container.clientWidth < container.scrollWidth - 5
     );
   };
-
+  const loadCategoryProducts = async()=>{
+    setLoading(true);
+    try {
+      const data = await getProductByCategoryApi(categoryName);
+      const formattedProducts =
+          data?.variants.map((item) => {
+            const price = Number(
+              item.price
+            );
+            const primaryImage =
+              item.images?.find(
+                (image) =>
+                  Number(
+                    image.isPrimary
+                  ) === 1
+              )?.image_url || "";
+            return {
+              id: item.id,
+              productId:item?.product?.id,
+              name: item.name,
+              color: item.color,
+              price,
+              description:
+                item?.description || "",
+              image: primaryImage
+                ? `${API_BASE_IMAGE_URL}${primaryImage}`
+                : "",
+              inStock:
+                Number(item.inStock) > 0,
+              stockQuantity:
+                Number(item.inStock),
+              isPrimary:
+                item.isPrimary,
+              createdAt:
+                item.createdAt,
+              product: item.product,
+              skuNo:
+                item.product?.skuNo || "",
+              images:
+                item.images || [],
+            };
+          });
+      setProducts(formattedProducts ?? []);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.error("fetch product by category",error);
+      throw error;
+    }
+  }
   useEffect(() => {
     updateArrows();
+    loadCategoryProducts();
     const container = scrollRef.current;
     if (!container) return;
     container.addEventListener("scroll", updateArrows);
@@ -138,7 +115,7 @@ const ProductList = () => {
   return (
     <section className="product-list-section">
       <CContainer>
-        <h2 className="product-list-title">New Launches</h2>
+        <h2 className="product-list-title">New Launches {categoryName}</h2>
 
         <div className="product-list-wrapper">
           {canScrollLeft && <button
@@ -175,7 +152,7 @@ const ProductList = () => {
         </div>
 
         <div className="text-center mt-4">
-          <CButton shape="rounded-pill" className="product-list-view-all">
+          <CButton shape="rounded-pill" className="product-list-view-all" onClick={()=>{navigate(`/collections?category=${categoryName}`),window.scrollTo(0, 0)}}>
             View All
           </CButton>
         </div>
