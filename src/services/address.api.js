@@ -67,3 +67,13 @@ export const deleteAddressApi = async (id) => {
     },
   });
 };
+
+export const getLocationsApi  = async () => {
+  return request({
+    method: "get",
+    url: `/locations`,
+    headers: {
+      etoken: localStorage.getItem("etoken"),
+    },
+  });
+};

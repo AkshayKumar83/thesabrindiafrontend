@@ -2,7 +2,7 @@ import React from 'react';
 import { CCard, CCardHeader, CCardBody } from '@coreui/react';
 import { ShoppingBag } from 'lucide-react';
 
-const API_BASE_IMAGE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8090';
+const API_BASE_IMAGE_URL = import.meta.env.VITE_API_BASE_IMAGE_URL || 'http://localhost:8090';
 
 const currency = (n) =>
   `₹${Number(n).toLocaleString('en-IN', { maximumFractionDigits: 0 })}`;

@@ -41,3 +41,13 @@ export const getAllOrdersListApi = async () => {
     },
   });
 };
+
+export const getProductByCategoryApi = async (categoryName) => {
+  return request({
+    method: "get",
+    url: `/products/category-collections?category=${categoryName}`,
+    headers: {
+      etoken: localStorage.getItem("etoken"),
+    },
+  });
+};

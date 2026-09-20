@@ -9,15 +9,18 @@ import store from './store'
 import { CartProvider } from './context/CartContext'
 import { AuthProvider } from "./context/AuthContext";
 import ToastProvider from "../src/layout/components/toast/Toast"
+import { LocationProvider } from './context/LocationContext'
 
 createRoot(document.getElementById('root')).render(
   <ToastProvider position="center">
      <Provider store={store}>
-      <AuthProvider>
-        <CartProvider>
-          <App />
-        </CartProvider>
-      </AuthProvider>
+      <LocationProvider>
+        <AuthProvider>
+          <CartProvider>
+            <App />
+          </CartProvider>
+        </AuthProvider>
+      </LocationProvider>
     </Provider>
     </ToastProvider>
 

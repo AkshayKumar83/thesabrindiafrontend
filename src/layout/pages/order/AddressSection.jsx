@@ -30,8 +30,9 @@ import {
   setDefaultAddressApi,
   deleteAddressApi,
 } from "../../../services/address.api";
-import ConfirmationModal from "../../../admin/common/ConfirmationModal";
 import { useConfirm } from "../../components/confirm/ConfirmModal";
+import { useLocations } from "../../../context/LocationContext";
+import CustomDropdown from "../../components/dropdown/CustomDropdown";
 
 const emptyForm = {
   name: "",
@@ -55,6 +56,7 @@ const AddressSection = ({
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState(null);
   const { confirm, modal } = useConfirm();
+  const { locations, locationLoading } = useLocations();
 
   const [form, setForm] = useState(emptyForm);
   const [errors, setErrors] = useState({});
@@ -63,6 +65,35 @@ const AddressSection = ({
   const [saving, setSaving] = useState(false);
   const [confirmVisible, setConfirmVisible] = useState(false);
 
+  const stateOptions = Object.values(locations || {}).map((state) => ({
+    label: state.name,
+    value: state.slug,
+  }));
+
+  const getStateName = (slug) => {
+  return Object.values(locations || {}).find(
+      (state) => state.slug === slug
+    )?.name || "";
+  };
+
+  const districtOptions =
+  locations?.[form.state]?.districts?.districts?.map((district) => ({
+    label: district.name,
+    value: district.name,
+  })) || [];
+
+  const handleDropdownChange = (field) => (value) => {
+    console.log(field, value);
+    setForm((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+
+    setErrors((prev) => ({
+      ...prev,
+      [field]: "",
+    }));
+  };
   // ==========================================
   // LOAD ADDRESSES
   // ==========================================
@@ -142,6 +173,7 @@ const AddressSection = ({
     setEditingId(null);
     setErrors({});
     setForm(emptyForm);
+    window.scrollTo(0,0);
   };
 
   // ==========================================
@@ -190,9 +222,7 @@ const AddressSection = ({
     if (!form.state.trim()) {
       next.state = "State is required";
     }
-
     setErrors(next);
-
     return Object.keys(next).length === 0;
   };
 
@@ -202,7 +232,6 @@ const AddressSection = ({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!validate()) return;
 
     try {
@@ -218,7 +247,7 @@ const AddressSection = ({
         addressType: form.addressType,
         city: form.city.trim(),
         pincode: Number(form.pincode),
-        state: form.state.trim(),
+        state: getStateName(form.state),
         country: form.country || "India",
         isDefault: form.isDefault,
       };
@@ -608,33 +637,57 @@ const AddressSection = ({
                 />
               </CCol>
 
-              <CCol xs={12} md={4}>
-                <CFormLabel className="sabr-form-label">
-                  City
-                </CFormLabel>
-
-                <CFormInput
-                  value={form.city}
-                  onChange={handleChange("city")}
-                  invalid={!!errors.city}
-                  feedback={errors.city}
-                />
-              </CCol>
-
-              <CCol xs={12} md={4}>
+              <CCol xs={12} md={6}>
                 <CFormLabel className="sabr-form-label">
                   State
                 </CFormLabel>
 
-                <CFormInput
+                {/* <CFormInput
                   value={form.state}
                   onChange={handleChange("state")}
                   invalid={!!errors.state}
                   feedback={errors.state}
+                /> */}
+                <CustomDropdown
+                  options={stateOptions}
+                  value={form.state}
+                  onChange={handleDropdownChange("state")}
+                  placeholder={locationLoading ? "Loading states..." : "Select State"}
+                  disabled={locationLoading}
                 />
+
+                {errors.state && (
+                  <div className="invalid-feedback d-block">
+                    {errors.state}
+                  </div>
+                )}
+              </CCol>
+              <CCol xs={12} md={6}>
+                <CFormLabel className="sabr-form-label">
+                  City
+                </CFormLabel>
+
+                {/* <CFormInput
+                  value={form.city}
+                  onChange={handleChange("city")}
+                  invalid={!!errors.city}
+                  feedback={errors.city}
+                /> */}
+                <CustomDropdown
+                  options={districtOptions}
+                  value={form.city}
+                  placeholder={locationLoading ? "Loading district..." : "Select District"}
+                  onChange={handleDropdownChange("city")}
+                  disabled={!form.state}
+                />  
+                {errors.state && (
+                  <div className="invalid-feedback d-block">
+                    {errors.city}
+                  </div>
+                )}
               </CCol>
 
-              <CCol xs={12} md={4}>
+              <CCol xs={12} md={6}>
                 <CFormLabel className="sabr-form-label">
                   Pincode
                 </CFormLabel>
@@ -695,6 +748,7 @@ const AddressSection = ({
               <CButton
                 type="submit"
                 className="sabr-btn-primary"
+                onClick={handleSubmit}
                 disabled={saving}
               >
                 {saving
