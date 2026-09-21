@@ -4,79 +4,274 @@
 
 .order-panel {
   width: 100%;
-}
-
-.order-panel-header {
+  height: calc(100dvh - 205px);
+  min-height: 0;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  margin-bottom: 1rem;
-}
-
-.order-panel-header h4 {
-  margin: 0;
-
-  font-size: 1.25rem;
-  font-weight: 700;
-
-  color: var(--sabr-maroon-dark, #5a1520);
-}
-
-.order-panel-header p {
-  margin: 4px 0 0;
-
-  color: #777;
-
-  font-size: 0.88rem;
-}
-
-.order-count {
-  padding: 7px 12px;
-
-  border-radius: 8px;
-
-  background: #f8f1ed;
-
-  color: var(--sabr-maroon, #7b1e2d);
-
-  font-size: 0.85rem;
-
-  font-weight: 600;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 
 /* ==========================================================
-   MODAL
+   ORDER PANEL HEADER
+   ========================================================== */
+
+.order-panel-header {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 40px;
+  margin-bottom: 7px;
+}
+
+.order-panel-header h4 {
+  margin: 0;
+  color: var(--sabr-maroon-dark, #5a1520);
+  font-size: 1.28rem;
+  line-height: 1.15;
+  font-weight: 700;
+}
+
+.order-panel-header p {
+  margin: 2px 0 0;
+  color: #777;
+  font-size: 0.8rem;
+  line-height: 1.15;
+}
+
+
+/* ==========================================================
+   ORDER COUNT
+   ========================================================== */
+
+.order-count {
+  padding: 5px 9px;
+  border-radius: 6px;
+  background: #f8f1ed;
+  color: var(--sabr-maroon, #7b1e2d);
+  font-size: 0.98rem;
+  line-height: 1;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+
+/* ==========================================================
+   MAIN TABLE SCROLL AREA
+   ========================================================== */
+
+.order-table-scroll {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-radius: 8px;
+  scrollbar-width: thin;
+  scrollbar-color: #c7c7c7 transparent;
+}
+
+
+/* ==========================================================
+   MAIN TABLE SCROLLBAR
+   ========================================================== */
+
+.order-table-scroll::-webkit-scrollbar {
+  width: 7px;
+}
+
+.order-table-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.order-table-scroll::-webkit-scrollbar-thumb {
+  background: #c7c7c7;
+
+  border-radius: 20px;
+}
+
+.order-table-scroll::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+
+/* ==========================================================
+   REUSABLE TABLE INTERNAL WRAPPER
+   ========================================================== */
+
+.order-table-scroll .table-responsive {
+  width: 100%;
+
+  max-height: none !important;
+
+  overflow: visible !important;
+}
+
+
+
+/* ==========================================================
+   MAIN TABLE
+   ========================================================== */
+
+.order-table-scroll table {
+  width: 100% !important;
+
+  margin: 0 !important;
+
+  border-collapse: separate !important;
+
+  border-spacing: 0;
+
+  table-layout: auto;
+}
+
+
+/* ==========================================================
+   MAIN TABLE HEADER
+   ========================================================== */
+
+.order-table-scroll table thead {
+  position: static !important;
+}
+
+.order-table-scroll table thead th {
+  position: sticky !important;
+
+  top: 0 !important;
+
+  z-index: 20 !important;
+
+  background: #ffffff !important;
+
+  color: #222;
+
+  box-shadow:
+    0 1px 0 #dee2e6,
+    0 2px 5px rgba(0, 0, 0, 0.04);
+}
+
+
+/* ==========================================================
+   MAIN TABLE BODY
+   ========================================================== */
+
+.order-table-scroll table tbody tr {
+  position: relative;
+}
+
+
+/* ==========================================================
+   ORDERS TABLE - COMPACT SIZE
+   ========================================================== */
+
+/* Table header */
+.order-table-scroll table thead th {
+  padding: 8px 10px !important;
+  height: 42px !important;
+  font-size: 0.92rem !important;
+  line-height: 1.1 !important;
+  font-weight: 600 !important;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+/* Table rows */
+.order-table-scroll table tbody tr {
+  height: 20px !important;
+}
+
+/* Table cells */
+.order-table-scroll table tbody td {
+  padding: 3px 6px !important;
+  height: 20px !important;
+  font-size: 0.78rem !important;
+  line-height: 1.1 !important;
+  vertical-align: middle !important;
+}
+
+/* Order ID / customer / date etc. */
+.order-table-scroll table tbody td,
+.order-table-scroll table thead th {
+  white-space: nowrap;
+}
+
+/* Status badge inside table */
+.order-table-scroll table tbody .badge {
+  padding: 4px 8px !important;
+
+  font-size: 0.68rem !important;
+  line-height: 1 !important;
+
+  border-radius: 5px !important;
+}
+
+/* View / action button */
+.order-table-scroll table tbody button {
+  padding: 4px 8px !important;
+  min-height: 30px !important;
+  min-width: 30px !important;
+}
+
+/* Eye icon */
+.order-table-scroll table tbody button svg {
+  width: 15px !important;
+  height: 15px !important;
+}
+
+/* ==========================================================
+   ORDER DETAILS MODAL
    ========================================================== */
 
 .order-details-modal .modal-dialog {
+  width: calc(100% - 2rem);
+
   max-width: 1100px;
+
+  height: calc(100dvh - 2rem);
+
+  margin: 1rem auto;
+
+  display: flex;
+  align-items: center;
 }
 
 .order-details-modal .modal-content {
+  width: 100%;
+
+  max-height: calc(100dvh - 2rem);
+
+  display: flex;
+  flex-direction: column;
+
   border: none;
 
   border-radius: 14px;
 
   overflow: hidden;
 
+  background: #fff;
+
   box-shadow:
     0 20px 60px rgba(0, 0, 0, 0.15);
 }
 
+
+/* ==========================================================
+   MODAL HEADER
+   ========================================================== */
+
 .order-details-modal .modal-header {
-  padding: 1rem 1.25rem;
-
-  border-bottom: 1px solid #eee;
-
+  flex: 0 0 auto;
+  width: 100%;
+  min-height: 68px;
+  padding: 0.75rem 1.15rem;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  border-bottom: none !important;
   background: #fff;
-}
-
-.order-details-modal .modal-body {
-  padding: 1.25rem;
-
-  background: #fafafa;
 }
 
 
@@ -86,22 +281,23 @@
 
 .order-modal-title {
   display: flex;
-
   align-items: center;
-
-  gap: 10px;
+  gap: 9px;
+  min-width: 0;
 }
 
 .order-modal-icon {
-  width: 38px;
-  height: 38px;
+  width: 36px;
+  height: 36px;
+
+  flex: 0 0 36px;
 
   display: flex;
 
   align-items: center;
   justify-content: center;
 
-  border-radius: 9px;
+  border-radius: 8px;
 
   background: #f7e9e5;
 
@@ -111,7 +307,11 @@
 .order-modal-title h5 {
   margin: 0;
 
-  font-size: 1rem;
+  color: #333;
+
+  font-size: 0.95rem;
+
+  line-height: 1.2;
 
   font-weight: 700;
 }
@@ -121,25 +321,123 @@
 
   margin-top: 2px;
 
-  font-size: 0.78rem;
+  color: #888;
 
-  color: #777;
+  font-size: 0.73rem;
+
+  line-height: 1.2;
 }
 
 
 /* ==========================================================
-   ORDER SUMMARY
+   MODAL CLOSE BUTTON
+   ========================================================== */
+
+.order-details-modal .modal-header .btn-close {
+  position: relative;
+
+  margin: 0 0 0 auto !important;
+
+  padding: 0 !important;
+
+  width: 34px;
+  height: 34px;
+
+  flex: 0 0 34px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  opacity: 0.65;
+
+  background-size: 14px;
+
+  border-radius: 50%;
+}
+
+.order-details-modal .modal-header .btn-close:hover {
+  opacity: 1;
+
+  background-color: #f5f5f5;
+}
+
+
+/* ==========================================================
+   MODAL BODY
+   ONLY BODY SCROLLS
+   ========================================================== */
+
+.order-details-modal .modal-body {
+  flex: 1 1 auto;
+
+  min-height: 0;
+
+  padding: 0.7rem 1rem 1rem;
+
+  background: #fafafa;
+
+  overflow-y: auto;
+
+  overflow-x: hidden;
+
+  scrollbar-width: thin;
+
+  scrollbar-color: #c7c7c7 transparent;
+}
+
+
+/* ==========================================================
+   MODAL BODY SCROLLBAR
+   ========================================================== */
+
+.order-details-modal .modal-body::-webkit-scrollbar {
+  width: 7px;
+}
+
+.order-details-modal .modal-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.order-details-modal .modal-body::-webkit-scrollbar-thumb {
+  background: #c7c7c7;
+
+  border-radius: 20px;
+}
+
+.order-details-modal .modal-body::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+
+/* ==========================================================
+   ORDER DETAILS WRAPPER
+   ========================================================== */
+
+.order-details {
+  margin: 0;
+
+  padding: 0;
+}
+
+
+/* ==========================================================
+   ORDER SUMMARY CARD
    ========================================================== */
 
 .order-summary-card {
   display: flex;
 
   align-items: center;
+
   justify-content: space-between;
 
-  padding: 1rem 1.15rem;
+  min-height: 92px;
 
-  margin-bottom: 1rem;
+  margin: 0 0 0.75rem;
+
+  padding: 0.8rem 1rem;
 
   border: 1px solid #eee;
 
@@ -148,14 +446,25 @@
   background: #fff;
 }
 
-.order-summary-label {
-  font-size: 0.68rem;
 
+/* ==========================================================
+   ORDER SUMMARY LEFT SIDE
+   ========================================================== */
+
+.order-summary-card > div:first-child {
+  min-width: 0;
+}
+
+.order-summary-label {
   color: #888;
+
+  font-size: 0.64rem;
+
+  line-height: 1.2;
 
   font-weight: 700;
 
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
 }
 
 .order-number {
@@ -163,9 +472,13 @@
 
   color: var(--sabr-maroon-dark, #5a1520);
 
-  font-size: 1.05rem;
+  font-size: 1rem;
+
+  line-height: 1.2;
 
   font-weight: 700;
+
+  word-break: break-word;
 }
 
 .order-date {
@@ -179,15 +492,26 @@
 
   color: #777;
 
-  font-size: 0.78rem;
+  font-size: 0.73rem;
+
+  line-height: 1.2;
 }
+
+
+/* ==========================================================
+   ORDER STATUS + PAYMENT
+   ========================================================== */
 
 .order-status-wrapper {
   display: flex;
 
-  align-items: center;
+  align-items: flex-end;
+
+  justify-content: flex-end;
 
   gap: 1.5rem;
+
+  margin-left: auto;
 }
 
 .order-status-wrapper > div {
@@ -197,25 +521,71 @@
 
   align-items: flex-end;
 
+  justify-content: center;
+
   gap: 5px;
+
+  width: auto;
+
+  min-width: 0;
 }
 
 .status-label {
-  font-size: 0.65rem;
+  display: block;
+
+  margin: 0;
 
   color: #888;
 
+  font-size: 0.62rem;
+
+  line-height: 1;
+
   font-weight: 700;
 
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
+
+  text-transform: uppercase;
 }
 
 
 /* ==========================================================
-   INFO CARD
+   STATUS BADGES
+   ========================================================== */
+
+.order-status-wrapper .badge {
+  display: inline-flex !important;
+
+  align-items: center;
+  justify-content: center;
+
+  width: auto !important;
+
+  min-width: 0 !important;
+
+  max-width: max-content !important;
+
+  padding: 5px 10px !important;
+
+  border-radius: 7px !important;
+
+  font-size: 0.72rem !important;
+
+  line-height: 1 !important;
+
+  font-weight: 700 !important;
+
+  white-space: nowrap;
+}
+
+
+/* ==========================================================
+   INFO CARDS
    ========================================================== */
 
 .order-info-card {
+  margin: 0 !important;
+
   border: 1px solid #eee !important;
 
   border-radius: 10px !important;
@@ -226,7 +596,7 @@
 }
 
 .order-info-card .card-body {
-  padding: 1rem;
+  padding: 0.8rem 0.9rem;
 }
 
 
@@ -239,9 +609,9 @@
 
   align-items: center;
 
-  gap: 8px;
+  gap: 7px;
 
-  margin-bottom: 1rem;
+  margin-bottom: 0.7rem;
 
   color: var(--sabr-maroon, #7b1e2d);
 }
@@ -251,7 +621,9 @@
 
   color: #333;
 
-  font-size: 0.92rem;
+  font-size: 0.88rem;
+
+  line-height: 1.2;
 
   font-weight: 700;
 }
@@ -259,7 +631,7 @@
 .item-count {
   margin-left: auto;
 
-  padding: 4px 8px;
+  padding: 3px 7px;
 
   border-radius: 5px;
 
@@ -267,12 +639,14 @@
 
   color: #777;
 
-  font-size: 0.72rem;
+  font-size: 0.68rem;
+
+  line-height: 1;
 }
 
 
 /* ==========================================================
-   CUSTOMER INFO
+   CUSTOMER INFORMATION
    ========================================================== */
 
 .info-list {
@@ -280,20 +654,25 @@
 
   flex-direction: column;
 
-  gap: 12px;
+  gap: 0;
 }
 
 .info-item {
   display: flex;
 
   align-items: center;
+
   justify-content: space-between;
 
   gap: 15px;
 
-  padding-bottom: 9px;
+  padding: 7px 0;
 
   border-bottom: 1px solid #f1f1f1;
+}
+
+.info-item:first-child {
+  padding-top: 0;
 }
 
 .info-item:last-child {
@@ -311,13 +690,13 @@
 
   color: #888;
 
-  font-size: 0.78rem;
+  font-size: 0.75rem;
 }
 
 .info-item strong {
   color: #333;
 
-  font-size: 0.82rem;
+  font-size: 0.78rem;
 
   text-align: right;
 }
@@ -332,28 +711,30 @@
    ========================================================== */
 
 .shipping-address {
-  font-size: 0.83rem;
-
-  line-height: 1.55;
-
   color: #666;
+
+  font-size: 0.77rem;
+
+  line-height: 1.45;
 }
 
 .shipping-address strong {
   display: block;
 
-  margin-bottom: 5px;
+  margin-bottom: 3px;
 
   color: #333;
+
+  font-size: 0.8rem;
 }
 
 .shipping-address p {
-  margin: 0;
+  margin: 1px 0;
 }
 
 
 /* ==========================================================
-   PAYMENT
+   PAYMENT INFORMATION
    ========================================================== */
 
 .payment-info {
@@ -361,38 +742,136 @@
 
   flex-direction: column;
 
-  gap: 6px;
+  align-items: flex-start;
+
+  justify-content: center;
+
+  gap: 5px;
+
+  width: auto;
+
+  min-width: 0;
 }
 
 .payment-info span {
+  display: block;
+
+  margin: 0;
+
   color: #888;
 
-  font-size: 0.75rem;
+  font-size: 0.7rem;
+
+  line-height: 1.2;
 }
 
 .payment-info strong {
-  color: #333;
+  display: inline-flex !important;
 
-  font-size: 0.88rem;
+  align-items: center;
+
+  justify-content: center;
+
+  width: auto !important;
+
+  min-width: 0 !important;
+
+  max-width: max-content !important;
+
+  padding: 5px 12px;
+
+  border-radius: 6px;
+
+  color: #9a6900;
+
+  background: #ffb511;
+
+  font-size: 0.72rem;
+
+  line-height: 1;
+
+  font-weight: 700;
+
+  white-space: nowrap;
 }
 
 
 /* ==========================================================
-   PRODUCTS
+   PAYMENT STATUS CLASSES
+   ========================================================== */
+
+.payment-status,
+.payment-status-badge,
+.order-payment-status {
+  display: inline-flex !important;
+
+  align-items: center;
+
+  justify-content: center;
+
+  width: auto !important;
+
+  min-width: 0 !important;
+
+  max-width: max-content !important;
+
+  padding: 5px 12px !important;
+
+  border-radius: 6px;
+
+  white-space: nowrap;
+}
+
+
+/* ==========================================================
+   PAYMENT CARD
+   ========================================================== */
+
+.order-details-modal .payment-info > * {
+  width: auto !important;
+}
+
+
+/* ==========================================================
+   ORDER ITEMS
    ========================================================== */
 
 .order-items-table {
+  width: 100%;
+
+  margin: 0;
+
   overflow-x: auto;
+
+  scrollbar-width: thin;
+
+  scrollbar-color: #c7c7c7 transparent;
+}
+
+.order-items-table::-webkit-scrollbar {
+  height: 6px;
+}
+
+.order-items-table::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.order-items-table::-webkit-scrollbar-thumb {
+  background: #c7c7c7;
+
+  border-radius: 20px;
 }
 
 .order-items-table table {
-  margin-bottom: 0;
+  width: 100%;
 
-  min-width: 700px;
+  min-width: 650px;
+
+  margin-bottom: 0;
 }
 
 .order-items-table th {
-  padding: 0.7rem 0.5rem;
+  padding: 0.6rem 0.5rem;
 
   background: #fafafa;
 
@@ -400,7 +879,9 @@
 
   border-bottom: 1px solid #eee;
 
-  font-size: 0.7rem;
+  font-size: 0.67rem;
+
+  line-height: 1.2;
 
   text-transform: uppercase;
 
@@ -408,15 +889,15 @@
 }
 
 .order-items-table td {
-  padding: 0.75rem 0.5rem;
+  padding: 0.65rem 0.5rem;
 
   vertical-align: middle;
 
+  color: #555;
+
   border-bottom: 1px solid #f2f2f2;
 
-  font-size: 0.8rem;
-
-  color: #555;
+  font-size: 0.76rem;
 }
 
 .order-items-table tbody tr:last-child td {
@@ -433,24 +914,24 @@
 
   align-items: center;
 
-  gap: 10px;
+  gap: 9px;
 
-  min-width: 250px;
+  min-width: 240px;
 }
 
 .product-image {
-  width: 48px;
-  height: 58px;
+  width: 42px;
+  height: 52px;
 
   flex: none;
 
   overflow: hidden;
 
+  border: 1px solid #eee;
+
   border-radius: 6px;
 
   background: #f5f5f5;
-
-  border: 1px solid #eee;
 }
 
 .product-image img {
@@ -465,7 +946,7 @@
 
   flex-direction: column;
 
-  gap: 3px;
+  gap: 2px;
 
   min-width: 0;
 }
@@ -473,36 +954,36 @@
 .product-info strong {
   color: #333;
 
-  font-size: 0.82rem;
+  font-size: 0.78rem;
+
+  line-height: 1.2;
 }
 
 .product-info span {
   color: #888;
 
-  font-size: 0.72rem;
+  font-size: 0.68rem;
 
-  line-height: 1.3;
+  line-height: 1.25;
 }
 
 
 /* ==========================================================
-   TOTAL
+   ORDER TOTAL
    ========================================================== */
 
 .order-total-card {
   width: 100%;
 
-  max-width: 420px;
+  max-width: 380px;
 
-  margin-left: auto;
+  margin: 0.75rem 0 0 auto;
 
-  margin-top: 1rem;
-
-  padding: 1rem;
+  padding: 0.75rem 0.9rem;
 
   border: 1px solid #eee;
 
-  border-radius: 10px;
+  border-radius: 9px;
 
   background: #fff;
 }
@@ -510,15 +991,15 @@
 .total-row {
   display: flex;
 
-  justify-content: space-between;
-
   align-items: center;
 
-  padding: 5px 0;
+  justify-content: space-between;
+
+  padding: 4px 0;
 
   color: #777;
 
-  font-size: 0.83rem;
+  font-size: 0.77rem;
 }
 
 .total-row strong {
@@ -530,17 +1011,17 @@
 .total-divider {
   height: 1px;
 
-  margin: 8px 0;
+  margin: 6px 0;
 
   background: #eee;
 }
 
 .final-total {
-  padding-top: 8px;
+  padding-top: 6px;
 
   color: #333;
 
-  font-size: 0.95rem;
+  font-size: 0.88rem;
 
   font-weight: 700;
 }
@@ -548,18 +1029,24 @@
 .final-total strong {
   color: var(--sabr-maroon, #7b1e2d);
 
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
 
 /* ==========================================================
-   NOTES
+   ORDER NOTES
    ========================================================== */
 
 .order-notes {
-  margin-top: 1rem;
+  margin-top: 0.75rem;
 
-  padding: 0.85rem 1rem;
+  padding: 0.7rem 0.85rem;
+
+  border-top: 1px solid #eee;
+
+  border-right: 1px solid #eee;
+
+  border-bottom: 1px solid #eee;
 
   border-left: 3px solid
     var(--sabr-maroon, #7b1e2d);
@@ -567,22 +1054,16 @@
   border-radius: 5px;
 
   background: #fff;
-
-  border-top: 1px solid #eee;
-
-  border-right: 1px solid #eee;
-
-  border-bottom: 1px solid #eee;
 }
 
 .order-notes strong {
   display: block;
 
-  margin-bottom: 4px;
-
-  font-size: 0.8rem;
+  margin-bottom: 3px;
 
   color: #333;
+
+  font-size: 0.76rem;
 }
 
 .order-notes p {
@@ -590,40 +1071,154 @@
 
   color: #666;
 
-  font-size: 0.8rem;
+  font-size: 0.75rem;
 
-  line-height: 1.5;
+  line-height: 1.4;
 }
 
 
 /* ==========================================================
-   RESPONSIVE
+   MODAL ROW SPACING
+   ========================================================== */
+
+.order-details-modal .row {
+  --cui-gutter-x: 0.75rem;
+  --cui-gutter-y: 0.75rem;
+}
+
+
+/* ==========================================================
+   DIRECT CARD SPACING
+   ========================================================== */
+
+.order-details > .order-info-card {
+  margin-top: 0.75rem !important;
+}
+
+
+/* ==========================================================
+   MODAL TABLE RESPONSIVE
+   ========================================================== */
+
+.order-details-modal .table-responsive {
+  margin: 0 !important;
+
+  scrollbar-width: thin;
+
+  scrollbar-color: #c7c7c7 transparent;
+}
+
+.order-details-modal .table-responsive::-webkit-scrollbar {
+  height: 6px;
+}
+
+.order-details-modal .table-responsive::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.order-details-modal .table-responsive::-webkit-scrollbar-thumb {
+  background: #c7c7c7;
+
+  border-radius: 20px;
+}
+
+
+/* ==========================================================
+   RESPONSIVE - TABLET
    ========================================================== */
 
 @media (max-width: 768px) {
-  .order-panel-header {
-    align-items: flex-start;
 
-    gap: 10px;
+  .order-panel {
+    height: calc(100dvh - 190px);
   }
+
+  .order-panel-header {
+    min-height: 38px;
+
+    margin-bottom: 6px;
+  }
+
+  .order-panel-header h4 {
+    font-size: 0.95rem;
+  }
+
+  .order-panel-header p {
+    font-size: 0.7rem;
+  }
+
+  .order-count {
+    padding: 4px 8px;
+
+    font-size: 0.68rem;
+  }
+
+
+  /* ========================================================
+     MODAL
+     ======================================================== */
+
+  .order-details-modal .modal-dialog {
+    width: calc(100% - 1rem);
+
+    height: calc(100dvh - 1rem);
+
+    margin: 0.5rem auto;
+  }
+
+  .order-details-modal .modal-content {
+    max-height: calc(100dvh - 1rem);
+
+    border-radius: 12px;
+  }
+
+  .order-details-modal .modal-header {
+    min-height: 60px;
+
+    padding: 0.7rem 0.85rem;
+  }
+
+  .order-details-modal .modal-body {
+    padding: 0.6rem 0.7rem 0.8rem;
+  }
+
+
+  /* ========================================================
+     ORDER SUMMARY
+     ======================================================== */
 
   .order-summary-card {
     align-items: flex-start;
 
     flex-direction: column;
 
-    gap: 1rem;
+    gap: 0.75rem;
+
+    min-height: auto;
+
+    padding: 0.75rem 0.85rem;
   }
 
   .order-status-wrapper {
     width: 100%;
 
-    justify-content: space-between;
+    align-items: flex-start;
+
+    justify-content: flex-start;
+
+    gap: 1.25rem;
+
+    margin-left: 0;
   }
 
   .order-status-wrapper > div {
     align-items: flex-start;
   }
+
+
+  /* ========================================================
+     TOTAL
+     ======================================================== */
 
   .order-total-card {
     max-width: none;
@@ -631,36 +1226,119 @@
 }
 
 
+/* ==========================================================
+   RESPONSIVE - MOBILE
+   ========================================================== */
+
 @media (max-width: 480px) {
+
+  .order-panel {
+    height: calc(100dvh - 180px);
+  }
+
   .order-panel-header {
-    flex-direction: column;
+    min-height: 36px;
+  }
+
+  .order-panel-header h4 {
+    font-size: 0.92rem;
+  }
+
+  .order-panel-header p {
+    font-size: 0.68rem;
   }
 
   .order-count {
-    align-self: flex-start;
+    padding: 4px 7px;
+
+    font-size: 0.66rem;
+  }
+
+
+  /* ========================================================
+     MODAL
+     ======================================================== */
+
+  .order-details-modal .modal-dialog {
+    width: 100%;
+
+    height: 100dvh;
+
+    margin: 0;
+  }
+
+  .order-details-modal .modal-content {
+    max-height: 100dvh;
+
+    border-radius: 0;
+  }
+
+  .order-details-modal .modal-header {
+    min-height: 58px;
+
+    padding: 0.65rem 0.75rem;
   }
 
   .order-details-modal .modal-body {
-    padding: 0.75rem;
+    padding: 0.5rem;
   }
 
-  .order-summary-card {
-    padding: 0.85rem;
+
+  /* ========================================================
+     MODAL TITLE
+     ======================================================== */
+
+  .order-modal-icon {
+    width: 32px;
+    height: 32px;
+
+    flex-basis: 32px;
   }
+
+  .order-modal-title h5 {
+    font-size: 0.88rem;
+  }
+
+  .order-modal-title span {
+    font-size: 0.68rem;
+  }
+
+  .order-details-modal .modal-header .btn-close {
+    width: 30px;
+    height: 30px;
+
+    flex-basis: 30px;
+  }
+
+
+  /* ========================================================
+     ORDER STATUS
+     ======================================================== */
 
   .order-status-wrapper {
-    gap: 1rem;
+    flex-wrap: wrap;
+
+    gap: 0.8rem;
   }
+
+
+  /* ========================================================
+     INFO
+     ======================================================== */
 
   .info-item {
     align-items: flex-start;
 
     flex-direction: column;
 
-    gap: 3px;
+    gap: 2px;
   }
 
   .info-item strong {
     text-align: left;
+  }
+
+  .order-info-card .card-body {
+    padding: 0.7rem;
   }
 }
