@@ -132,7 +132,10 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible 
 .form-panel { display:grid; place-items:center; padding:28px 7vw; background:var(--paper); }
 .form-wrap { width:min(100%,430px); animation:rise-in .6s ease both; }
 .mobile-brand { display:none; }
-.form-heading h2 { margin:0 0 7px; color:var(--ink); font-family:'Playfair Display',serif; font-size:clamp(30px,3vw,42px); font-weight:500; line-height:1.05; }
+.form-heading h2 { margin:0 0 7px; 
+  /* color:var(--ink);  */
+   color:var(--sabr-maroon);  
+  font-family:'Playfair Display',serif; font-size:clamp(30px,3vw,42px); font-weight:500; line-height:1.05; }
 .form-heading > p:last-child { margin:0; color:var(--muted); font-size:13px; line-height:1.5; }
 .form-heading .eyebrow { margin-bottom:10px; }
 .mode-switch { display:flex; gap:24px; margin:24px 0 20px; border-bottom:1px solid var(--line); }

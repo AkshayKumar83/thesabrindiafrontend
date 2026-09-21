@@ -70,7 +70,7 @@ const AppSidebar = () => {
 
   const handleLogout = () => {
     // Remove JWT token
-    localStorage.removeItem('token')
+    localStorage.removeItem('etoken')
 
     // Navigate to home
     navigate('/')

@@ -5,7 +5,6 @@
 .orders-page {
   min-height: calc(100vh - 100px);
   padding: 55px 0 80px;
-
   background: var(--paper);
   color: var(--ink);
 }
@@ -17,63 +16,44 @@
 
 .orders-page-header {
   display: flex;
-
   align-items: center;
   justify-content: space-between;
-
   gap: 25px;
-
   margin-bottom: 30px;
 }
 
 .orders-eyebrow {
   margin: 0 0 9px;
-
   color: var(--coral);
-
   font-size: 11px;
   font-weight: 600;
-
   letter-spacing: 0.2em;
 }
 
 .orders-page-header h1 {
   margin: 0 0 8px;
-
-  color: var(--ink);
-
+  color: var(--forest);
   font-family: 'Playfair Display', serif;
-
   font-size: clamp(35px, 4vw, 52px);
-
   font-weight: 500;
-
   line-height: 1.05;
 }
 
 .orders-page-header p:not(.orders-eyebrow) {
   margin: 0;
-
   color: var(--muted);
-
   font-size: 14px;
 }
 
 .orders-header-icon {
   width: 58px;
   height: 58px;
-
   flex-shrink: 0;
-
   display: flex;
-
   align-items: center;
   justify-content: center;
-
   border-radius: 50%;
-
   background: var(--forest);
-
   color: #fff;
 }
 

@@ -12,7 +12,7 @@ import ToastProvider from "../src/layout/components/toast/Toast"
 import { LocationProvider } from './context/LocationContext'
 
 createRoot(document.getElementById('root')).render(
-  <ToastProvider position="center">
+  <ToastProvider position="top-center">
      <Provider store={store}>
       <LocationProvider>
         <AuthProvider>

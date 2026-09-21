@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import {
   CAlert,
   CButton,
@@ -8,30 +8,34 @@ import {
   CCol,
   CContainer,
   CForm,
-  CFormCheck,
   CFormInput,
   CFormLabel,
   CInputGroup,
   CInputGroupText,
   CRow,
-  CTooltip,
+  CSpinner,
 } from '@coreui/react'
+import { Eye, EyeOff, LockKeyhole, Mail } from 'lucide-react'
 import CIcon from '@coreui/icons-react'
-import { apple } from 'src/assets/brand/apple'
-import { google } from 'src/assets/brand/google'
-import { logo } from 'src/assets/brand/logo'
-import { eye } from 'src/assets/icons/eye'
+
+import logoSabr from 'src/assets/brand/logoSabr.png'
+import adminImage from 'src/assets/images/adminImage.png'
+
 import { request } from '../../services/api'
+
+import './AdminLogin.css'
 
 const AdminLogin = () => {
   const navigate = useNavigate()
   const location = useLocation()
+
   const [showPassword, setShowPassword] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState('')
 
   const handleSubmit = async (event) => {
     event.preventDefault()
+
     setError('')
     setSubmitting(true)
 
@@ -47,13 +51,25 @@ const AdminLogin = () => {
         },
       })
 
-      const token = response?.token || response?.accessToken || response?.data?.token
+      const token =
+        response?.token ||
+        response?.accessToken ||
+        response?.data?.token
+
       if (!token) {
-        throw new Error('Login response did not include an authentication token.')
+        throw new Error(
+          'Login response did not include an authentication token.',
+        )
       }
 
       localStorage.setItem('etoken', token)
-      navigate(location.state?.from?.pathname || '/admin/dashboard', { replace: true })
+
+      navigate(
+        location.state?.from?.pathname || '/admin/dashboard',
+        {
+          replace: true,
+        },
+      )
     } catch (requestError) {
       setError(
         requestError.response?.data?.message ||
@@ -66,81 +82,207 @@ const AdminLogin = () => {
   }
 
   return (
-    <div className="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center">
-      <CContainer>
+    <div
+      className="admin-login-page"
+      style={{
+        backgroundImage: `url(${adminImage})`,
+      }}
+    >
+      <CContainer fluid className="admin-login-container">
         <CRow className="justify-content-center">
-          <CCol md={8} lg={6} xl={5}>
-            <div className="d-flex flex-column gap-4">
-              <div className="text-center">
-                <CIcon icon={logo} height={48} />
-              </div>
-              <CCard className="p-4">
-                <CCardBody className="d-flex flex-column gap-4">
-                  <h2 className="h5 text-center mb-0">Login to your account</h2>
-                  <CForm className="row gy-3" onSubmit={handleSubmit}>
-                    {error && (
-                      <CCol xs={12}>
-                        <CAlert color="danger" className="mb-0">
-                          {error}
-                        </CAlert>
-                      </CCol>
-                    )}
-                    <CCol xs={12}>
-                      <CFormLabel htmlFor="email">Email address</CFormLabel>
-                      <CFormInput
-                        id="email"
-                        name="email"
-                        type="email"
-                        placeholder="your@email.com"
-                        autoComplete="email"
+          <CCol
+            xs={12}
+            sm={10}
+            md={7}
+            lg={5}
+            xl={4}
+            xxl={4}
+          >
+            <div className="admin-login-wrapper">
+
+             
+
+              {/* LOGIN CARD */}
+              <CCard className="admin-login-card">
+                <CCardBody>
+
+            {/* BRAND LOGO */}
+              <div className="admin-card-logo">
+              <img
+                src={logoSabr}
+                alt="The Sabr India"
+                className="admin-logo"
+              />
+            </div>
+
+                  {/* HEADER */}
+                  <div className="admin-login-heading">
+
+                    <div className="admin-login-lock">
+                      <LockKeyhole
+                        size={20}
+                        strokeWidth={1.8}
                       />
-                    </CCol>
-                    <CCol xs={12}>
-                      <div className="d-flex justify-content-between">
-                        <CFormLabel htmlFor="password">Password</CFormLabel>
-                        {/* <Link to="/authentication/reset-password">I forgot password</Link> */}
+                    </div>
+
+                    <div>
+                      <h1>Welcome Back</h1>
+
+                      <p>
+                        Sign in to your admin account
+                      </p>
+                    </div>
+
+                  </div>
+
+                  {/* ERROR */}
+                  {error && (
+                    <CAlert
+                      color="danger"
+                      className="admin-login-alert"
+                    >
+                      {error}
+                    </CAlert>
+                  )}
+
+                  {/* LOGIN FORM */}
+                  <CForm onSubmit={handleSubmit}>
+
+                    {/* EMAIL */}
+                    <div className="admin-form-group">
+
+                      <CFormLabel htmlFor="email">
+                        Email address
+                      </CFormLabel>
+
+                      <CInputGroup className="admin-input-group">
+
+                        <CInputGroupText>
+                          <Mail size={17} />
+                        </CInputGroupText>
+
+                        <CFormInput
+                          id="email"
+                          name="email"
+                          type="email"
+                          placeholder="Enter your email"
+                          autoComplete="email"
+                          required
+                        />
+
+                      </CInputGroup>
+
+                    </div>
+
+                    {/* PASSWORD */}
+                    <div className="admin-form-group">
+
+                      <div className="admin-password-label">
+                        <CFormLabel htmlFor="password">
+                          Password
+                        </CFormLabel>
                       </div>
-                      <CInputGroup>
+
+                      <CInputGroup className="admin-input-group">
+
+                        <CInputGroupText>
+                          <LockKeyhole size={17} />
+                        </CInputGroupText>
+
                         <CFormInput
                           id="password"
                           name="password"
-                          type={showPassword ? 'text' : 'password'}
-                          placeholder="Your password"
+                          type={
+                            showPassword
+                              ? 'text'
+                              : 'password'
+                          }
+                          placeholder="Enter your password"
                           autoComplete="current-password"
+                          required
                         />
-                        <CInputGroupText>
-                          <CTooltip content={showPassword ? 'Hide password' : 'Show password'}>
-                            <CButton
-                              type="button"
-                              color="link"
-                              className="p-0 link-secondary"
-                              aria-label={showPassword ? 'Hide password' : 'Show password'}
-                              onClick={() => setShowPassword((visible) => !visible)}
-                            >
-                              <CIcon icon={eye} size="sm" />
-                            </CButton>
-                          </CTooltip>
+
+                        <CInputGroupText
+                          className="admin-password-toggle"
+                          onClick={() =>
+                            setShowPassword(
+                              (visible) => !visible,
+                            )
+                          }
+                        >
+                          {showPassword ? (
+                            <EyeOff size={17} />
+                          ) : (
+                            <Eye size={17} />
+                          )}
                         </CInputGroupText>
+
                       </CInputGroup>
-                    </CCol>
-                    <CCol xs={12}>
-                      <CFormCheck id="rememberMe" label="Remember me on this device" />
-                    </CCol>
-                    <CCol xs={12}>
-                      <CButton
-                        color="primary"
-                        type="submit"
-                        className="w-100"
-                        disabled={submitting}
-                      >
-                        {submitting ? 'Signing in...' : 'Sign in'}
-                      </CButton>
-                    </CCol>
+
+                    </div>
+
+                    {/* REMEMBER ME */}
+                    <div className="admin-login-options">
+
+                      <label className="admin-remember">
+
+                        <input
+                          type="checkbox"
+                          name="rememberMe"
+                        />
+
+                        <span>
+                          Remember me
+                        </span>
+
+                      </label>
+
+                    </div>
+
+                    {/* LOGIN BUTTON */}
+                    <CButton
+                      type="submit"
+                      className="admin-login-button"
+                      disabled={submitting}
+                    >
+                      {submitting ? (
+                        <>
+                          <CSpinner
+                            size="sm"
+                            className="me-2"
+                          />
+
+                          Signing in...
+                        </>
+                      ) : (
+                        'Sign in'
+                      )}
+                    </CButton>
+
                   </CForm>
-                  
+
+                  {/* CARD FOOTER */}
+                  <div className="admin-login-footer">
+
+                    <span>
+                      THE SABR INDIA
+                    </span>
+
+                    <small>
+                      Admin Portal
+                    </small>
+
+                  </div>
+
                 </CCardBody>
               </CCard>
-              
+
+              {/* COPYRIGHT */}
+              <p className="admin-login-copyright">
+                © {new Date().getFullYear()} The Sabr India.
+                All rights reserved.
+              </p>
+
             </div>
           </CCol>
         </CRow>

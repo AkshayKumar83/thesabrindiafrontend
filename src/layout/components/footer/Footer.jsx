@@ -21,7 +21,7 @@ function Footer({ onNavigate }) {
      SOCIAL LINKS
      ===================================================== */
 
-  const instagramUrl = 'https://instagram.com/your_username'
+  const instagramUrl = 'https://instagram.com/thesabrindia'
   const facebookUrl = 'https://facebook.com/your_username'
   const youtubeUrl = 'https://youtube.com/'
   const twitterUrl = 'https://twitter.com/'
@@ -170,11 +170,11 @@ function Footer({ onNavigate }) {
                   Care Guide
                 </Link>
 
-                <button className="sabr-footer-link" onClick={() => handleNavigate('/login')}>
+                <button className="sabr-footer-link" onClick={() => handleNavigate('/profile')}>
                   My Account
                 </button>
 
-                <button className="sabr-footer-link" onClick={() => handleNavigate('/contact')}>
+                <button className="sabr-footer-link" onClick={() => handleNavigate('contact')}>
                   Contact Us
                 </button>
 
