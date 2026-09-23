@@ -1,0 +1,674 @@
+/* =========================================
+   ADMIN REGISTER PAGE
+========================================= */
+
+.admin-register-page {
+  position: relative;
+  width: 100%;
+  min-height: calc(100vh - 200px);
+
+  padding: 32px 20px;
+
+  /* background:
+    linear-gradient(
+      rgba(247, 248, 244, 0.93),
+      rgba(247, 248, 244, 0.93)
+    ),
+    url('../../assets/images/adminbg.png');
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat; */
+  
+}
+
+/* =========================================
+   CARD
+========================================= */
+
+.admin-register-card {
+  border: 1px solid #eadfe1 !important;
+  border-radius: 12px !important;
+  background: rgba(255, 255, 255, 0.97);
+
+  box-shadow:
+    0 8px 30px rgba(70, 25, 35, 0.08);
+}
+
+.admin-register-body {
+  /* padding: 24px 28px !important; */
+  color: #23352f;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.admin-register-header {
+  border-bottom: 1px solid #eee4e5;
+  padding-bottom: 6px;
+}
+
+.admin-register-title {
+  margin: 0;
+
+  color: var(--sabr-maroon, #7b1e2d);
+
+  font-family: 'Playfair Display', serif;
+
+  font-size: 24px;
+  font-weight: 600;
+
+  line-height: 1.3;
+}
+
+.admin-register-subtitle {
+  margin-top: 5px;
+
+  color: #7a7777 !important;
+
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* =========================================
+   FORM
+========================================= */
+
+.admin-register-form {
+  margin-top: 4px;
+}
+
+/*
+   Each CRow is a separate field row.
+   Remove default vertical gutter.
+*/
+
+.admin-register-form > .row {
+  --cui-gutter-y: 0px !important;
+
+  row-gap: 0 !important;
+
+  margin-bottom: 4px;
+}
+
+/* Last row should not have extra bottom space */
+
+.admin-register-form > .row:last-of-type {
+  margin-bottom: 0;
+}
+
+/* =========================================
+   LABEL
+========================================= */
+
+.admin-register-label {
+  display: block;
+
+  margin-bottom: 4px !important;
+
+  color: #4b3a3d !important;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  line-height: 1.2;
+}
+
+/* =========================================
+   INPUTS
+========================================= */
+
+.admin-register-form .form-control {
+  width: 100%;
+
+  min-height: 35px;
+  height: 35px;
+
+  padding: 7px 11px;
+
+  border: 1px solid #dcd4d5;
+
+  border-radius: 7px;
+
+  color: #33292b;
+
+  background-color: #fff;
+
+  font-size: 13px;
+
+  line-height: 1.2;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.admin-register-form .form-control::placeholder {
+  color: #aaa2a4;
+
+  font-size: 13px;
+}
+
+.admin-register-form .form-control:hover {
+  border-color: #bdaeb1;
+}
+
+.admin-register-form .form-control:focus {
+  border-color: var(--sabr-maroon, #7b1e2d) !important;
+
+  box-shadow:
+    0 0 0 3px rgba(123, 30, 45, 0.08) !important;
+
+  background-color: #fff;
+}
+
+/* =========================================
+   PASSWORD INPUT GROUP
+========================================= */
+
+.admin-register-form .input-group {
+  display: flex !important;
+
+  flex-wrap: nowrap !important;
+
+  align-items: stretch !important;
+
+  width: 100%;
+
+  height: 35px !important;
+
+  min-height: 35px !important;
+}
+
+/*
+   Password input takes remaining width
+*/
+
+.admin-register-form .input-group .form-control {
+  flex: 1 1 auto !important;
+
+  width: 1% !important;
+
+  min-width: 0 !important;
+
+  height: 35px !important;
+
+  min-height: 35px !important;
+
+  padding: 7px 11px;
+
+  border-radius: 7px 0 0 7px;
+}
+
+/*
+   Eye icon container
+*/
+
+.admin-register-form .input-group-text {
+  display: flex !important;
+
+  flex: 0 0 42px !important;
+
+  align-items: center !important;
+
+  justify-content: center !important;
+
+  width: 42px !important;
+
+  min-width: 42px !important;
+
+  max-width: 42px !important;
+
+  height: 35px !important;
+
+  min-height: 35px !important;
+
+  padding: 0 !important;
+
+  border: 1px solid #dcd4d5;
+
+  border-left: 0;
+
+  border-radius: 0 7px 7px 0;
+
+  background: #faf8f8;
+}
+
+/* =========================================
+   PASSWORD FOCUS
+========================================= */
+
+.admin-register-form .input-group .form-control:focus {
+  position: relative;
+
+  z-index: 3;
+}
+
+.admin-register-form .input-group:focus-within .input-group-text {
+  border-color: var(--sabr-maroon, #7b1e2d);
+}
+
+/* =========================================
+   EYE BUTTON
+========================================= */
+
+.admin-register-eye-btn {
+  display: flex !important;
+
+  align-items: center !important;
+
+  justify-content: center !important;
+
+  width: 100% !important;
+
+  height: 100% !important;
+
+  margin: 0 !important;
+
+  padding: 0 !important;
+
+  color: #817477 !important;
+
+  border: 0 !important;
+
+  background: transparent !important;
+
+  box-shadow: none !important;
+}
+
+.admin-register-eye-btn:hover {
+  color: var(--sabr-maroon, #7b1e2d) !important;
+}
+
+.admin-register-eye-btn:focus,
+.admin-register-eye-btn:active {
+  color: var(--sabr-maroon, #7b1e2d) !important;
+
+  border: 0 !important;
+
+  box-shadow: none !important;
+}
+
+.admin-register-eye-btn svg {
+  width: 16px;
+
+  height: 16px;
+
+  flex-shrink: 0;
+}
+
+/* =========================================
+   ALERT
+========================================= */
+
+.admin-register-form .alert {
+  margin-bottom: 14px;
+
+  padding: 8px 11px;
+
+  border-radius: 7px;
+
+  font-size: 13px;
+}
+
+/* =========================================
+   LOADING
+========================================= */
+
+.admin-register-loading {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  min-height: 35px;
+
+  margin-bottom: 10px;
+}
+
+.admin-register-loading .spinner-border {
+  width: 22px;
+
+  height: 22px;
+}
+
+/* =========================================
+   BUTTONS
+========================================= */
+
+.admin-register-actions {
+  padding-top: 14px;
+
+  border-top: 1px solid #eee4e5;
+}
+
+.admin-register-actions .btn {
+  min-width: 110px;
+
+  height: 38px;
+
+  padding: 7px 16px;
+
+  border-radius: 7px;
+
+  font-size: 13px;
+
+  font-weight: 600;
+}
+
+/* =========================================
+   CANCEL BUTTON
+========================================= */
+
+.admin-register-cancel-btn {
+  color: #655b5d !important;
+
+  background: #fff !important;
+
+  border: 1px solid #d8ced0 !important;
+}
+
+.admin-register-cancel-btn:hover {
+  color: #4b3b3e !important;
+
+  background: #f8f5f5 !important;
+
+  border-color: #bdb1b4 !important;
+}
+
+/* =========================================
+   SUBMIT BUTTON
+========================================= */
+
+.admin-register-submit-btn {
+  color: #fff !important;
+
+  background-color:
+    var(--sabr-maroon, #7b1e2d) !important;
+
+  border-color:
+    var(--sabr-maroon, #7b1e2d) !important;
+}
+
+.admin-register-submit-btn:hover {
+  color: #fff !important;
+
+  background-color:
+    var(--sabr-maroon-dark, #5a1520) !important;
+
+  border-color:
+    var(--sabr-maroon-dark, #5a1520) !important;
+}
+
+.admin-register-submit-btn:focus {
+  color: #fff !important;
+
+  background-color:
+    var(--sabr-maroon, #7b1e2d) !important;
+
+  border-color:
+    var(--sabr-maroon, #7b1e2d) !important;
+
+  box-shadow:
+    0 0 0 3px rgba(123, 30, 45, 0.12) !important;
+}
+
+.admin-register-submit-btn:disabled {
+  color: #fff !important;
+
+  background-color:
+    var(--sabr-maroon, #7b1e2d) !important;
+
+  border-color:
+    var(--sabr-maroon, #7b1e2d) !important;
+
+  opacity: 0.65;
+}
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 991px) {
+  .admin-register-body {
+    padding: 22px 24px !important;
+  }
+
+  .admin-register-form > .row {
+    margin-bottom: 12px;
+  }
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 767px) {
+  .admin-register-page {
+    padding: 4px 0;
+  }
+
+  .admin-register-body {
+    padding: 16px 18px !important;
+  }
+
+  .admin-register-title {
+    font-size: 21px;
+  }
+
+  .admin-register-subtitle {
+    font-size: 12px;
+  }
+
+  /*
+     Separate rows become single column.
+     Keep small gap between fields.
+  */
+
+  .admin-register-form > .row {
+    --cui-gutter-y: 0px !important;
+
+    row-gap: 0 !important;
+
+    margin-bottom: 9px;
+  }
+
+  .admin-register-form > .row:last-of-type {
+    margin-bottom: 0;
+  }
+
+  .admin-register-label {
+    margin-bottom: 3px !important;
+
+    font-size: 12px;
+  }
+
+  /* Password group */
+
+  .admin-register-form .input-group {
+    display: flex !important;
+
+    flex-wrap: nowrap !important;
+
+    height: 35px !important;
+  }
+
+  .admin-register-form .input-group .form-control {
+    flex: 1 1 auto !important;
+
+    width: 1% !important;
+
+    min-width: 0 !important;
+
+    height: 35px !important;
+  }
+
+  .admin-register-form .input-group-text {
+    flex: 0 0 40px !important;
+
+    width: 40px !important;
+
+    min-width: 40px !important;
+
+    max-width: 40px !important;
+
+    height: 35px !important;
+  }
+
+  .admin-register-actions {
+    margin-top: 14px !important;
+
+    padding-top: 12px;
+  }
+}
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 575px) {
+  .admin-register-body {
+    padding: 15px 14px !important;
+  }
+
+  .admin-register-title {
+    font-size: 20px;
+  }
+
+  .admin-register-subtitle {
+    font-size: 11px;
+  }
+
+  .admin-register-form > .row {
+    margin-bottom: 8px;
+  }
+
+  .admin-register-actions {
+    flex-direction: column-reverse;
+
+    gap: 8px !important;
+  }
+
+  .admin-register-actions .btn {
+    width: 100%;
+
+    min-width: 100%;
+  }
+}
+
+/* =========================================
+   VERY SMALL MOBILE
+========================================= */
+
+@media (max-width: 400px) {
+  .admin-register-page {
+    padding: 2px 0;
+  }
+
+  .admin-register-body {
+    padding: 14px 12px !important;
+  }
+
+  .admin-register-title {
+    font-size: 18px;
+  }
+
+  .admin-register-header {
+    padding-bottom: 12px;
+
+    margin-bottom: 14px !important;
+  }
+
+  .admin-register-form > .row {
+    margin-bottom: 7px;
+  }
+
+  .admin-register-label {
+    margin-bottom: 2px !important;
+
+    font-size: 12px;
+  }
+
+  /* Normal inputs */
+
+  .admin-register-form .form-control {
+    height: 35px !important;
+
+    min-height: 35px !important;
+
+    padding: 6px 9px;
+
+    font-size: 12px;
+  }
+
+  .admin-register-form .form-control::placeholder {
+    font-size: 12px;
+  }
+
+  /* Password */
+
+  .admin-register-form .input-group {
+    display: flex !important;
+
+    flex-wrap: nowrap !important;
+
+    width: 100%;
+
+    height: 35px !important;
+
+    min-height: 35px !important;
+  }
+
+  .admin-register-form .input-group .form-control {
+    flex: 1 1 auto !important;
+
+    width: 1% !important;
+
+    min-width: 0 !important;
+
+    height: 35px !important;
+
+    min-height: 35px !important;
+  }
+
+  .admin-register-form .input-group-text {
+    flex: 0 0 38px !important;
+
+    width: 38px !important;
+
+    min-width: 38px !important;
+
+    max-width: 38px !important;
+
+    height: 35px !important;
+
+    min-height: 35px !important;
+  }
+
+  .admin-register-eye-btn svg {
+    width: 15px;
+
+    height: 15px;
+  }
+
+  /* Buttons */
+
+  .admin-register-actions {
+    margin-top: 10px !important;
+
+    padding-top: 10px;
+  }
+
+  .admin-register-actions .btn {
+    width: 100%;
+
+    min-width: 100%;
+
+    height: 36px;
+
+    font-size: 12px;
+  }
+}

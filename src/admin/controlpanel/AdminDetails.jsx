@@ -16,8 +16,11 @@ import {
   CTooltip,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
-import { eye } from 'src/assets/icons/eye'
+// import { eye  } from 'src/assets/icons/eye'
 import { request } from '../../services/api'
+import './AdminDetails.css'
+
+import { Eye, EyeOff } from 'lucide-react'
 
 const AdminRegister = () => {
   const { id } = useParams()
@@ -102,14 +105,17 @@ const AdminRegister = () => {
   }
 
   return (
-    <div className="py-2">
+    <div className="admin-register-page py-2">
       <CRow className="justify-content-center">
-        <CCol xs={12} xl={9}>
-          <CCard>
-            <CCardBody className="p-4 p-lg-5">
-              <div className="mb-4">
-                <h2 className="h4 mb-1">{isEditMode ? 'Update admin' : 'Create new admin'}</h2>
-                <p className="text-body-secondary mb-0">
+       <CCol xs={12} xl={9}>
+        <CCard className="admin-register-card">
+          <CCardBody className="admin-register-body">
+              <div className="admin-register-header mb-4">
+                <h2 className="admin-register-title">
+                  {isEditMode ? 'Update admin' : 'Create new admin'}
+                </h2>
+
+                <p className="admin-register-subtitle mb-0">
                   {isEditMode
                     ? 'Update administrator account details.'
                     : 'Add an administrator and assign access to the control panel.'}
@@ -117,11 +123,11 @@ const AdminRegister = () => {
               </div>
 
               {loading && <CSpinner color="primary" />}
-              <CForm onSubmit={handleSubmit}>
+             <CForm className="admin-register-form" onSubmit={handleSubmit}>
                 {error && <CAlert color="danger">{error}</CAlert>}
                 <CRow className="g-3">
-                  <CCol md={6}>
-                    <CFormLabel htmlFor="firstName">First name</CFormLabel>
+                  <CCol xs={12} md={6} lg={6}>
+                   <CFormLabel className="admin-register-label" htmlFor="firstName">First name</CFormLabel>
                     <CFormInput
                       id="firstName"
                       name="firstName"
@@ -132,8 +138,8 @@ const AdminRegister = () => {
                       required
                     />
                   </CCol>
-                  <CCol md={6}>
-                    <CFormLabel htmlFor="lastName">Last name</CFormLabel>
+                  <CCol  xs={12} md={6}  lg={6}>
+                    <CFormLabel className="admin-register-label" htmlFor="lastName">Last name</CFormLabel>
                     <CFormInput
                       id="lastName"
                       name="lastName"
@@ -144,8 +150,10 @@ const AdminRegister = () => {
                       required
                     />
                   </CCol>
-                  <CCol md={6}>
-                    <CFormLabel htmlFor="email">Email address</CFormLabel>
+                  </CRow>
+                    <CRow className="g-3">
+                  <CCol  xs={12}  md={6}  lg={6}>
+                    <CFormLabel className="admin-register-label"  htmlFor="email">Email address</CFormLabel>
                     <CFormInput
                       id="email"
                       name="email"
@@ -157,8 +165,8 @@ const AdminRegister = () => {
                       required
                     />
                   </CCol>
-                  <CCol md={6}>
-                    <CFormLabel htmlFor="contactNo">Contact number</CFormLabel>
+                  <CCol  xs={12} md={6}  lg={6}>
+                    <CFormLabel className="admin-register-label" htmlFor="contactNo">Contact number</CFormLabel>
                     <CFormInput
                       id="contactNo"
                       name="contactNo"
@@ -170,8 +178,10 @@ const AdminRegister = () => {
                       required
                     />
                   </CCol>
-                  <CCol md={6}>
-                    <CFormLabel htmlFor="password">Password</CFormLabel>
+                  </CRow>
+                    <CRow className="g-3">
+                  <CCol  xs={12} md={6}  lg={6}>
+                    <CFormLabel className="admin-register-label" htmlFor="password">Password</CFormLabel>
                     <CInputGroup>
                       <CFormInput
                         id="password"
@@ -184,22 +194,22 @@ const AdminRegister = () => {
                         required={!isEditMode}
                       />
                       <CInputGroupText>
-                        <CTooltip content={showPassword ? 'Hide password' : 'Show password'}>
-                          <CButton
-                            type="button"
-                            color="link"
-                            className="p-0 link-secondary"
-                            aria-label={showPassword ? 'Hide password' : 'Show password'}
-                            onClick={() => setShowPassword((visible) => !visible)}
-                          >
-                            <CIcon icon={eye} size="sm" />
-                          </CButton>
-                        </CTooltip>
+                        {/* <CTooltip  content={showPassword ? 'Hide password' : 'Show password'}> */}
+                         <CButton
+                          type="button"
+                          color="link"
+                          className="admin-register-eye-btn p-0"
+                          aria-label={showPassword ? 'Hide password' : 'Show password'}
+                          onClick={() => setShowPassword((visible) => !visible)}
+                        >
+                          {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                        </CButton>
+                        {/* </CTooltip> */}
                       </CInputGroupText>
                     </CInputGroup>
                   </CCol>
-                  <CCol md={6}>
-                    <CFormLabel htmlFor="confirmPassword">Confirm password</CFormLabel>
+                  <CCol  xs={12} md={6}  lg={6}>
+                    <CFormLabel className="admin-register-label"  htmlFor="confirmPassword">Confirm password</CFormLabel>
                     <CInputGroup>
                       <CFormInput
                         id="confirmPassword"
@@ -212,23 +222,23 @@ const AdminRegister = () => {
                         required={!isEditMode}
                       />
                       <CInputGroupText>
-                        <CTooltip content={showConfirmPassword ? 'Hide password' : 'Show password'}>
+                        {/* <CTooltip content={showConfirmPassword ? 'Hide password' : 'Show password'}> */}
                           <CButton
                             type="button"
                             color="link"
-                            className="p-0 link-secondary"
+                            className="admin-register-eye-btn p-0"
                             aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}
                             onClick={() => setShowConfirmPassword((visible) => !visible)}
                           >
-                            <CIcon icon={eye} size="sm" />
+                            {showConfirmPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                           </CButton>
-                        </CTooltip>
+                        {/* </CTooltip> */}
                       </CInputGroupText>
                     </CInputGroup>
                   </CCol>
                 </CRow>
 
-                <div className="d-flex justify-content-end gap-2 mt-4">
+               <div className="admin-register-actions d-flex justify-content-end gap-5 mt-3">
                   <CButton
                     type="button"
                     color="secondary"
@@ -237,7 +247,7 @@ const AdminRegister = () => {
                   >
                     Cancel
                   </CButton>
-                  <CButton color="primary" type="submit" disabled={submitting || loading}>
+                  <CButton   className="sabr-maroon-btn" type="submit" disabled={submitting || loading} >
                     {submitting
                       ? isEditMode
                         ? 'Updating admin...'

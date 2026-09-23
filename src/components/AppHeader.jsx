@@ -115,7 +115,7 @@ React.useEffect(() => {
     <CIcon icon={cilMenu} size="lg" />
   </CHeaderToggler>
 
-<CHeaderBrand className="flex-grow-1 text-center fw-bold fst-italic">
+<CHeaderBrand className="flex-grow-1 text-center fw-bold fst-italic sabr-maroon">
   THE SABR INDIA
 </CHeaderBrand>
         {/* <CSearchButton
@@ -173,7 +173,7 @@ React.useEffect(() => {
         <CHeaderNav className="ms-auto">
       
          <CNavItem>
-  <CNavLink className="d-flex align-items-center gap-2">
+  <CNavLink className="sabr-maroon d-flex align-items-center gap-2">
     <CIcon icon={cilCalendar} size="lg" />
 
     <span>

@@ -651,7 +651,7 @@ const Profile = () => {
 
             <p>
               Manage your personal information,
-              addresses and account security.
+               and account security.
             </p>
 
           </div>
@@ -669,7 +669,7 @@ const Profile = () => {
             PERSONAL INFORMATION
         ===================================================== */}
 
-        <CCard className="profile-card">
+        {/* <CCard className="profile-card">
 
           <CCardHeader className="profile-card-header">
 
@@ -810,7 +810,201 @@ const Profile = () => {
 
           </CCardBody>
 
-        </CCard>
+        </CCard> */}
+
+        <CRow className="g-3 profile-main-grid">
+
+  <CCol lg={6}>
+    <CCard className="profile-card h-100">
+
+      <CCardHeader className="profile-card-header">
+        <div className="profile-section-title">
+          <UserRound size={19} />
+
+          <div>
+            <h2>Personal Information</h2>
+            <p>Update your personal details.</p>
+          </div>
+        </div>
+      </CCardHeader>
+
+      <CCardBody>
+        <CForm onSubmit={handleProfileSubmit}>
+
+          <CRow className="g-3">
+
+            <CCol md={6}>
+              <CFormLabel>First Name</CFormLabel>
+
+              <CFormInput
+                name="firstName"
+                value={profile.firstName}
+                onChange={handleProfileChange}
+                placeholder="First name"
+                required
+              />
+            </CCol>
+
+            <CCol md={6}>
+              <CFormLabel>Last Name</CFormLabel>
+
+              <CFormInput
+                name="lastName"
+                value={profile.lastName}
+                onChange={handleProfileChange}
+                placeholder="Last name"
+                required
+              />
+            </CCol>
+
+            <CCol md={6}>
+              <CFormLabel>Contact Number</CFormLabel>
+
+              <div className="profile-input-icon">
+                <Phone size={15} />
+
+                <CFormInput
+                  name="contactNo"
+                  value={profile.contactNo}
+                  onChange={handleProfileChange}
+                  placeholder="Contact number"
+                  maxLength={10}
+                  required
+                />
+              </div>
+            </CCol>
+
+            <CCol md={6}>
+              <CFormLabel>Email Address</CFormLabel>
+
+              <div className="profile-input-icon">
+                <Mail size={15} />
+
+                <CFormInput
+                  value={profile.email}
+                  disabled
+                />
+              </div>
+
+              <small className="profile-field-note">
+                Email cannot be changed here.
+              </small>
+            </CCol>
+
+          </CRow>
+
+          <div className="profile-form-actions">
+            <CButton
+              type="submit"
+              className="profile-primary-button"
+              disabled={profileSaving}
+            >
+              {profileSaving ? (
+                <>
+                  <CSpinner size="sm" className="me-2" />
+                  Saving...
+                </>
+              ) : (
+                'Save Changes'
+              )}
+            </CButton>
+          </div>
+
+        </CForm>
+      </CCardBody>
+
+    </CCard>
+  </CCol>
+
+
+  <CCol lg={6}>
+    <CCard className="profile-card h-100">
+
+      <CCardHeader className="profile-card-header">
+        <div className="profile-section-title">
+          <LockKeyhole size={19} />
+
+          <div>
+            <h2>Security</h2>
+            <p>Keep your account secure.</p>
+          </div>
+        </div>
+      </CCardHeader>
+
+      <CCardBody>
+
+        <CForm onSubmit={handlePasswordSubmit}>
+
+          <CRow className="g-3">
+
+            <CCol xs={12}>
+              <CFormLabel>Current Password</CFormLabel>
+
+              <CFormInput
+                type="password"
+                name="currentPassword"
+                value={passwordForm.currentPassword}
+                onChange={handlePasswordChange}
+                placeholder="Current password"
+                required
+              />
+            </CCol>
+
+            <CCol md={6}>
+              <CFormLabel>New Password</CFormLabel>
+
+              <CFormInput
+                type="password"
+                name="newPassword"
+                value={passwordForm.newPassword}
+                onChange={handlePasswordChange}
+                placeholder="New password"
+                minLength={6}
+                required
+              />
+            </CCol>
+
+            <CCol md={6}>
+              <CFormLabel>Confirm Password</CFormLabel>
+
+              <CFormInput
+                type="password"
+                name="confirmPassword"
+                value={passwordForm.confirmPassword}
+                onChange={handlePasswordChange}
+                placeholder="Confirm password"
+                minLength={6}
+                required
+              />
+            </CCol>
+
+          </CRow>
+
+          <div className="profile-form-actions">
+            <CButton
+              type="submit"
+              className="profile-primary-button"
+              disabled={passwordSaving}
+            >
+              {passwordSaving ? (
+                <>
+                  <CSpinner size="sm" className="me-2" />
+                  Updating...
+                </>
+              ) : (
+                'Update Password'
+              )}
+            </CButton>
+          </div>
+
+        </CForm>
+
+      </CCardBody>
+
+    </CCard>
+  </CCol>
+
+</CRow>
 
 
        
@@ -1293,7 +1487,7 @@ const Profile = () => {
             SECURITY
         ===================================================== */}
 
-        <CCard className="profile-card">
+        {/* <CCard className="profile-card">
 
           <CCardHeader className="profile-card-header">
 
@@ -1417,7 +1611,7 @@ const Profile = () => {
 
           </CCardBody>
 
-        </CCard>
+        </CCard> */}
 
       </CContainer>
 
