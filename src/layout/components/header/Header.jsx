@@ -509,7 +509,7 @@ const Header = ({
           onClick={() => handleNavigate('/profile')}
         >
           <UserRound size={17} />
-          <span>Profile</span>
+          <span>Update Profile</span>
         </button>
 
         {/* Orders */}

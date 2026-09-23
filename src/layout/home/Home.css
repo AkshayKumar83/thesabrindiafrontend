@@ -13,6 +13,41 @@
   --cream:#eee9df;
   --sabr-maroon: #7b1e2d;
   --sabr-maroon-dark: #5a1520;
+  
+.sabr-maroon {
+  color: var(--sabr-maroon) !important;
+}
+
+.sabr-maroon-dark {
+  color: var(--sabr-maroon-dark) !important;
+}
+
+/* Sabr Maroon Button */
+.sabr-maroon-btn {
+  background-color: var(--sabr-maroon) !important;
+  border-color: var(--sabr-maroon) !important;
+  color: #fff !important;
+  font-weight: 500;
+}
+
+.sabr-maroon-btn:hover,
+.sabr-maroon-btn:focus {
+  background-color: var(--sabr-maroon-dark) !important;
+  border-color: var(--sabr-maroon-dark) !important;
+  color: #fff !important;
+}
+
+.sabr-maroon-btn:active {
+  background-color: var(--sabr-maroon-dark) !important;
+  border-color: var(--sabr-maroon-dark) !important;
+}
+
+.sabr-maroon-btn:disabled {
+  background-color: var(--sabr-maroon) !important;
+  border-color: var(--sabr-maroon) !important;
+  color: #fff !important;
+  opacity: 0.65;
+}
 
   /* ================================
      THE SABR INDIA FOOTER
