@@ -53,7 +53,7 @@ const AppHeaderDropdown = () => {
 
          <CDropdownItem href="#">
           <CIcon icon={cilUser} className="me-2" />
-          Profile
+          Update Profile
         </CDropdownItem>
          {/* Logout */}
         <CDropdownItem

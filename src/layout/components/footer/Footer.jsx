@@ -222,7 +222,7 @@ function Footer({ onNavigate }) {
                 CONTACT
                 ================================================= */}
 
-            <CCol xs={12} sm={6} lg={2} className="sabr-footer-col">
+            <CCol xs={6} sm={6} lg={2} className="sabr-footer-col">
               <div className="sabr-footer-section">
                 <h6 className="sabr-footer-heading">COME SAY HELLO</h6>
 
