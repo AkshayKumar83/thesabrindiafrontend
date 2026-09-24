@@ -24,11 +24,14 @@ import adminImage from 'src/assets/images/adminImage.png'
 import { request } from '../../services/api'
 
 import './AdminLogin.css'
+import { useAuth } from '../../context/AuthContext'
+
+
 
 const AdminLogin = () => {
   const navigate = useNavigate()
   const location = useLocation()
-
+const { login } = useAuth(); 
   const [showPassword, setShowPassword] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState('')
@@ -61,7 +64,7 @@ const AdminLogin = () => {
           'Login response did not include an authentication token.',
         )
       }
-
+  login({token: token, user: response?.admin})
       localStorage.setItem('etoken', token)
 
       navigate(

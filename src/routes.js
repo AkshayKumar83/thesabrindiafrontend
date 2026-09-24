@@ -25,6 +25,7 @@ import CategoryPanel from './admin/category/CategoryPanel'
 import CategoryDetails from './admin/category/CategoryDetails'
 import AdminLogin from './admin/auth/AdminLogin'
 import AdminRegister from './admin/controlpanel/AdminDetails'
+import AdminProfile from './admin/controlpanel/AdminProfile'
 
 // Dashboard
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
@@ -115,6 +116,7 @@ export const routes = [
   { path: '/control-panel/add-admins', name: 'Admins', element: AdminRegister },
   { path: '/control-panel/update-admin/:id', name: 'Admins', element: AdminRegister },
   { path: '/control-panel/admins', name: 'Admins', element: Admin },
+  { path: '/update-profile', name: 'Admins', element: AdminProfile },
 
   // { path: '/components', name: 'Components', element: Accordion, exact: true },
   // { path: '/components/accordion', name: 'Accordion', element: Accordion },

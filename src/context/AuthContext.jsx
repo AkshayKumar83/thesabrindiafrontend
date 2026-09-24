@@ -49,6 +49,13 @@ export const AuthProvider = ({ children }) => {
     setIsLoggedIn(false);
   };
 
+const resetAuthState = () => {
+  setUser(null)
+  setToken(null)
+  setIsLoggedIn(false)
+  setIsAuthLoading(true)
+}
+
   return (
     <AuthContext.Provider
       value={{
@@ -58,6 +65,7 @@ export const AuthProvider = ({ children }) => {
         isAuthLoading,
         login,
         logout,
+        resetAuthState,
       }}
     >
       {children}

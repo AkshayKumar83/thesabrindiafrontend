@@ -17,6 +17,7 @@
 import React, { Suspense, useEffect } from 'react'
 import { HashRouter, Route, Routes } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import { Toaster } from 'react-hot-toast'
 
 import { CSpinner, useColorModes } from '@coreui/react'
 import './scss/style.scss'
@@ -103,6 +104,13 @@ const App = () => {
 
   return (
     <HashRouter>
+      <Toaster
+        position="top-right"
+        reverseOrder={false}
+        toastOptions={{
+          duration: 3000,
+        }}
+      />
       <Suspense
         fallback={
           <div className="pt-3 text-center">

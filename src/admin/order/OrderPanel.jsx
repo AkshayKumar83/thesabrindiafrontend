@@ -67,6 +67,19 @@ const OrderPanel = () => {
     fetchOrders()
   }, [])
 
+  const getPaymentMethodColor = (method) => {
+  switch (method?.toUpperCase()) {
+    case 'COD':
+      return 'secondary'
+
+    case 'ONLINE':
+    case 'RAZORPAY':
+      return 'primary'
+
+    default:
+      return 'secondary'
+  }
+}
 
   const formatDate = (date) => {
     if (!date) return '-'
@@ -157,16 +170,37 @@ const OrderPanel = () => {
     orderId: order.orderNumber,
 
     customer: order.shippingName || 'N/A',
+    phoneNo: order.shippingPhone || 'N/A',
+    email: order.shippingEmail || 'N/A',
+    city: order.shippingCity || 'N/A',
+    state: order.shippingState || 'N/A',
+    pinCode: order.shippingPincode || 'N/A',
 
     date: formatDate(order.createdAt),
+    noOfProducts: order?.items?.length || 0,
+
 
     amount: formatCurrency(order.totalAmount),
 
-    status: (
-      <CBadge color={getStatusColor(order.orderStatus)}>
-        {order.orderStatus}
-      </CBadge>
-    ),
+    // orderStatus: (
+    //   <CBadge color={getStatusColor(order.orderStatus)}>
+    //     {order.orderStatus}
+    //   </CBadge>
+    // ),
+    // paymentStatus: (
+    //   <CBadge color={getPaymentColor(order.paymentStatus)}>
+    //     {order.paymentStatus}
+    //   </CBadge>
+    // ),
+    // paymentMethod: (
+    //   <CBadge color={getPaymentColor(order.paymentMethod)}>
+    //     {order.paymentMethod}
+    //   </CBadge>
+    // ),
+
+      orderStatus: order.orderStatus,
+  paymentStatus: order.paymentStatus,
+  paymentMethod: order.paymentMethod,
   }))
 
   // ==========================================================
@@ -174,6 +208,7 @@ const OrderPanel = () => {
   // ==========================================================
 
   const handleView = (row) => {
+    console.log("row",row)
     setSelectedOrder(row)
     setShowModal(true)
   }
@@ -201,17 +236,65 @@ const OrderPanel = () => {
       accessor: 'customer',
     },
     {
+      header: 'Phone No',
+      accessor: 'phoneNo',
+    },
+    {
+      header: 'Email',
+      accessor: 'email',
+    },
+    {
+      header: 'City',
+      accessor: 'city',
+    },
+    {
+      header: 'State',
+      accessor: 'state',
+    },
+    {
+      header: 'Pin Code',
+      accessor: 'pinCode',
+    },
+    {
       header: 'Date',
       accessor: 'date',
+    },
+    {
+      header: 'No of Products',
+      accessor: 'noOfProducts',
     },
     {
       header: 'Amount',
       accessor: 'amount',
     },
     {
-      header: 'Status',
-      accessor: 'status',
-    },
+  header: 'Order Status',
+  accessor: 'orderStatus',
+  render: (value) => (
+    <CBadge color={getStatusColor(value)}>
+      {value || 'N/A'}
+    </CBadge>
+  ),
+},
+    {
+  header: 'Payment Status',
+  accessor: 'paymentStatus',
+  render: (value) => (
+    <CBadge color={getPaymentColor(value)}>
+      {value || 'N/A'}
+    </CBadge>
+  ),
+},
+    {
+  header: 'Payment Method',
+  accessor: 'paymentMethod',
+  render: (value) => (
+    <CBadge color={getPaymentMethodColor(value)}>
+      {value || 'N/A'}
+    </CBadge>
+  ),
+},
+    
   ]
 
   return (
@@ -230,13 +313,13 @@ const OrderPanel = () => {
         </div>
 
        <div className="order-table-scroll">
-  <ReusableTable
-    columns={columns}
-    data={tableData}
-    onView={handleView}
-    loading={loading}
-  />
-</div>
+          <ReusableTable
+            columns={columns}
+            data={tableData}
+            onView={handleView}
+            loading={loading}
+          />
+        </div>
       </div>
 
 
