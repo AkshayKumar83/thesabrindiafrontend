@@ -137,7 +137,7 @@ const CategoryDetails = () => {
       <CToaster placement="top-end" push={toast} />
       <CRow>
         <CCol xs={12}>
-          <CCard className="mb-4">
+          <CCard className="">
             <CCardHeader>
               <strong>{isEditMode ? 'Update Category' : 'Add Category'}</strong>
             </CCardHeader>
@@ -147,7 +147,7 @@ const CategoryDetails = () => {
               {error && <CAlert color="danger">{error}</CAlert>}
               <CForm onSubmit={handleSubmit}>
                 {/* Category Name */}
-                <CRow className="mb-3">
+                <CRow className="">
                   <CCol md={6}>
                     <CFormLabel>Category Name</CFormLabel>
                     <CFormInput
@@ -169,11 +169,11 @@ const CategoryDetails = () => {
 
 
                 {/* Description */}
-                <CRow className="mb-3">
+                <CRow className="">
                   <CCol md={12}>
                     <CFormLabel>Description</CFormLabel>
                     <CFormTextarea
-                      rows={4}
+                      rows={2}
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
                       placeholder="Enter category description"
@@ -182,7 +182,7 @@ const CategoryDetails = () => {
                 </CRow>
 
                 {/* Image Upload */}
-                <CRow className="mb-3">
+                <CRow className="mb-1">
                   <CCol md={6}>
                     <CFormLabel>Category Image</CFormLabel>
                     <CFormInput type="file" accept="image/*" onChange={handleImageChange} />
@@ -214,12 +214,8 @@ const CategoryDetails = () => {
                 </CRow>
 
                 {/* Action Buttons */}
-                <div className="d-flex gap-2">
-                  <CButton color="primary" type="submit" disabled={loading || saving}>
-                    {saving ? 'Saving...' : isEditMode ? 'Update Category' : 'Add Category'}
-                  </CButton>
-
-                  <CButton
+                <div className="d-flex justify-content-end gap-5">
+                   <CButton
                     color="secondary"
                     type="button"
                     variant="outline"
@@ -227,6 +223,12 @@ const CategoryDetails = () => {
                   >
                     Cancel
                   </CButton>
+                  
+                  <CButton className="sabr-maroon-btn"  type="submit" disabled={loading || saving}>
+                    {saving ? 'Saving...' : isEditMode ? 'Update Category' : 'Add Category'}
+                  </CButton>
+
+                 
                 </div>
               </CForm>
             </CCardBody>

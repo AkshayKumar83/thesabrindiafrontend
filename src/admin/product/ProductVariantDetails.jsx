@@ -306,7 +306,7 @@ const ProductVariantDetails = () => {
                 >
                   Cancel
                 </CButton>
-                <CButton color="primary" type="submit" disabled={loading || saving}>
+                <CButton className='sabr-maroon-btn' type="submit" disabled={loading || saving}>
                   {saving ? 'Saving...' : isEditMode ? 'Update Variant' : 'Add Variant'}
                 </CButton>
               </div>
