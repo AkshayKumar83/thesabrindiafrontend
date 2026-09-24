@@ -22,16 +22,18 @@ import {
 } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
 import { useNavigate } from 'react-router-dom'
-
+import { useAuth } from "../../context/AuthContext";
 import avatar8 from './../../assets/images/avatars/8.jpg'
 
 const AppHeaderDropdown = () => {
   const navigate = useNavigate()
+const { isLoggedIn, user, logout } = useAuth(); 
+
 
   const handleLogout = () => {
     // Remove JWT token
-    localStorage.removeItem('etoken')
-
+    // localStorage.removeItem('etoken')
+    logout()
     // Navigate to home
     navigate('/')
   }
@@ -51,7 +53,7 @@ const AppHeaderDropdown = () => {
           Account
         </CDropdownHeader>
 
-         <CDropdownItem href="#">
+         <CDropdownItem onClick={() => navigate('/admin/update-profile')} className="w-100 text-start">
           <CIcon icon={cilUser} className="me-2" />
           Update Profile
         </CDropdownItem>
