@@ -179,7 +179,7 @@ const ProductDetails = () => {
                   />
                 </CCol>
               </CRow>
-              <div className="d-flex justify-content-end gap-2 mt-4">
+              <div className="d-flex justify-content-end gap-5 mt-4">
                 <CButton
                   type="button"
                   color="secondary"
@@ -188,7 +188,7 @@ const ProductDetails = () => {
                 >
                   Cancel
                 </CButton>
-                <CButton color="primary" type="submit" disabled={loading || saving}>
+                <CButton  className="sabr-maroon-btn" type="submit" disabled={loading || saving}>
                   {saving ? 'Saving...' : isEditMode ? 'Update Product' : 'Add Product'}
                 </CButton>
               </div>

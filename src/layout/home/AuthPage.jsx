@@ -240,7 +240,7 @@ const AuthPage = () => {
                 className={mode === 'register' ? 'active' : ''}
                 onClick={() => setMode('register')}
               >
-                Create account
+                Sign up
               </button>
 
             </div>
@@ -278,11 +278,11 @@ const AuthPage = () => {
 
           <p className="auth-legal">
             By continuing, you agree to our{' '}
-            <a href="#terms">
+            <a href="#/policies/terms">
               Terms
             </a>
             {' '}and{' '}
-            <a href="#privacy">
+            <a href="#/policies/privacy">
               Privacy Policy
             </a>.
           </p>

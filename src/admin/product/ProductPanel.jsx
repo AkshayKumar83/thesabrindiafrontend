@@ -56,6 +56,7 @@ const ProductPanel = () => {
       render: (_, row) => (
         <CButton
           color="info"
+          className='sabr-maroon-btn'
           size="sm"
           onClick={() => navigate(`/admin/product-variants/${row.id}`)}
         >

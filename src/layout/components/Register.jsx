@@ -38,7 +38,7 @@
 //       const data = await response.json();
 //       if (!response.ok) {
 //         throw new Error(
-//           data.message || "Unable to create account"
+//           data.message || "Unable to "
 //         );
 //       }
 //       login({

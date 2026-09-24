@@ -120,7 +120,8 @@ const VariantPannel = () => {
         <CCardHeader className="d-flex justify-content-between align-items-center">
           <strong>{productId ? `Variants for Product ${productId}` : 'All Variants'}</strong>
           <CButton
-            color="primary"
+            // color="primary"
+            className='sabr-maroon-btn'
             onClick={() => productId && navigate(`/admin/product-variants/${productId}/add`)}
             disabled={!productId}
           >
